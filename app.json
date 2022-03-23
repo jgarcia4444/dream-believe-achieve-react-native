@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "dream-believe-achieve",
+    "slug": "dream-believe-achieve",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "dream-believe-achieve"
+}
