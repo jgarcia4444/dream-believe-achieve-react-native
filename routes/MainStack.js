@@ -7,9 +7,13 @@ const MainStack = () => {
 
     const Stack = createNativeStackNavigator();
 
+    const transparentHeader = {
+        headerShown: false
+    }
+
     return (
         <Stack.Navigator initialRouteName='Landing'>
-            <Stack.Screen name="Landing" component={LandingScreen} />
+            <Stack.Screen options={transparentHeader} name="Landing" component={LandingScreen} />
         </Stack.Navigator>
     )
 

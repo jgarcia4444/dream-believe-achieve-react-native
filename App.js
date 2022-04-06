@@ -7,9 +7,7 @@ import MainStack from './routes/MainStack';
 export default function App() {
   return (
     <NavigationContainer>
-      <View style={styles.container}>
         <MainStack />
-      </View>
     </NavigationContainer>
   );
 }
