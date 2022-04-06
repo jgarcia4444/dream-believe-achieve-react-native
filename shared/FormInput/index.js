@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     input: {
         width: '90%',
         height: '100%',
-        backgroundColor: lightGray
+        backgroundColor: lightGray,
     },
     inputIconContainer: {
         width: '10%',
