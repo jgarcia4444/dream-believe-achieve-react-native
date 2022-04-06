@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     appNameFull: {
-        fontFamily: 'serif',
         color: darkGray
     },
     

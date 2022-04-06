@@ -1,9 +1,13 @@
 import React, {useState, } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 import GlobalStyles from '../../config/GlobalStyles';
-import FormInput from '../../shared/FormInput';
 const { container } = GlobalStyles;
+
+import Colors from '../../config/Colors';
+const { black, } = Colors;
+
+import FormInput from '../../shared/FormInput';
 
 const LoginScreen = () => {
 
@@ -41,11 +45,10 @@ const LoginScreen = () => {
 
     return (
         <View style={[container]}>
-
+            <View style={styles.loginTitleRow}>
+                <Text style={styles.loginTitle}>Login</Text>
+            </View>    
             <View style={styles.loginContainer}>
-                <View style={styles.loginTitleRow}>
-                    <Text>Login</Text>
-                </View>    
                 <View style={styles.loginFormContainer}>
                     {renderInputs()}
                 </View>
@@ -54,8 +57,23 @@ const LoginScreen = () => {
     )
 }
 
-const styles = StyleSheet.create({
+const {height, width} = Dimensions.get('screen');
 
+const styles = StyleSheet.create({
+    loginContainer: {
+        // borderWidth: 2,
+        // borderColor: black,
+        // borderRadius: 5,
+        paddingVertical: height * 0.01,
+    },
+    loginTitle: {
+        fontSize: 48,
+        fontWeight: 'bold'
+    },
+    loginTitleRow: {
+        width: '100%',
+        alignItems: 'flex-start',
+    }
 })
 
 export default LoginScreen;

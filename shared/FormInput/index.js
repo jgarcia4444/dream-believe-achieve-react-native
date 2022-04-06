@@ -6,7 +6,7 @@ import { Feather } from 'react-native-vector-icons';
 const {height, width} = Dimensions.get('screen');
 
 import Colors from '../../config/Colors';
-const {darkGray} = Colors;
+const {darkGray, white, lightGray} = Colors;
 
 const FormInput = ({inputObject}) => {
 
@@ -49,21 +49,31 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        height: height * 0.03,
+        height: height * 0.075,
     },
     formInputContainer: {
-
+        width: '100%',
+        marginBottom: height * 0.03,
     },
     formInputLabel: {
-
+        fontWeight: 'bold',
+        fontSize: 24,
+        color: darkGray,
     },
     formInputLabelRow: {
         width: '100%',
-        alignItems: 'flex-start',
+    },
+    input: {
+        width: '90%',
+        height: '100%',
+        backgroundColor: lightGray
     },
     inputIconContainer: {
-        width: '33%',
+        width: '10%',
         height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: lightGray,
     }
 });
 
