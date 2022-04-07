@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     },
     signUpInputContainer: {
         paddingVertical: height * 0.01,
+        width: '100%',
     },
     signUpTopContainer: {
         width: '100%',

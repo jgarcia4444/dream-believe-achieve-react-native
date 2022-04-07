@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     },
     loginContainer: {
         paddingVertical: height * 0.01,
+        width: '100%',
     },
     loginTopContainer: {
         width: '100%',
