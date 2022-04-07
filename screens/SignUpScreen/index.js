@@ -1,16 +1,22 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
 
 import GlobalStyles from '../../config/GlobalStyles';
 const { container } = GlobalStyles;
-
 import Colors from '../../config/Colors';
 const { blue, black, white, } = Colors;
-
 import FormInput from '../../shared/FormInput';
+import createUser from '../../redux/actions/userActions/createUser';
 
-const SignUpScreen = () => {
+const SignUpScreen = ({createUser, userInfo}) => {
+
+    const {username} = userInfo;
+
+    const dispatch = useDispatch();
 
     const navigation = useNavigation();
 
@@ -60,6 +66,28 @@ const SignUpScreen = () => {
         };
     }
 
+    const handleCreatePress = () => {
+        if (signUpEmail === "") {
+            dispatch({type: "USER_CREATION_ERROR", errorMessage: "Email cannot be left blank."});
+        } else if (signUpUsername === "") {
+            dispatch({type: "USER_CREATION_ERROR", errorMessage: "Username cannot be left blank."});
+        } else if (signUpPassword === "") {
+            dispatch({type: "USER_CREATION_ERROR", errorMessage: "Password cannot be left blank."});
+        }
+        let userInfo = {
+            username: signUpUsername,
+            password: signUpPassword,
+            email: signUpEmail
+        };
+        createUser(userInfo);
+    }
+
+    useEffect(() => {
+        if (username !== "") {
+            navigation.navigate('Home');
+        }
+    },[username])
+
     return (
         <View style={[container, ]}>
             <View style={styles.signUpTopContainer}>
@@ -70,7 +98,7 @@ const SignUpScreen = () => {
                     {renderInputs()}
                 </View>
                 <View style={styles.signUpButtonContainer}>
-                    <TouchableOpacity style={styles.signUpButton}>
+                    <TouchableOpacity onPress={handleCreatePress} style={styles.signUpButton}>
                         <Text style={styles.signUpButtonText}>Create</Text>
                     </TouchableOpacity>
                 </View>
@@ -130,4 +158,19 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SignUpScreen;
+const mapStateToProps = state => {
+    return {
+        userInfo: state.session.userInfo
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        createUser: (userInfo) => dispatch(createUser(userInfo)),
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SignUpScreen);
