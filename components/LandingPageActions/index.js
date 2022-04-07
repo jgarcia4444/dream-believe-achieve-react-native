@@ -20,7 +20,7 @@ const LandingPageActions = () => {
                 </TouchableOpacity>
             </View>
             <View style={[styles.buttonContainer, styles.signUpButtonContainer]}>
-                <TouchableOpacity style={styles.actionButton}>
+                <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={styles.actionButton}>
                     <Text style={styles.buttonText}>Sign Up</Text>
                 </TouchableOpacity>
             </View>

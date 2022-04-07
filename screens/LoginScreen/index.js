@@ -53,9 +53,7 @@ const LoginScreen = () => {
                     <Text style={styles.loginTitle}>Login</Text>
                 </View>    
                 <View style={styles.loginContainer}>
-                    <View style={styles.loginFormContainer}>
-                        {renderInputs()}
-                    </View>
+                    {renderInputs()}
                 </View>
                 <View style={styles.loginButtonContainer}>
                     <TouchableOpacity style={styles.loginButton}>

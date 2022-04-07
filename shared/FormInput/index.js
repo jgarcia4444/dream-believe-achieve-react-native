@@ -21,6 +21,9 @@ const FormInput = ({inputObject}) => {
             case 'Password':
                 iconName = "lock";
                 break;
+            case 'Username':
+                iconName = 'user';
+                break;
             default:
                 iconName = "user";
                 break;
