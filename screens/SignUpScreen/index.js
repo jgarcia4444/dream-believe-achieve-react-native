@@ -11,8 +11,11 @@ import Colors from '../../config/Colors';
 const { blue, black, white, } = Colors;
 import FormInput from '../../shared/FormInput';
 import createUser from '../../redux/actions/userActions/createUser';
+import FormError from '../../shared/Errors/FormError';
 
-const SignUpScreen = ({createUser, userInfo}) => {
+const SignUpScreen = ({createUser, session}) => {
+
+    const {userInfo, signUpError} = session
 
     const {username} = userInfo;
 
@@ -68,11 +71,11 @@ const SignUpScreen = ({createUser, userInfo}) => {
 
     const handleCreatePress = () => {
         if (signUpEmail === "") {
-            dispatch({type: "USER_CREATION_ERROR", errorMessage: "Email cannot be left blank."});
+            return dispatch({type: "USER_CREATION_ERROR", errorMessage: "Email cannot be left blank."});
         } else if (signUpUsername === "") {
-            dispatch({type: "USER_CREATION_ERROR", errorMessage: "Username cannot be left blank."});
+            return dispatch({type: "USER_CREATION_ERROR", errorMessage: "Username cannot be left blank."});
         } else if (signUpPassword === "") {
-            dispatch({type: "USER_CREATION_ERROR", errorMessage: "Password cannot be left blank."});
+            return dispatch({type: "USER_CREATION_ERROR", errorMessage: "Password cannot be left blank."});
         }
         let userInfo = {
             username: signUpUsername,
@@ -94,6 +97,9 @@ const SignUpScreen = ({createUser, userInfo}) => {
                 <View style={styles.signUpTitleRow}>
                     <Text style={styles.signUpTitle}>Sign Up</Text>
                 </View>    
+                {signUpError !== "" &&
+                    <FormError error={signUpError} />
+                }
                 <View style={styles.signUpInputContainer}>
                     {renderInputs()}
                 </View>
@@ -160,7 +166,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        userInfo: state.session.userInfo
+        session: state.session
     }
 }
 

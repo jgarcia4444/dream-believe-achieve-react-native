@@ -11,9 +11,12 @@ import Colors from '../../config/Colors';
 const { black, white, blue } = Colors;
 
 import FormInput from '../../shared/FormInput';
+import FormError from '../../shared/Errors/FormError';
 import loginUser from '../../redux/actions/sessionActions/loginUser';
 
-const LoginScreen = ({loginUser, userInfo}) => {
+const LoginScreen = ({loginUser, session}) => {
+
+    const {userInfo, loginError} = session;
 
     const {username} = userInfo;
 
@@ -55,9 +58,9 @@ const LoginScreen = ({loginUser, userInfo}) => {
 
     const handleLoginPress = () => {
         if (loginEmail === "") {
-            dispatch({type: "USER_LOGIN_ERROR", errorMessage: "Email cannot be left empty."});
+            return dispatch({type: "USER_LOGIN_ERROR", errorMessage: "Email cannot be left empty."});
         } else if (loginPassword === "") {
-            dispatch({type: "USER_LOGIN_ERROR", errorMessage: "Password cannot be left empty."});
+            return dispatch({type: "USER_LOGIN_ERROR", errorMessage: "Password cannot be left empty."});
         }
         let loginInfo = {
             email: loginEmail,
@@ -66,12 +69,21 @@ const LoginScreen = ({loginUser, userInfo}) => {
         loginUser(loginInfo);
     }
 
+    useEffect(() => {
+        if (username !== "") {
+            navigation.navigate('Home');
+        }
+    },[username])
+
     return (
         <View style={[container]}>
             <View style={styles.loginTopContainer}>
                 <View style={styles.loginTitleRow}>
                     <Text style={styles.loginTitle}>Login</Text>
-                </View>    
+                </View>
+                {loginError !== "" &&
+                    <FormError error={loginError} />    
+                }
                 <View style={styles.loginContainer}>
                     {renderInputs()}
                 </View>
@@ -137,7 +149,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        userInfo: state.session.userInfo
+        session: state.session,
     }
 };
 
