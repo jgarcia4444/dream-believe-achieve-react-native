@@ -1,5 +1,7 @@
 import React, {useRef, useEffect} from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
+import { connect } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 import GlobalStyles from '../../config/GlobalStyles';
 const { container } = GlobalStyles;
@@ -9,12 +11,13 @@ const {darkGray} = Colors;
 
 import LandingPageActions from '../../components/LandingPageActions';
 
-const LandingScreen = () => {
+const LandingScreen = ({username}) => {
 
     const viewOpacity = useRef(new Animated.Value(0)).current;
+    const navigation = useNavigation()
 
     useEffect(() => {
-        fadeInView();
+        fadeInView()
     });
 
     const fadeInView = () => {
@@ -22,7 +25,11 @@ const LandingScreen = () => {
             toValue: 1,
             duration: 2000,
             useNativeDriver: true
-        }).start();
+        }).start(() => {
+            if (username !== "") {
+                navigation.navigate('Home')
+            }
+        });
     }
 
     return (
@@ -53,4 +60,13 @@ const styles = StyleSheet.create({
     
 });
 
-export default LandingScreen;
+const mapStateToProps = state => {
+    return {
+        username: state.session.userInfo.username
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    null
+)(LandingScreen);

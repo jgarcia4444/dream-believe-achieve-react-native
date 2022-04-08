@@ -11,7 +11,7 @@ import sessionReducer from '../reducers/sessionReducer';
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['sessionReducer']
+    whitelist: ['session']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
