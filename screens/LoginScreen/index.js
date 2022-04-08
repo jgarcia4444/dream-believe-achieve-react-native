@@ -1,6 +1,8 @@
-import React, {useState, } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 
 import GlobalStyles from '../../config/GlobalStyles';
 const { container } = GlobalStyles;
@@ -9,8 +11,13 @@ import Colors from '../../config/Colors';
 const { black, white, blue } = Colors;
 
 import FormInput from '../../shared/FormInput';
+import loginUser from '../../redux/actions/sessionActions/loginUser';
 
-const LoginScreen = () => {
+const LoginScreen = ({loginUser, userInfo}) => {
+
+    const {username} = userInfo;
+
+    const dispatch = useDispatch();
 
     const navigation = useNavigation();
 
@@ -46,6 +53,19 @@ const LoginScreen = () => {
         })
     }
 
+    const handleLoginPress = () => {
+        if (loginEmail === "") {
+            dispatch({type: "USER_LOGIN_ERROR", errorMessage: "Email cannot be left empty."});
+        } else if (loginPassword === "") {
+            dispatch({type: "USER_LOGIN_ERROR", errorMessage: "Password cannot be left empty."});
+        }
+        let loginInfo = {
+            email: loginEmail,
+            password: loginPassword
+        }
+        loginUser(loginInfo);
+    }
+
     return (
         <View style={[container]}>
             <View style={styles.loginTopContainer}>
@@ -56,7 +76,7 @@ const LoginScreen = () => {
                     {renderInputs()}
                 </View>
                 <View style={styles.loginButtonContainer}>
-                    <TouchableOpacity style={styles.loginButton}>
+                    <TouchableOpacity onPress={handleLoginPress} style={styles.loginButton}>
                         <Text style={styles.loginButtonText}>Login</Text>
                     </TouchableOpacity>
                 </View>
@@ -113,6 +133,21 @@ const styles = StyleSheet.create({
     loginSignUpText: {
         color: blue
     },
-})
+});
 
-export default LoginScreen;
+const mapStateToProps = state => {
+    return {
+        userInfo: state.session.userInfo
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        loginUser: (loginInfo) => dispatch(loginUser(loginInfo)),
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginScreen);
