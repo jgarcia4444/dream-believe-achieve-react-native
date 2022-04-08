@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 import GlobalStyles from '../../config/GlobalStyles';
@@ -21,6 +21,7 @@ const QuoteOfTheDay = () => {
 
 const styles = StyleSheet.create({
     quoteOfTheDayContainer: {
+        width: '80%',
         height: '50%',
         alignItems: 'center',
         justifyContent: 'center',

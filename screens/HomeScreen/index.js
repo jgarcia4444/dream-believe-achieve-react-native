@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import GlobalStyles from '../../config/GlobalStyles';
@@ -7,9 +7,9 @@ const {container} = GlobalStyles;
 
 import Colors from '../../config/Colors';
 import QuoteOfTheDay from '../../components/QuoteOfTheDay';
-const {white, black, darkGray} = Colors;
+const {white, black, darkGray, blue} = Colors;
 
-const HomeScreen = ({userInfo}) => {
+const HomeScreen = ({userInfo, signOut}) => {
 
     const {username} = userInfo;
 
@@ -25,7 +25,9 @@ const HomeScreen = ({userInfo}) => {
         }
     }
 
-    console.log("Here is the userInfo from Home screen", userInfo)
+    const handleSignOutPress = () => {
+        signOut();
+    }
 
     return (
         <View style={[container, styles.homeContainer]}>
@@ -38,6 +40,9 @@ const HomeScreen = ({userInfo}) => {
                 </View>
             </View>
             <QuoteOfTheDay />
+            <TouchableOpacity onPress={handleSignOutPress}>
+                <Text style={{color: blue}}>Sign Out</Text>
+            </TouchableOpacity>
         </View>
     )
 };
@@ -74,8 +79,13 @@ const mapStateToProps = state => {
     }
 };
 
+const mapDispatchToProps = dispatch => {
+    return {
+        signOut: () => dispatch({type: "USER_SIGN_OUT"})
+    }
+}
 
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(HomeScreen);

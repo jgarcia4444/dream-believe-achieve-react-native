@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { connect } from 'react-redux';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LandingScreen from '../screens/LandingScreen';
@@ -6,13 +7,23 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import HomeScreen from '../screens/HomeScreen';
 
-const MainStack = () => {
+import { useNavigation } from '@react-navigation/native';
+
+const MainStack = ({username}) => {
+
+    const navigation = useNavigation();
 
     const Stack = createNativeStackNavigator();
 
     const transparentHeader = {
         headerShown: false
     }
+
+    useEffect(() => {
+        if (username === "") {
+            navigation.navigate("Landing");
+        }
+    }, [username])
 
     return (
         <Stack.Navigator initialRouteName='Landing'>
@@ -25,4 +36,13 @@ const MainStack = () => {
 
 }
 
-export default MainStack;
+const mapStateToProps = state => {
+    return {
+        username: state.session.userInfo.username
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    null
+)(MainStack);

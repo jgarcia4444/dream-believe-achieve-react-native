@@ -8,11 +8,55 @@ const initialState = {
     userInfoLoading: false,
     loginError: '',
     signUpError: '',
-    quoteOfTheDayDate: '',
+    dailyQuote: {
+        quoteOfTheDayDate: '',
+        quoteInfo: {
+            id: '',
+            quote: '',
+            author: ''
+        },
+        dailyQuoteLoading: false,
+        dailyQuoteError: '',
+    }
 };
 
 const sessionReducer = (state=initialState, action) => {
     switch(action.type) {
+        case "DAILY_QUOTE_FETCH_SUCCESS":
+            return {
+                ...state,
+                dailyQuote: {
+                    ...state.dailyQuote,
+                    dailyQuoteError: '',
+                    dailyQuoteLoading: false,
+                    quoteInfo: {
+                        ...state.dailyQuote.quoteInfo,
+                        ...action.quoteInfo
+                    }
+                }
+            }
+        case "DAILY_QUOTE_FETCH_ERROR":
+            return {
+                ...state,
+                dailyQuote: {
+                    ...state.dailyQuote,
+                    dailyQuoteLoading: false,
+                    dailyQuoteError: action.errorMessage
+                }
+            }
+        case "FETCHING_DAILY_QUOTE":
+            return {
+                ...state,
+                dailyQuote: {
+                    ...state.dailyQuote,
+                    dailyQuoteLoading: true,
+                    dailyQuoteError: ''
+                }
+            }
+        case "USER_SIGN_OUT":
+            return {
+                ...initialState
+            }
         case 'CREATING_USER':
             return {
                 ...state,
