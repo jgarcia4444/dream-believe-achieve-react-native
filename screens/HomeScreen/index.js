@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 
 import GlobalStyles from '../../config/GlobalStyles';
@@ -12,17 +12,55 @@ const HomeScreen = ({userInfo}) => {
 
     const {username} = userInfo;
 
+    const timeBasedGreeting = () => {
+        let date = new Date();
+        let hour = date.getHours();
+        if (hour <= 4 && hour < 12) {
+            return "Good Morning,";
+        } else if (hour >= 12 && hour < 17) {
+            return "Good Afternoon,";
+        } else {
+            return "Good Evening,";
+        }
+    }
+
     console.log("Here is the userInfo from Home screen", userInfo)
 
     return (
-        <View style={[container]}>
-            <Text>Home Screen of {username}</Text>
+        <View style={[container, styles.homeContainer]}>
+            <View style={styles.greetingRow}>
+                <View style={styles.timeGreetingRow}>
+                    <Text style={styles.timeGreeting}>{timeBasedGreeting()}</Text>
+                </View>
+                <View style={styles.usernameRow}>
+                    <Text style={styles.username}>{username}</Text>
+                </View>
+            </View>
         </View>
     )
 };
 
-const styles = StyleSheet.create({
+const {height, width} = Dimensions.get('screen');
 
+const styles = StyleSheet.create({
+    homeContainer: {
+        justifyContent: 'flex-start',
+    },
+    timeGreeting: {
+        fontSize: 32,
+        fontWeight: 'bold',
+    },
+    timeGreetingRow: {
+        marginTop: height * 0.05,
+        width: '75%',
+    },
+    username: {
+        fontSize: 32,
+        fontWeight: 'bold',
+    },
+    usernameRow: {
+        width: '75%',
+    },
 });
 
 const mapStateToProps = state => {
