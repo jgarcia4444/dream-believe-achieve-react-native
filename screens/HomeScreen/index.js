@@ -6,6 +6,7 @@ import GlobalStyles from '../../config/GlobalStyles';
 const {container} = GlobalStyles;
 
 import Colors from '../../config/Colors';
+import QuoteOfTheDay from '../../components/QuoteOfTheDay';
 const {white, black, darkGray} = Colors;
 
 const HomeScreen = ({userInfo}) => {
@@ -36,6 +37,7 @@ const HomeScreen = ({userInfo}) => {
                     <Text style={styles.username}>{username}</Text>
                 </View>
             </View>
+            <QuoteOfTheDay />
         </View>
     )
 };
@@ -43,6 +45,9 @@ const HomeScreen = ({userInfo}) => {
 const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
+    greetingRow: {
+        height: '25%',
+    },
     homeContainer: {
         justifyContent: 'flex-start',
     },

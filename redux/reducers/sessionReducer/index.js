@@ -8,6 +8,7 @@ const initialState = {
     userInfoLoading: false,
     loginError: '',
     signUpError: '',
+    quoteOfTheDayDate: '',
 };
 
 const sessionReducer = (state=initialState, action) => {
