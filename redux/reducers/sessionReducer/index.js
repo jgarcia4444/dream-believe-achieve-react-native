@@ -23,6 +23,7 @@ const initialState = {
 const sessionReducer = (state=initialState, action) => {
     switch(action.type) {
         case "DAILY_QUOTE_FETCH_SUCCESS":
+            console.log("Here is the quote info", action.quoteInfo);
             return {
                 ...state,
                 dailyQuote: {
@@ -32,7 +33,8 @@ const sessionReducer = (state=initialState, action) => {
                     quoteInfo: {
                         ...state.dailyQuote.quoteInfo,
                         ...action.quoteInfo
-                    }
+                    },
+                    quoteOfTheDayDate: new Date()
                 }
             }
         case "DAILY_QUOTE_FETCH_ERROR":

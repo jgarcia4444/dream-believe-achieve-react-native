@@ -1,14 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 
 import Colors from '../../../config/Colors';
 const {black} = Colors;
 
-const QuoteCard = () => {
+const QuoteCard = ({quoteInfo}) => {
+
+    const {author, quote} = quoteInfo;
 
     return (
         <View style={styles.quoteCard}>
-            <Text>Quote Card</Text>
+            <Text>{quote}</Text>
+            <Text>{author}</Text>
         </View>
     )
 };
@@ -24,4 +28,13 @@ const styles = StyleSheet.create({
     },
 });
 
-export default QuoteCard;
+const mapStateToProps = state => {
+    return {
+        quoteInfo: state.session.dailyQuote.quoteInfo
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    null
+)(QuoteCard);
