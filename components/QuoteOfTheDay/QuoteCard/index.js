@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 
 import Colors from '../../../config/Colors';
@@ -11,11 +11,17 @@ const QuoteCard = ({quoteInfo}) => {
 
     return (
         <View style={styles.quoteCard}>
-            <Text>{quote}</Text>
-            <Text>{author}</Text>
+            <View style={styles.quoteTextContainer}>
+                <Text style={styles.quoteText}>"{quote}"</Text>
+            </View>
+            <View style={styles.quoteAuthorContainer}>
+                <Text style={styles.quoteAuthor}>{author}</Text>
+            </View>
         </View>
     )
 };
+
+const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
     quoteCard: {
@@ -25,7 +31,28 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderWidth: 1,
         borderColor: black,
+        borderRadius: 5,
+        padding: width * 0.02,
     },
+    quoteAuthor: {
+        textAlign: 'right',
+        fontWeight: 'bold',
+        fontSize: 20,
+    },
+    quoteAuthorContainer: {
+        width: '100%',
+        height: '25%'
+    },
+    quoteText: {
+        fontWeight: '300',
+        fontSize: 16,
+    },
+    quoteTextContainer: {
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '75%'
+    }
 });
 
 const mapStateToProps = state => {
