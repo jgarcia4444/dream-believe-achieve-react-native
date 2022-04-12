@@ -34,8 +34,8 @@ const getDailyQuote = (dailyQuoteInfo) => {
                     let {message} = error;
                     return dispatch({type: "DAILY_QUOTE_FETCH_ERROR", errorMessage: message});
                 } else {
-                    let {quoteInfo} = data;
-                    return dispatch({type: "DAILY_QUOTE_FETCH_SUCCESS", quoteInfo: quoteInfo});
+                    let {dailyQuote} = data;
+                    return dispatch({type: "DAILY_QUOTE_FETCH_SUCCESS", dailyQuote});
                 }
             })
     }
