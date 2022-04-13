@@ -9,10 +9,63 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
 
     // let timerInterval = setInterval(adjustTime, 1000); 
     const [timeObject, setTimeObject] = useState({
-        hours: 23,
-        minutes: 59,
-        seconds: 59
-    })
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+    });
+
+    const [configureTime, setConfigureTime] = useState(true);
+
+    const setTimeHours = () => {
+        let dailyQuoteDate = new Date(quoteOfTheDayDate);
+        let todaysDate = new Date();
+
+        let quoteHours = dailyQuoteDate.getHours();
+        let todaysHours = todaysDate.getHours();
+
+        if (quoteHours < todaysHours) {
+            let howManyToTwentyThree = 23 - todaysHours;
+            return howManyToTwentyThree + quoteHours;
+        } else if (quoteHours === todaysHours) {
+            return 0;
+        } else {
+            return quoteHours - todaysHours;
+        }
+    }
+
+    const setTimeMinutes = () => {
+        let dailyQuoteDate = new Date(quoteOfTheDayDate);
+        let todaysDate = new Date();
+
+        let quoteMinutes = dailyQuoteDate.getMinutes();
+        let todaysMinutes = todaysDate.getMinutes();
+
+        if (quoteMinutes < todaysMinutes) {
+            let howManyToSixty = 60 - todaysMinutes;
+            return howManyToSixty + quoteMinutes;
+        } else if (quoteMinutes === todaysMinutes) {
+            return 0;
+        } else {
+            return quoteMinutes - todaysMinutes;
+        }
+    }
+
+    const setTimeSeconds = () => {
+        let dailyQuoteDate = new Date(quoteOfTheDayDate);
+        let todaysDate = new Date();
+
+        let quoteSeconds = dailyQuoteDate.getSeconds();
+        let todaysSeconds = todaysDate.getSeconds();
+
+        if (quoteSeconds < todaysSeconds) {
+            let howManyToSixty = 60 - todaysSeconds;
+            return howManyToSixty + quoteSeconds;
+        } else if (quoteSeconds === todaysSeconds) {
+            return 0;
+        } else {
+            return todaysSeconds - quoteSeconds;
+        }
+    }
 
     const { hours, minutes, seconds } = timeObject;
 
@@ -84,17 +137,27 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
 
     useEffect(() => {
         if (!aDayHasPassed(quoteOfTheDayDate)) {
-            let timeInterval = setInterval(() => {
-                adjustTime();
-                clearInterval(timeInterval);
-            }, 1000)
+            if (hours === 0 && minutes === 0 && seconds === 0) {
+                let newHours = setTimeHours();
+                let newMinutes = setTimeMinutes();
+                let newSeconds = setTimeSeconds();
+                setTimeObject({
+                    hours: newHours,
+                    minutes: newMinutes,
+                    seconds: newSeconds
+                })
+            } else {
+                let timeInterval = setInterval(() => {
+                    adjustTime();
+                    clearInterval(timeInterval);
+                }, 1000)
+            }
         }
     },[timeObject])
 
     const adjustTime = () => {
-        console.log("Test in adjust time")
         var newSeconds = seconds - 1;
-        if (newSeconds > 0) {
+        if (newSeconds >= 0) {
             setTimeObject({
                 ...timeObject,
                 seconds: newSeconds,
@@ -102,7 +165,7 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
         } else {
             newSeconds = 59;
             var newMinutes = minutes - 1;
-            if (newMinutes > 0) {
+            if (newMinutes >= 0) {
                 setTimeObject({
                     ...timeObject,
                     minutes: newMinutes,
