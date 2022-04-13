@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Alert } from 'react-native';
 
 import { Feather } from 'react-native-vector-icons';
 
@@ -7,14 +7,12 @@ import { connect } from 'react-redux';
 
 const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
 
-    // let timerInterval = setInterval(adjustTime, 1000); 
     const [timeObject, setTimeObject] = useState({
         hours: 0,
         minutes: 0,
         seconds: 0
     });
 
-    const [configureTime, setConfigureTime] = useState(true);
 
     const setTimeHours = () => {
         let dailyQuoteDate = new Date(quoteOfTheDayDate);
@@ -153,7 +151,7 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
                 }, 1000)
             }
         }
-    },[timeObject])
+    },[seconds])
 
     const adjustTime = () => {
         var newSeconds = seconds - 1;
@@ -185,9 +183,23 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
         }
     }
 
+    const alertUser = () =>
+        Alert.alert(
+            "Time Left",
+            `24 hours must pass before your next daily quote is available. There is ${hours} hours left, ${minutes} minutes left, and ${seconds} seconds left.`,
+            [
+                {
+                    text: 'Close',
+                    style: 'cancel'
+                }
+            ]
+        )
+
+    const onPressFunction = quoteOfTheDayDate === "" || aDayHasPassed(quoteOfTheDayDate) ? handleRefreshPress : alertUser;
+
     return (
         <View style={styles.refreshButtonRow}>
-            <TouchableOpacity onPress={handleRefreshPress} style={styles.refreshButton}>
+            <TouchableOpacity onPress={onPressFunction} style={styles.refreshButton}>
                 {setRefreshDisplay()}
             </TouchableOpacity>
         </View>
@@ -207,7 +219,7 @@ const styles = StyleSheet.create({
         height: width * 0.15,
         borderWidth: 2,
         borderColor: '#000',
-        borderRadius: '50%',
+        borderRadius: (width * 0.15) / 2,
         alignItems: 'center',
         justifyContent: 'center',
     },

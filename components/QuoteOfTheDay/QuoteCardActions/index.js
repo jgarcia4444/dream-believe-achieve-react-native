@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderWidth: 2,
         borderColor: black,
-        borderRadius: '50%',
+        borderRadius: 24,
     },
     shareButton: {
         marginStart: width * 0.05,

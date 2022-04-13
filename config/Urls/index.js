@@ -1,6 +1,6 @@
 
 const Urls = {
-    baseUrl: "http://localhost:3000"
+    baseUrl: "http://192.168.1.31:3000",
 };
 
 export default Urls;
