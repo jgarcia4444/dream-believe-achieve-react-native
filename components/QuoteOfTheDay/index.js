@@ -10,6 +10,7 @@ const {black, white, darkGray} = Colors;
 import QuoteCard from './QuoteCard';
 import QuoteCardActions from './QuoteCardActions';
 import getDailyQuote from '../../redux/actions/quoteActions/getDailyQuote';
+import RefreshButton from './RefreshButton';
 
 const QuoteOfTheDay = ({session, getDailyQuote}) => {
 
@@ -20,10 +21,8 @@ const QuoteOfTheDay = ({session, getDailyQuote}) => {
     const {quoteOfTheDayDate} = dailyQuote;
 
     const handleFetchQuote = () => {
-        let dailyQuoteDate = quoteOfTheDayDate === "" ? Date() : quoteOfTheDayDate;
         let dailyQuoteInfo = {
             username: username,
-            quoteOfTheDayDate: dailyQuoteDate
         };
         getDailyQuote(dailyQuoteInfo);
     }
@@ -36,6 +35,7 @@ const QuoteOfTheDay = ({session, getDailyQuote}) => {
                 </TouchableOpacity>
             :
             <>
+                <RefreshButton />
                 <QuoteCard />
                 <QuoteCardActions />
             </>
