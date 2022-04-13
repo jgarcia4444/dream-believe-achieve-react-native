@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
 import { Feather } from 'react-native-vector-icons';
@@ -6,18 +6,28 @@ import { Feather } from 'react-native-vector-icons';
 import { connect } from 'react-redux';
 
 const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
+
+    // let timerInterval = setInterval(adjustTime, 1000); 
+    const [timeObject, setTimeObject] = useState({
+        hours: 23,
+        minutes: 59,
+        seconds: 59
+    })
+
+    const { hours, minutes, seconds } = timeObject;
+
     const setRefreshDisplay = () => {
-        if (quoteOfTheDayDate === "" || aDayHasPassed(new Date(quoteOfTheDayDate))) {
+        if (quoteOfTheDayDate === "" || aDayHasPassed(quoteOfTheDayDate)) {
             return <Feather name="rotate-cw" size={height * 0.05} />
         } else {
-            // Display a countdown timer
             return (
-                <Text style={styles.countDownText}>23:13</Text>
+                <Text style={styles.countDownText}>{hours}:{minutes}.{seconds}</Text>
             )
         }
     }
 
-    const aDayHasPassed = (quoteDate) => {
+    const aDayHasPassed = (quoteDateString) => {
+        let quoteDate = new Date(quoteDateString)
         let quoteDateYear = quoteDate.getFullYear();
         let quoteDateMonth = quoteDate.getMonth()
         let quoteDateNumber = quoteDate.getDate();
@@ -69,6 +79,46 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
             }
         } else {
             return false;
+        }
+    }
+
+    useEffect(() => {
+        if (!aDayHasPassed(quoteOfTheDayDate)) {
+            let timeInterval = setInterval(() => {
+                adjustTime();
+                clearInterval(timeInterval);
+            }, 1000)
+        }
+    },[timeObject])
+
+    const adjustTime = () => {
+        console.log("Test in adjust time")
+        var newSeconds = seconds - 1;
+        if (newSeconds > 0) {
+            setTimeObject({
+                ...timeObject,
+                seconds: newSeconds,
+            })
+        } else {
+            newSeconds = 59;
+            var newMinutes = minutes - 1;
+            if (newMinutes > 0) {
+                setTimeObject({
+                    ...timeObject,
+                    minutes: newMinutes,
+                    seconds: newSeconds
+                })
+            } else {
+                newMinutes = 59;
+                var newHours = hours - 1;
+                if (hours >= 0) {
+                    setTimeObject({
+                        hours: newHours,
+                        minutes: newMinutes,
+                        seconds: newSeconds
+                    })
+                }
+            }
         }
     }
 
