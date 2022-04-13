@@ -1,15 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
+import { Feather } from 'react-native-vector-icons';
+
 import { connect } from 'react-redux';
 
 const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
-
     const setRefreshDisplay = () => {
-        if (quoteOfTheDayDate === "" || aDayHasPassed(quoteOfTheDayDate)) {
-
+        if (quoteOfTheDayDate === "" || aDayHasPassed(new Date(quoteOfTheDayDate))) {
+            return <Feather name="rotate-cw" size={height * 0.05} />
         } else {
             // Display a countdown timer
+            return (
+                <Text style={styles.countDownText}>23:13</Text>
+            )
         }
     }
 
@@ -70,8 +74,8 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
 
     return (
         <View style={styles.refreshButtonRow}>
-            <TouchableOpacity style={styles.refreshButton}>
-                <Text style={styles.countDownText}>23:12</Text>
+            <TouchableOpacity onPress={handleRefreshPress} style={styles.refreshButton}>
+                {setRefreshDisplay()}
             </TouchableOpacity>
         </View>
     )
