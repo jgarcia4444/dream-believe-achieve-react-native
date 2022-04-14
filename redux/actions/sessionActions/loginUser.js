@@ -22,10 +22,15 @@ const loginUser = (loginInfo) => {
 
     return async dispatch => {
         dispatch({type: "USER_LOGGING_IN"});
-
+        console.log("Log before fetch");
+        console.log("Url to fetch: ", url);
         fetch(url, options)
-            .then(res => res.json())
+            .then(res => {
+                console.log(res.blob);
+                return res.json()
+            })
             .then(data => {
+                console.log("Data sent back from login action", data);
                 let {error} = data;
                 let {hasError} = error;
                 if (hasError === true) {

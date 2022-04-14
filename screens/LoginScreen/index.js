@@ -56,7 +56,8 @@ const LoginScreen = ({loginUser, session}) => {
         })
     }
 
-    const handleLoginPress = () => {
+    const handleLoginPress = async () => {
+        console.log("Handle login press started")
         if (loginEmail === "") {
             return dispatch({type: "USER_LOGIN_ERROR", errorMessage: "Email cannot be left empty."});
         } else if (loginPassword === "") {
@@ -66,12 +67,12 @@ const LoginScreen = ({loginUser, session}) => {
             email: loginEmail,
             password: loginPassword
         }
-        loginUser(loginInfo);
+        await loginUser(loginInfo);
     }
 
     useEffect(() => {
         if (username !== "") {
-            navigation.navigate('Home');
+            navigation.navigate('HomeStack');
         }
     },[username])
 

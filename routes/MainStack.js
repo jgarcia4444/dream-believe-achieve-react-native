@@ -8,6 +8,8 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import HomeScreen from '../screens/HomeScreen';
 
+import FooterMenu from '../components/FooterMenu';
+
 import { useNavigation } from '@react-navigation/native';
 
 const MainStack = ({username}) => {
@@ -31,7 +33,7 @@ const MainStack = ({username}) => {
             <Stack.Screen options={transparentHeader} name="Landing" component={LandingScreen} />
             <Stack.Screen options={transparentHeader} name="Login" component={LoginScreen} />
             <Stack.Screen options={transparentHeader} name="SignUp" component={SignUpScreen} />
-            <Stack.Screen options={transparentHeader} name="Home" component={HomeScreen} />
+            <Stack.Screen options={transparentHeader} name="HomeStack" component={FooterMenu} />
         </Stack.Navigator>
     )
 
