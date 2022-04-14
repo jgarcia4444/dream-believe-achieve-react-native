@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import LandingScreen from '../screens/LandingScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
