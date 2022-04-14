@@ -72,7 +72,7 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
             return <Feather name="rotate-cw" size={height * 0.05} />
         } else {
             return (
-                <Text style={styles.countDownText}>{hours}:{minutes}.{seconds}</Text>
+                <Text style={styles.countDownText}>{configuredNumber(hours)}:{configuredNumber(minutes)}.{configuredNumber(seconds)}</Text>
             )
         }
     }
@@ -130,6 +130,15 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
             }
         } else {
             return false;
+        }
+    }
+
+
+    const configuredNumber = (timeNum) => {
+        if (timeNum < 10) {
+            return `0${timeNum}`;
+        } else {
+            return timeNum
         }
     }
 
@@ -210,7 +219,7 @@ const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
     countDownText: {
-        fontSize: 12,
+        fontSize: 10,
         fontWeight: 'bold',
         textAlign: 'center',
     },
