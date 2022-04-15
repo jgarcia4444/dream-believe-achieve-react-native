@@ -2,6 +2,7 @@ import Urls from "../../../config/Urls";
 const {baseUrl} = Urls;
 
 const favoriteQuote = (quoteInfo) => {
+    console.log("Beginning of favorite quote action");
     const {username, quoteId} = quoteInfo;
 
     let bodyObject = {
@@ -26,6 +27,7 @@ const favoriteQuote = (quoteInfo) => {
         fetch(url, options)
             .then(res => res.json())
             .then(data => {
+                console.log("Data sent back from add action", data);
                 let {error} = data;
                 let {hasError} = error;
                 if (hasError === true) {

@@ -11,16 +11,18 @@ import QuoteCard from './QuoteCard';
 import QuoteCardActions from './QuoteCardActions';
 import getDailyQuote from '../../redux/actions/quoteActions/getDailyQuote';
 import RefreshButton from './RefreshButton';
+import favoriteQuote from '../../redux/actions/quoteActions/favoriteQuote';
 
-const QuoteOfTheDay = ({session, getDailyQuote, }) => {
+const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote }) => {
 
     const [isFavorited, setIsFavorited] = useState(false);
 
     const {dailyQuote, userInfo, favoriteQuotes} = session;
 
-    const {username} = userInfo
+    const {username} = userInfo;
 
     const {quoteOfTheDayDate, quoteInfo} = dailyQuote;
+    
 
     const handleFetchQuote = () => {
         let dailyQuoteInfo = {
@@ -30,12 +32,21 @@ const QuoteOfTheDay = ({session, getDailyQuote, }) => {
     };
 
     const handleFavoritePress = () => {
-
+        const {id} = quoteInfo;
+        let favoriteInfo = {
+            username: username,
+            quoteId: id
+        }
+        if (!isFavorited) {
+            favoriteQuote(favoriteInfo);
+        } else {
+            // Unfavorite the quote
+        }
     }
 
     const checkIfFavorited = () => {
         if (favoriteQuotes.length > 0) {
-            if (favoriteQuotes.any(quote => quote.id === quoteInfo.id)) {
+            if (favoriteQuotes.some(quote => quote.id === quoteInfo.id)) {
                 setIsFavorited(true);
             } else {
                 setIsFavorited(false);
@@ -82,6 +93,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getDailyQuote: (dailyQuoteInfo) => dispatch(getDailyQuote(dailyQuoteInfo)),
+        favoriteQuote: (favoriteInfo) => dispatch(favoriteQuote(favoriteInfo)),
     }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import { Feather } from 'react-native-vector-icons';
 
 import Colors from '../../../config/Colors';
@@ -7,8 +7,22 @@ const {black, white, darkGray} = Colors;
 
 const QuoteCardActions = ({handleFavoritePress, isFavorited}) => {
 
+    const deviceShadow = Platform.OS === 'ios' ? {
+        shadowOffset: {
+            width: 0,
+            height: 0
+        },
+        shadowOpacity: 0.7,
+        shadowRadius: 1
+    } : {
+        elevation: 1
+    }
+
     const isFavoritedStyle = {
-        backgroundColor: isFavorited ? '#ffd700' : white
+        backgroundColor: isFavorited ? '#ffd700' : white,
+        borderWidth: 0,
+        shadowColor: black,
+        ...deviceShadow
     }
 
     const starButton = (

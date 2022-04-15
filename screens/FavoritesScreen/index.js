@@ -3,14 +3,18 @@ import { View, StyleSheet, FlatList, Dimensions, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 import fetchFavorites from '../../redux/actions/quoteActions/fetchFavorites';
+import QuoteCell from '../../components/QuoteCell';
 
 const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes}) => {
 
     const [loadFavorites, setLoadFavorites] = useState(true);
 
     useEffect(() => {
-        fetchFavorites(username);
-    })
+        if (loadFavorites === true) {
+            fetchFavorites(username);
+            setLoadFavorites(false);
+        }
+    },[loadFavorites])
 
     const renderListItem = ({item}) => {
         return <QuoteCell quoteInfo={item} />
@@ -38,7 +42,9 @@ const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
     favoritesContainer: {
-        paddingVertical: height * 0.02,
+        paddingVertical: height * 0.1,
+        width: width,
+        height: height,
     },
     noQuotesContainer: {
         alignItems: 'center',
