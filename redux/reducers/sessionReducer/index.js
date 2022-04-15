@@ -27,6 +27,20 @@ const initialState = {
 
 const sessionReducer = (state=initialState, action) => {
     switch(action.type) {
+        case "UNFAVORITE_QUOTE_SUCCESS":
+            let removedFavorites = state.favoriteQuotes.filter(quote => quote.id !== action.removedQuoteId);
+            return {
+                ...state,
+                quoteFavoriting: false,
+                quoteFavoritingError: "",
+                favoriteQuotes: removedFavorites
+            }
+        case "UNFAVORITE_QUOTE_ERROR": 
+            return {
+                ...state,
+                quoteFavoriting: false,
+                quoteFavoritingError: action.errorMessage 
+            }
         case "FAVORITING_QUOTE":
             return {
                 ...state,

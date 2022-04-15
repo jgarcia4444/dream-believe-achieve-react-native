@@ -18,8 +18,8 @@ const QuoteCardActions = ({handleFavoritePress, isFavorited}) => {
         elevation: 1
     }
 
-    const isFavoritedStyle = {
-        backgroundColor: isFavorited ? '#ffd700' : white,
+    const isFavoritedStyle = isFavorited && {
+        backgroundColor: '#ffd700',
         borderWidth: 0,
         shadowColor: black,
         ...deviceShadow
