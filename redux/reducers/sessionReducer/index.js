@@ -18,11 +18,25 @@ const initialState = {
         dailyQuoteLoading: false,
         dailyQuoteError: '',
     },
-    favoriteQuotes: []
+    favoriteQuotes: [],
+    fetchingFavorites: false,
+    fetchingFavoritesError: ""
 };
 
 const sessionReducer = (state=initialState, action) => {
     switch(action.type) {
+        case "FAVORITES_FETCH_ERROR":
+            return {
+                ...state,
+                fetchingFavorites: false,
+                fetchingFavoritesError: action.errorMessage
+            }
+        case "FETCHING_FAVORITES":
+            return {
+                ...state,
+                fetchingFavorites: true,
+                fetchingFavoritesError: ""
+            }
         case "DAILY_QUOTE_FETCH_SUCCESS":
             let {dailyQuote} = action;
             return {
