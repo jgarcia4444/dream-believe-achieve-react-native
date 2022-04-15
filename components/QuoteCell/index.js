@@ -4,6 +4,8 @@ import { View, Text, StyleSheet, Dimensions, Platform } from 'react-native';
 import Colors from '../../config/Colors';
 const {black, white} = Colors;
 
+import QuoteCardActions from '../QuoteOfTheDay/QuoteCardActions';
+
 const QuoteCell = ({quoteInfo}) => {
 
     const {author, quote} = quoteInfo;
@@ -27,6 +29,7 @@ const QuoteCell = ({quoteInfo}) => {
             <View style={[styles.quoteCell]}>
                 <Text style={styles.quoteText}>{quote}</Text>
             </View>
+                <QuoteCardActions />
         </View>
     )
 }
@@ -44,7 +47,6 @@ const styles = StyleSheet.create({
         borderColor: black,
         borderRadius: 10,
         alignItems: 'center',
-        justifyContent: 'center',
         padding: width * 0.05,
     },
     quoteCellContainer: {
