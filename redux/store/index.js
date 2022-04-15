@@ -9,32 +9,39 @@ import rootReducer from '../reducers';
 import sessionReducer from '../reducers/sessionReducer';
 import createMigrate from 'redux-persist/es/createMigrate';
 
+const migrations = {
+    0: state => {
+        return {
+            ...state,
+            session: {
+                ...state.session,
+                dailyQuote: {
+                    ...state.dailyQuote,
+                    quoteOfTheDayDate: '',
+                    quoteInfo: {
+                        ...state.session.dailyQuote.quoteInfo,
+                        id: '',
+                        quote: '',
+                        author: ''
+                    },
+                    dailyQuoteLoading: false,
+                    dailyQuoteError: '',
+                },
+                favoriteQuotes: []
+            }
+        }
+    },
+}
+
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
     whitelist: ['session'],
     version: 0,
-    migrate: createMigrate(migrations)
+    debug: true,
+    migrate: createMigrate(migrations, {debug: true}),
+    timeout: null,
 };
-
-const migrations = {
-    0: (state) => {
-        return {
-            ...state,
-            dailyQuote: {
-                quoteOfTheDayDate: '',
-                quoteInfo: {
-                    id: '',
-                    quote: '',
-                    author: ''
-                },
-                dailyQuoteLoading: false,
-                dailyQuoteError: '',
-            },
-            favoriteQuotes: []
-        }
-    },
-}
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
