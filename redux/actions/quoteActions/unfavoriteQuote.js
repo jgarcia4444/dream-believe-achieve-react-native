@@ -1,7 +1,7 @@
 import Urls from "../../../config/Urls";
 const {baseUrl} = Urls;
 
-const favoriteQuote = (quoteInfo) => {
+const unfavoriteQuote = (quoteInfo) => {
     const {username, quoteId} = quoteInfo;
 
     let bodyObject = {
@@ -10,10 +10,10 @@ const favoriteQuote = (quoteInfo) => {
         }
     }
 
-    const url = `${baseUrl}/users/${username}/favorites/add`;
+    const url = `${baseUrl}/users/${username}/favorites/remove`;
 
     const options = {
-        method: 'POST',
+        method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -30,14 +30,13 @@ const favoriteQuote = (quoteInfo) => {
                 let {hasError} = error;
                 if (hasError === true) {
                     let {message} = error;
-                    return dispatch({type: "FAVORITE_QUOTE_ERROR", errorMessage: message});
+                    return dispatch({type: "UNFAVORITE_QUOTE_ERROR", errorMessage: message});
                 } else {
-                    let {newFavorite} = data;
-                    return dispatch({type: "FAVORITE_QUOTE_SUCCESS", newFavorite});
+                    return dispatch({type: "UNFAVORITE_QUOTE_SUCCESS", removedQuoteId: quoteId});
                 }
             })
         }
 
 }
 
-export default favoriteQuote;
+export default unfavoriteQuote;
