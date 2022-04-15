@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Feather } from 'react-native-vector-icons';
 
 import HomeScreen from '../../screens/HomeScreen';
+import FavoritesScreen from '../../screens/FavoritesScreen';
 
 import Colors from '../../config/Colors';
 const {white, black} = Colors;
@@ -51,7 +52,7 @@ const FooterMenu = ({username}) => {
             tabBarInactiveTintColor: 'black',
         })}>
             <Tab.Screen name="Home" component={HomeScreen} options={transparentHeader} />
-            <Tab.Screen name="Favorites" component={HomeScreen} options={transparentHeader} />
+            <Tab.Screen name="Favorites" component={FavoritesScreen} options={transparentHeader} />
             <Tab.Screen name="Profile" component={HomeScreen} options={transparentHeader} />
         </Tab.Navigator>
     )

@@ -87,7 +87,7 @@ const SignUpScreen = ({createUser, session}) => {
 
     useEffect(() => {
         if (username !== "") {
-            navigation.navigate('Home');
+            navigation.navigate('HomeStack');
         }
     },[username])
 

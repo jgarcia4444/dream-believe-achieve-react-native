@@ -7,12 +7,34 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import rootReducer from '../reducers';
 
 import sessionReducer from '../reducers/sessionReducer';
+import createMigrate from 'redux-persist/es/createMigrate';
 
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['session']
+    whitelist: ['session'],
+    version: 0,
+    migrate: createMigrate(migrations)
 };
+
+const migrations = {
+    0: (state) => {
+        return {
+            ...state,
+            dailyQuote: {
+                quoteOfTheDayDate: '',
+                quoteInfo: {
+                    id: '',
+                    quote: '',
+                    author: ''
+                },
+                dailyQuoteLoading: false,
+                dailyQuoteError: '',
+            },
+            favoriteQuotes: []
+        }
+    },
+}
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

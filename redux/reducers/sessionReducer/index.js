@@ -17,7 +17,8 @@ const initialState = {
         },
         dailyQuoteLoading: false,
         dailyQuoteError: '',
-    }
+    },
+    favoriteQuotes: []
 };
 
 const sessionReducer = (state=initialState, action) => {

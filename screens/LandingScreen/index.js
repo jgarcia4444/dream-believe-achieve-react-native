@@ -27,7 +27,7 @@ const LandingScreen = ({username}) => {
             useNativeDriver: true
         }).start(() => {
             if (username !== "") {
-                navigation.navigate('Home')
+                navigation.navigate('HomeStack')
             }
         });
     }
