@@ -20,11 +20,40 @@ const initialState = {
     },
     favoriteQuotes: [],
     fetchingFavorites: false,
-    fetchingFavoritesError: ""
+    fetchingFavoritesError: "",
+    quoteFavoriting: false,
+    quoteFavoritingError: ""
 };
 
 const sessionReducer = (state=initialState, action) => {
     switch(action.type) {
+        case "FAVORITING_QUOTE":
+            return {
+                ...state,
+                quoteFavoriting: true,
+                quoteFavoritingError: ""
+            }
+        case "FAVORITE_QUOTE_ERROR":
+            return {
+                ...state,
+                quoteFavoriting: false,
+                quoteFavoritingError: action.errorMessage   
+            }
+        case "FAVORITE_QUOTE_SUCCESS":
+        let addedFavorites = state.favoriteQuotes.concat(action.newFavorite)
+        return {
+            ...state,
+            quoteFavoriting: false,
+            quoteFavoritingError: "",
+            favoriteQuotes: addedFavorites,
+        }
+        case "FAVORITES_FETCH_SUCCESS":
+            return {
+                ...state,
+                fetchingFavorites: false,
+                fetchingFavoritesError: '',
+                favoriteQuotes: action.favoriteQuotes,
+            }
         case "FAVORITES_FETCH_ERROR":
             return {
                 ...state,
