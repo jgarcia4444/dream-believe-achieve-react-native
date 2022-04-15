@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import GlobalStyles from '../../config/GlobalStyles';
 const {container} = GlobalStyles;
 
 import Colors from '../../config/Colors';
 import QuoteOfTheDay from '../../components/QuoteOfTheDay';
-const {white, black, darkGray, blue} = Colors;
+const {white, black, darkGray, blue, backgroundGradientTopLeft, backgroundGradientTopRight} = Colors;
 
 const HomeScreen = ({userInfo, signOut}) => {
 
@@ -27,6 +28,8 @@ const HomeScreen = ({userInfo, signOut}) => {
 
     return (
         <View style={[container, styles.homeContainer]}>
+            <LinearGradient end={{x: 0.95, y: 1.0}} start={{x: 0.05, y: 0}} style={styles.background} locations={[0.30, 0.60, 0.9]} colors={backgroundGradientTopLeft} />
+            <LinearGradient start={{x: 0.95, y: 0}} end={{x: 0.05, y: 1.0}} style={[styles.background, styles.backgroundTop]} locations={[0.30, 0.5, 0.9]} colors={backgroundGradientTopRight} />
             <View style={styles.greetingRow}>
                 <View style={styles.timeGreetingRow}>
                     <Text style={styles.timeGreeting}>{timeBasedGreeting()}</Text>
@@ -43,6 +46,14 @@ const HomeScreen = ({userInfo, signOut}) => {
 const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
+    background: {
+        height: height,
+        width: width,
+        position: 'absolute'
+    },
+    backgroundTop: {
+        opacity: 0.55
+    },
     greetingRow: {
         height: '25%',
     },
