@@ -42,7 +42,7 @@ const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
     favoritesContainer: {
-        paddingVertical: height * 0.1,
+        paddingVertical: height * 0.075,
         width: width,
         height: height,
     },

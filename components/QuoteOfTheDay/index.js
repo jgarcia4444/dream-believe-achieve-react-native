@@ -58,7 +58,6 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     }
 
     useEffect(() => {
-        console.log("Here are the favorited quotes: ", favoriteQuotes)
         checkIfFavorited()
     }, [favoriteQuotes.length])
 

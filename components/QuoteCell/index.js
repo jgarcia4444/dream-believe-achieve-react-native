@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Platform } from 'react-native';
 
 import Colors from '../../config/Colors';
 const {black, white} = Colors;
@@ -8,21 +8,52 @@ const QuoteCell = ({quoteInfo}) => {
 
     const {author, quote} = quoteInfo;
 
+    const deviceShadow = Platform.OS === 'ios' ? {
+        shadowOffset: {
+            width: 0,
+            height: 0
+        },
+        shadowOpacity: 0.7,
+        shadowRadius: 1
+    } : {
+        elevation: 1
+    }
+
     return (
-        <View style={styles.quoteCell}>
-            <Text>{author}: {quote}</Text>
+        <View style={styles.quoteCellContainer}>
+            <View style={styles.authorRow}>
+                <Text style={styles.authorText}>{author}</Text>
+            </View>
+            <View style={[styles.quoteCell]}>
+                <Text style={styles.quoteText}>{quote}</Text>
+            </View>
         </View>
     )
 }
 
-const {height} = Dimensions.get('screen');
+const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
+    authorText: {
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
     quoteCell: {
         width: '100%',
-        height: height * 0.1,
-        borderBottomWidth: 2,
+        borderWidth: 2,
         borderColor: black,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: width * 0.05,
+    },
+    quoteCellContainer: {
+        width: "100%",
+        paddingHorizontal: width * 0.02,
+        height: height * 0.1,
+    },
+    quoteText: {
+        
     }
 });
 
