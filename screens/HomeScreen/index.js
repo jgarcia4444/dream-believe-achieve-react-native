@@ -25,10 +25,6 @@ const HomeScreen = ({userInfo, signOut}) => {
         }
     }
 
-    const handleSignOutPress = () => {
-        signOut();
-    }
-
     return (
         <View style={[container, styles.homeContainer]}>
             <View style={styles.greetingRow}>
@@ -40,9 +36,6 @@ const HomeScreen = ({userInfo, signOut}) => {
                 </View>
             </View>
             <QuoteOfTheDay />
-            <TouchableOpacity onPress={handleSignOutPress}>
-                <Text style={{color: blue}}>Sign Out</Text>
-            </TouchableOpacity>
         </View>
     )
 };
@@ -79,13 +72,7 @@ const mapStateToProps = state => {
     }
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        signOut: () => dispatch({type: "USER_SIGN_OUT"})
-    }
-}
-
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    null
 )(HomeScreen);

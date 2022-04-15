@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     quoteCellContainer: {
         width: "100%",
         paddingHorizontal: width * 0.02,
-        height: height * 0.1,
+        marginVertical: height * 0.02,
     },
     quoteText: {
         
