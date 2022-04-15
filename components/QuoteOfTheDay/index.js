@@ -1,4 +1,4 @@
-import React, { useEffect, } from 'react';
+import React, { useEffect, useState} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -12,20 +12,40 @@ import QuoteCardActions from './QuoteCardActions';
 import getDailyQuote from '../../redux/actions/quoteActions/getDailyQuote';
 import RefreshButton from './RefreshButton';
 
-const QuoteOfTheDay = ({session, getDailyQuote}) => {
+const QuoteOfTheDay = ({session, getDailyQuote, }) => {
 
-    const {dailyQuote, userInfo} = session;
+    const [isFavorited, setIsFavorited] = useState(false);
+
+    const {dailyQuote, userInfo, favoriteQuotes} = session;
 
     const {username} = userInfo
 
-    const {quoteOfTheDayDate} = dailyQuote;
+    const {quoteOfTheDayDate, quoteInfo} = dailyQuote;
 
     const handleFetchQuote = () => {
         let dailyQuoteInfo = {
             username: username,
         };
         getDailyQuote(dailyQuoteInfo);
+    };
+
+    const handleFavoritePress = () => {
+
     }
+
+    const checkIfFavorited = () => {
+        if (favoriteQuotes.length > 0) {
+            if (favoriteQuotes.any(quote => quote.id === quoteInfo.id)) {
+                setIsFavorited(true);
+            } else {
+                setIsFavorited(false);
+            }
+        }
+    }
+
+    useEffect(() => {
+        checkIfFavorited()
+    }, [favoriteQuotes])
 
     return (
         <View style={[styles.quoteOfTheDayContainer]}>
@@ -37,7 +57,7 @@ const QuoteOfTheDay = ({session, getDailyQuote}) => {
             <>
                 <RefreshButton />
                 <QuoteCard />
-                <QuoteCardActions />
+                <QuoteCardActions isFavorited={isFavorited} handleFavoritePress={handleFavoritePress} />
             </>
             }
         </View>

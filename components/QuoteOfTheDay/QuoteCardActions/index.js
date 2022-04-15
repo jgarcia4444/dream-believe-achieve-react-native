@@ -5,10 +5,14 @@ import { Feather } from 'react-native-vector-icons';
 import Colors from '../../../config/Colors';
 const {black, white, darkGray} = Colors;
 
-const QuoteCardActions = () => {
+const QuoteCardActions = ({handleFavoritePress, isFavorited}) => {
+
+    const isFavoritedStyle = {
+        backgroundColor: isFavorited ? '#ffd700' : white
+    }
 
     const starButton = (
-        <TouchableOpacity style={[styles.actionButton, styles.starButton]}>
+        <TouchableOpacity onPress={handleFavoritePress} style={[styles.actionButton, styles.starButton, isFavoritedStyle]}>
             <Feather name="star" size={24} color={black}/>
         </TouchableOpacity>
     );
@@ -41,6 +45,9 @@ const styles = StyleSheet.create({
     },
     shareButton: {
         marginStart: width * 0.05,
+    },
+    starButton: {
+
     },
     quoteCardActionsRow: {
         width: '100%',
