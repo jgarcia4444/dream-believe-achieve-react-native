@@ -54,7 +54,7 @@ const FooterMenu = ({username}) => {
         })}>
             <Tab.Screen name="Home" component={HomeScreen} options={transparentHeader} />
             <Tab.Screen name="Favorites" component={FavoritesScreen} options={transparentHeader} />
-            <Tab.Screen name="Profile" component={ProfileScreen} />
+            <Tab.Screen name="Profile" component={ProfileScreen} options={transparentHeader} />
         </Tab.Navigator>
     )
 }

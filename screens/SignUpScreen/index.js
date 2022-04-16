@@ -12,6 +12,7 @@ const { blue, black, white, } = Colors;
 import FormInput from '../../shared/FormInput';
 import createUser from '../../redux/actions/userActions/createUser';
 import FormError from '../../shared/Errors/FormError';
+import Background from '../../components/Background';
 
 const SignUpScreen = ({createUser, session}) => {
 
@@ -93,6 +94,7 @@ const SignUpScreen = ({createUser, session}) => {
 
     return (
         <View style={[container, ]}>
+            <Background />
             <View style={styles.signUpTopContainer}>
                 <View style={styles.signUpTitleRow}>
                     <Text style={styles.signUpTitle}>Sign Up</Text>

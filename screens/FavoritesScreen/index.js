@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import fetchFavorites from '../../redux/actions/quoteActions/fetchFavorites';
 import QuoteCell from '../../components/QuoteCell';
+import Background from '../../components/Background';
 
 const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes}) => {
 
@@ -22,6 +23,7 @@ const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes}) => {
 
     return (
         <View style={styles.favoritesContainer}>
+            <Background />
             {favoriteQuotes.length === 0 ?
                 <View style={styles.noQuotesContainer}>
                     <Text style={styles.noQuotesText}>No favorited quotes yet...</Text>

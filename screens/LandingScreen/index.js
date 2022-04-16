@@ -10,6 +10,7 @@ import Colors from '../../config/Colors';
 const {darkGray} = Colors;
 
 import LandingPageActions from '../../components/LandingPageActions';
+import Background from '../../components/Background';
 
 const LandingScreen = ({username}) => {
 
@@ -34,6 +35,7 @@ const LandingScreen = ({username}) => {
 
     return (
         <Animated.View style={[container, {opacity: 0}, {opacity: viewOpacity}]}>
+            <Background />
             <View style={styles.appNameContainer}>
                 <Text style={styles.appNameAbbreviated}>DBA</Text>
                 <Text style={styles.appNameFull}>Dream Believe Achieve</Text>

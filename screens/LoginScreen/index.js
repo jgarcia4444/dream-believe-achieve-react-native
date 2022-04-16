@@ -13,6 +13,7 @@ const { black, white, blue } = Colors;
 import FormInput from '../../shared/FormInput';
 import FormError from '../../shared/Errors/FormError';
 import loginUser from '../../redux/actions/sessionActions/loginUser';
+import Background from '../../components/Background';
 
 const LoginScreen = ({loginUser, session}) => {
 
@@ -78,6 +79,7 @@ const LoginScreen = ({loginUser, session}) => {
 
     return (
         <View style={[container]}>
+            <Background />
             <View style={styles.loginTopContainer}>
                 <View style={styles.loginTitleRow}>
                     <Text style={styles.loginTitle}>Login</Text>

@@ -8,12 +8,15 @@ const { container } = GlobalStyles;
 import Colors from '../../config/Colors';
 const {white, black, darkGray, blue} = Colors;
 
+import Background from '../../components/Background';
+
 const ProfileScreen = ({signOut, userInfo}) => {
 
     const {username, email} = userInfo
 
     return (
         <View style={[container, styles.profileScreenContainer]}>
+            <Background />
             <ScrollView contentContainerStyle={styles.profileScrollContainer}>
                 <View style={styles.userInfoRow}>
                     <View style={styles.userInfoCol}>
