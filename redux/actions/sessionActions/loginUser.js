@@ -37,8 +37,8 @@ const loginUser = (loginInfo) => {
                     let {message} = error;
                     return dispatch({type: "USER_LOGIN_ERROR", errorMessage: message});
                 } else {
-                    let {userInfo} = data;
-                    return dispatch({type: "USER_LOGIN_SUCCESS", userInfo});
+                    let {userInfo, dailyQuote} = data;
+                    return dispatch({type: "USER_LOGIN_SUCCESS", userInfo, dailyQuote});
                 }
             })
     }

@@ -153,7 +153,11 @@ const sessionReducer = (state=initialState, action) => {
                     ...action.userInfo
                 },
                 userInfoLoading: false,
-                loginError: ''
+                loginError: '',
+                dailyQuote: {
+                    ...state.dailyQuote,
+                    ...action.dailyQuote
+                }
             }
         case 'USER_LOGIN_ERROR':
             return {
