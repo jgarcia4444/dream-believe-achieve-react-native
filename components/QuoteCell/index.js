@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, Dimensions, Platform } from 'react-native';
 import { connect } from 'react-redux';
+import { Feather } from 'react-native-vector-icons';
 
 import Colors from '../../config/Colors';
 const {black, white} = Colors;
@@ -10,7 +11,7 @@ import unfavoriteQuote from '../../redux/actions/quoteActions/unfavoriteQuote';
 
 const QuoteCell = ({quoteInfo, unfavoriteQuote, username}) => {
 
-    const {author, quote, id} = quoteInfo;
+    const {author, quote, id, favorites} = quoteInfo;
 
     const deviceShadow = Platform.OS === 'ios' ? {
         shadowOffset: {
@@ -38,6 +39,10 @@ const QuoteCell = ({quoteInfo, unfavoriteQuote, username}) => {
             </View>
             <View style={[styles.quoteCell]}>
                 <Text style={styles.quoteText}>{quote}</Text>
+                <View style={styles.favoritesRow}>
+                    <Text style={styles.favoritesCount}>{favorites}</Text>
+                    <Feather name="star" size={12} color={black} />
+                </View>
             </View>
                 <QuoteCardActions isFavorited={true} handleFavoritePress={handleFavoritePress} />
         </View>
@@ -50,6 +55,16 @@ const styles = StyleSheet.create({
     authorText: {
         fontSize: 20,
         fontWeight: 'bold'
+    },
+    favoritesCount: {
+        fontSize: 12,
+    },
+    favoritesRow: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-end',
+        marginTop: height * 0.01
     },
     quoteCell: {
         width: '100%',

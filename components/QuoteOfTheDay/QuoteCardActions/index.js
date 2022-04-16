@@ -40,7 +40,7 @@ const QuoteCardActions = ({handleFavoritePress, isFavorited}) => {
     return (
         <View style={styles.quoteCardActionsRow}>
             {starButton} 
-            {shareButton}
+            {/* {shareButton} */}
         </View>
     )
 }
