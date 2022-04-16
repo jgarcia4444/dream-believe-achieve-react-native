@@ -54,11 +54,12 @@ const styles = StyleSheet.create({
     signOutButton: {
         width: "90%",
         height: height * 0.10,
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: blue,
         borderRadius: (width * 0.90) / 2,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: 'rgba( 255, 255, 255, 0.10)',
     },
     signOutButtonContainer: {
         height: height * 0.50,
@@ -80,8 +81,8 @@ const styles = StyleSheet.create({
     },
     userInfoLabel: {
         fontWeight: 'bold',
-        color: darkGray,
-        fontSize: 18,
+        color: white,
+        fontSize: 20,
     },
     userInfoRow: {
         width: '100%',

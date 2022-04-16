@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, StyleSheet, Dimensions, Platform } from 'react-native';
+import { connect } from 'react-redux';
 
 import Colors from '../../config/Colors';
 const {black, white} = Colors;
 
 import QuoteCardActions from '../QuoteOfTheDay/QuoteCardActions';
+import unfavoriteQuote from '../../redux/actions/quoteActions/unfavoriteQuote';
 
-const QuoteCell = ({quoteInfo}) => {
+const QuoteCell = ({quoteInfo, unfavoriteQuote, username}) => {
 
-    const {author, quote} = quoteInfo;
+    const {author, quote, id} = quoteInfo;
 
     const deviceShadow = Platform.OS === 'ios' ? {
         shadowOffset: {
@@ -21,6 +23,14 @@ const QuoteCell = ({quoteInfo}) => {
         elevation: 1
     }
 
+    const handleFavoritePress = () => {
+        let favoriteInfo = {
+            username: username,
+            quoteId: id
+        }
+        unfavoriteQuote(favoriteInfo);
+    }
+
     return (
         <View style={styles.quoteCellContainer}>
             <View style={styles.authorRow}>
@@ -29,7 +39,7 @@ const QuoteCell = ({quoteInfo}) => {
             <View style={[styles.quoteCell]}>
                 <Text style={styles.quoteText}>{quote}</Text>
             </View>
-                <QuoteCardActions />
+                <QuoteCardActions isFavorited={true} handleFavoritePress={handleFavoritePress} />
         </View>
     )
 }
@@ -43,11 +53,12 @@ const styles = StyleSheet.create({
     },
     quoteCell: {
         width: '100%',
-        borderWidth: 2,
+        borderWidth: 0,
         borderColor: black,
         borderRadius: 10,
-        alignItems: 'center',
+        alignItems: 'flex-start',
         padding: width * 0.05,
+        backgroundColor: 'rgba(255, 255, 255, 0.15)',
     },
     quoteCellContainer: {
         width: "100%",
@@ -55,8 +66,23 @@ const styles = StyleSheet.create({
         marginVertical: height * 0.02,
     },
     quoteText: {
-        
+        color: black,
     }
 });
 
-export default QuoteCell;
+const mapStateToProps = state => {
+    return {
+        username: state.session.userInfo.username
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        unfavoriteQuote: (favoriteInfo) => dispatch(unfavoriteQuote(favoriteInfo)),
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(QuoteCell);

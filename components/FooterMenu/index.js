@@ -13,6 +13,7 @@ import FavoritesScreen from '../../screens/FavoritesScreen';
 import ProfileScreen from '../../screens/ProfileScreen';
 
 import Colors from '../../config/Colors';
+import Background from '../Background';
 const {white, black} = Colors;
 
 const FooterMenu = ({username}) => {
@@ -47,10 +48,11 @@ const FooterMenu = ({username}) => {
                 iconColor = focused ? white : black
                 return <Feather name={iconName} size={iconSize} color={iconColor} />
             },
-            tabBarActiveBackgroundColor: 'black',
+            tabBarActiveBackgroundColor: 'rgba(0, 0, 0, 0.15)',
             tabBarActiveTintColor: 'white',
-            tabBarInactiveBackgroundColor: 'white',
+            tabBarInactiveBackgroundColor: 'rgba(255, 255, 255, 0.65)',
             tabBarInactiveTintColor: 'black',
+            tabBarBackground: () => <Background />
         })}>
             <Tab.Screen name="Home" component={HomeScreen} options={transparentHeader} />
             <Tab.Screen name="Favorites" component={FavoritesScreen} options={transparentHeader} />
