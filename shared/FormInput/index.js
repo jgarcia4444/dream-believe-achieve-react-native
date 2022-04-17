@@ -31,6 +31,24 @@ const FormInput = ({inputObject}) => {
         return <Feather name={iconName} size={24} color={darkGray} />
     }
 
+    const androidAutoComplete = () => {
+        if (label === "Password") {
+            return 'password';
+        } else if (label === "Email") {
+            return 'email';
+        } else if (label === "Username") {
+            return 'username';
+        }
+    }
+
+    const computedKeyboardType = () => {
+        if (label === "Email") {
+            return 'email-address';
+        } else {
+            return 'default';
+        }
+    }
+
     return (
         <View style={styles.formInputContainer}>
             <View style={styles.formInputLabelRow}>
@@ -40,7 +58,7 @@ const FormInput = ({inputObject}) => {
                 <View style={styles.inputIconContainer}>
                     {computedIcon()}
                 </View>
-                <TextInput value={inputValue} onChangeText={changeFunc} style={styles.input} />
+                <TextInput secureTextEntry={label === "Password" ? true : false} placeholder={label} keyboardType={computedKeyboardType()} importantForAutofill='yes' clearButtonMode='while-editing' autoComplete={androidAutoComplete()} value={inputValue} onChangeText={changeFunc} style={styles.input} />
             </View>
         </View>
     )
