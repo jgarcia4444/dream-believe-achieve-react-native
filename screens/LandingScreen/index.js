@@ -7,7 +7,7 @@ import GlobalStyles from '../../config/GlobalStyles';
 const { container } = GlobalStyles;
 
 import Colors from '../../config/Colors';
-const {darkGray} = Colors;
+const {darkGray, white} = Colors;
 
 import LandingPageActions from '../../components/LandingPageActions';
 import Background from '../../components/Background';
@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     appNameFull: {
-        color: darkGray
+        color: white,
+        fontWeight: '100',
     },
     
 });

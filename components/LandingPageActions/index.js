@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-nati
 import { useNavigation } from '@react-navigation/native';
 
 import Colors from '../../config/Colors';
-const {black, white} = Colors;
+const {black, white, blackOpaque, whiteOpaque} = Colors;
 
 const {height, width} = Dimensions.get('screen');
 
@@ -14,13 +14,13 @@ const LandingPageActions = () => {
 
     return (
         <View style={styles.landingPageActionsContainer}>
-            <View style={[styles.buttonContainer, styles.loginButtonContainer]}>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.actionButton}>
+            <View style={[styles.buttonContainer]}>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')} style={[styles.actionButton, styles.loginButton]}>
                     <Text style={[styles.buttonText, {color: white}]}>Login</Text>
                 </TouchableOpacity>
             </View>
-            <View style={[styles.buttonContainer, styles.signUpButtonContainer]}>
-                <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={styles.actionButton}>
+            <View style={[styles.buttonContainer]}>
+                <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={[styles.actionButton, styles.signUpButton]}>
                     <Text style={styles.buttonText}>Sign Up</Text>
                 </TouchableOpacity>
             </View>
@@ -31,16 +31,16 @@ const LandingPageActions = () => {
 const styles = StyleSheet.create({
     actionButton: {
         width: '100%',
-        height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 1,
+        borderWidth: 0,
         borderColor: black,
-        borderRadius: 5,
+        borderRadius: width / 2,
+        paddingVertical: height * 0.02,
     },
     buttonContainer: {
-        width: '60%',
-        height: height * 0.05,
+        width: '75%',
+        // height: height * 0.05,
         
         alignItems: 'center',
         justifyContent: 'center',
@@ -55,12 +55,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-evenly'
     },
-    loginButtonContainer: {
-        backgroundColor: black,
-        borderRadius: 5,
-    },
-    signUpButtonContainer: {
+    loginButton: {
+        backgroundColor: blackOpaque,
         
+    },
+    signUpButton: {
+        backgroundColor: whiteOpaque
     }
 });
 

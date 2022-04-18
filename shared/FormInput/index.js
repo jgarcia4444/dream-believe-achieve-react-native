@@ -6,7 +6,7 @@ import { Feather } from 'react-native-vector-icons';
 const {height, width} = Dimensions.get('screen');
 
 import Colors from '../../config/Colors';
-const {darkGray, white, lightGray} = Colors;
+const {darkGray, white, lightGray, whiteOpaque, black} = Colors;
 
 const FormInput = ({inputObject}) => {
 
@@ -28,7 +28,7 @@ const FormInput = ({inputObject}) => {
                 iconName = "user";
                 break;
         }
-        return <Feather name={iconName} size={24} color={darkGray} />
+        return <Feather name={iconName} size={24} color={black} />
     }
 
     const androidAutoComplete = () => {
@@ -71,6 +71,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         height: height * 0.075,
+        borderRadius: width / 2,
+        backgroundColor: whiteOpaque,
+        paddingHorizontal: width * 0.02,
     },
     formInputContainer: {
         width: '100%',
@@ -79,7 +82,7 @@ const styles = StyleSheet.create({
     formInputLabel: {
         fontWeight: 'bold',
         fontSize: 24,
-        color: darkGray,
+        color: black,
     },
     formInputLabelRow: {
         width: '100%',
@@ -87,14 +90,15 @@ const styles = StyleSheet.create({
     input: {
         width: '90%',
         height: '100%',
-        backgroundColor: lightGray,
+        // backgroundColor: whiteOpaque,
     },
     inputIconContainer: {
         width: '10%',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: lightGray,
+        // backgroundColor: whiteOpaque,
+        // borderTopStartRadius: width / 2,
     }
 });
 

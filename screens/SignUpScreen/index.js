@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import GlobalStyles from '../../config/GlobalStyles';
 const { container } = GlobalStyles;
 import Colors from '../../config/Colors';
-const { blue, black, white, } = Colors;
+const { blue, black, white, blackOpaque } = Colors;
 import FormInput from '../../shared/FormInput';
 import createUser from '../../redux/actions/userActions/createUser';
 import FormError from '../../shared/Errors/FormError';
@@ -125,10 +125,11 @@ const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
     signUpButton: {
-        backgroundColor: black,
+        backgroundColor: blackOpaque,
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        borderRadius: width / 2,
     },
     signUpButtonContainer: {
         width: '100%',

@@ -8,7 +8,7 @@ import GlobalStyles from '../../config/GlobalStyles';
 const { container } = GlobalStyles;
 
 import Colors from '../../config/Colors';
-const { black, white, blue } = Colors;
+const { black, white, blue, blackOpaque } = Colors;
 
 import FormInput from '../../shared/FormInput';
 import FormError from '../../shared/Errors/FormError';
@@ -58,7 +58,6 @@ const LoginScreen = ({loginUser, session}) => {
     }
 
     const handleLoginPress = async () => {
-        console.log("Handle login press started")
         if (loginEmail === "") {
             return dispatch({type: "USER_LOGIN_ERROR", errorMessage: "Email cannot be left empty."});
         } else if (loginPassword === "") {
@@ -110,10 +109,11 @@ const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
     loginButton: {
-        backgroundColor: black,
+        backgroundColor: blackOpaque,
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        borderRadius: width / 2,
     },
     loginButtonContainer: {
         width: '100%',
