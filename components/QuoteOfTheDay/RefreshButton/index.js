@@ -144,7 +144,7 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
 
     useEffect(() => {
         if (!aDayHasPassed(quoteOfTheDayDate)) {
-            if (hours === 0 && minutes === 0 && seconds === 0) {
+            if ((hours === 0 && minutes === 0) && (seconds === 0)) {
                 let newHours = setTimeHours();
                 let newMinutes = setTimeMinutes();
                 let newSeconds = setTimeSeconds();

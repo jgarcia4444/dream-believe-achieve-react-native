@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 
 import Colors from '../../../config/Colors';
-const {black} = Colors;
+const {black, whiteOpaque} = Colors;
 
 const QuoteCard = ({quoteInfo}) => {
 
@@ -29,8 +29,7 @@ const styles = StyleSheet.create({
         height:  '60%',
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 2,
-        borderColor: black,
+        backgroundColor: whiteOpaque,
         borderRadius: 5,
         padding: width * 0.02,
     },

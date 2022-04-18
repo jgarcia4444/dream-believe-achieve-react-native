@@ -25,6 +25,11 @@ const initialState = {
     quoteFavoritingError: ""
 };
 
+const formatDateString = (dateString) => {
+    let stringSplit = dateString.split(" ");
+    return `${stringSplit[0]}T${stringSplit[1]}${stringSplit[2]}`;
+}
+
 const sessionReducer = (state=initialState, action) => {
     switch(action.type) {
         case "UNFAVORITE_QUOTE_SUCCESS":
@@ -82,6 +87,7 @@ const sessionReducer = (state=initialState, action) => {
             }
         case "DAILY_QUOTE_FETCH_SUCCESS":
             let {dailyQuote} = action;
+            let formattedDate = formatDateString(dailyQuote.quoteOfTheDayDate)
             return {
                 ...state,
                 dailyQuote: {
@@ -93,6 +99,7 @@ const sessionReducer = (state=initialState, action) => {
                         ...state.dailyQuote.quoteInfo,
                         ...dailyQuote.quoteInfo
                     },
+                    quoteOfTheDayDate: formattedDate
                 }
             }
         case "DAILY_QUOTE_FETCH_ERROR":
@@ -156,7 +163,8 @@ const sessionReducer = (state=initialState, action) => {
                 loginError: '',
                 dailyQuote: {
                     ...state.dailyQuote,
-                    ...action.dailyQuote
+                    ...action.dailyQuote,
+                    quoteOfTheDayDate: formatDateString(action.dailyQuote.quoteOfTheDayDate)
                 }
             }
         case 'USER_LOGIN_ERROR':
