@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import { View, Text, StyleSheet, Dimensions, StatusBar, Animated } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 
 import GlobalStyles from '../../config/GlobalStyles';
@@ -18,7 +18,8 @@ const HomeScreen = ({userInfo, quoteFavoriting}) => {
     const timeBasedGreeting = () => {
         let date = new Date();
         let hour = date.getHours();
-        if (hour <= 4 && hour < 12) {
+        console.log(hour);
+        if (hour >= 4 && hour < 12) {
             return "Good Morning,";
         } else if (hour >= 12 && hour < 17) {
             return "Good Afternoon,";
@@ -44,7 +45,7 @@ const HomeScreen = ({userInfo, quoteFavoriting}) => {
     )
 };
 
-const {height, width} = Dimensions.get('screen');
+const {height} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
     greetingRow: {

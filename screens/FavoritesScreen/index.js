@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import fetchFavorites from '../../redux/actions/quoteActions/fetchFavorites';
 import QuoteCell from '../../components/QuoteCell';
 import Background from '../../components/Background';
+import TopTenQuoteCell from '../../components/TopTenQuoteCell';
 
-const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes}) => {
+const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes, topTenQuotes}) => {
 
     const [loadFavorites, setLoadFavorites] = useState(true);
 
@@ -21,21 +22,55 @@ const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes}) => {
         return <QuoteCell quoteInfo={item} />
     }
 
+    const renderTopTenQuote = ({item}) => {
+        return (
+            <View style={styles.topTenQuoteContainer}>
+                <TopTenQuoteCell quoteInfo={item} />
+            </View>
+        )
+    }
+
     return (
         <View style={styles.favoritesContainer}>
             <Background />
-            {favoriteQuotes.length === 0 ?
-                <View style={styles.noQuotesContainer}>
-                    <Text style={styles.noQuotesText}>No favorited quotes yet...</Text>
+            <View style={styles.communityQuotesContainer}>
+                <View style={styles.communityFavoritesRow}>
+                    <Text style={styles.communityFavoritesTitle}>
+                        Community Favorites
+                    </Text>
                 </View>
+                {topTenQuotes.length === 0 ?
+                    <View style={styles.noCommunityQuotesContainer}>
+                        <Text style={styles.noCommunityQuotesText}>
+                            Community quotes are being calculated...
+                        </Text>
+                    </View>
                 :
-                <FlatList
-                data={favoriteQuotes}
-                renderItem={renderListItem}
-                keyExtractor={item => item.id}
-                 />
+                    <FlatList 
+                        horizontal={true}
+                        data={topTenQuotes}
+                        renderItem={renderTopTenQuote}
+                        keyExtractor={item => item.id}
+                    />
+                }
+            </View>
+            <View style={styles.yourFavorites}>
+                <View style={styles.yourFavoritesLabelRow}>
+                    <Text style={styles.yourFavoritesTitle}>Your Favorites</Text>
+                </View>
+                {favoriteQuotes.length === 0 ?
+                    <View style={styles.noQuotesContainer}>
+                        <Text style={styles.noQuotesText}>No favorited quotes yet...</Text>
+                    </View>
+                    :
+                    <FlatList
+                    data={favoriteQuotes}
+                    renderItem={renderListItem}
+                    keyExtractor={item => item.id}
+                    />
 
-            }
+                }
+            </View>
         </View>
     )
 };
@@ -43,6 +78,9 @@ const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes}) => {
 const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
+    communityQuotesContainer: {
+        height: height * 0.25,
+    },
     favoritesContainer: {
         paddingVertical: height * 0.075,
         width: width,
@@ -63,7 +101,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         username: state.session.userInfo.username,
-        favoriteQuotes: state.session.favoriteQuotes
+        favoriteQuotes: state.session.favoriteQuotes,
+        topTenQuotes: state.session.topTenQuotes,
     }
 }
 
