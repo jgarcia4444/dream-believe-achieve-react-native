@@ -22,7 +22,8 @@ const initialState = {
     fetchingFavorites: false,
     fetchingFavoritesError: "",
     quoteFavoriting: false,
-    quoteFavoritingError: ""
+    quoteFavoritingError: "",
+    topTenQuotes: []
 };
 
 const formatDateString = (dateString) => {
@@ -165,7 +166,9 @@ const sessionReducer = (state=initialState, action) => {
                     ...state.dailyQuote,
                     ...action.dailyQuote,
                     quoteOfTheDayDate: formatDateString(action.dailyQuote.quoteOfTheDayDate)
-                }
+                },
+                favoriteQuotes: action.favoriteQuotes,
+                topTenQuotes: action.topTenQuotes
             }
         case 'USER_LOGIN_ERROR':
             return {

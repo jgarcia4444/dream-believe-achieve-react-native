@@ -1,5 +1,5 @@
-import React, { useEffect, useState} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState, useRef} from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { connect } from 'react-redux';
 
 import GlobalStyles from '../../config/GlobalStyles';
@@ -23,6 +23,8 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     const {username} = userInfo;
 
     const {quoteOfTheDayDate, quoteInfo} = dailyQuote;
+
+    const opacityVal = useRef(new Animated.Value(0)).current;
     
 
     const handleFetchQuote = () => {
@@ -57,12 +59,22 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
         }
     }
 
+    const fadeIn = () => {
+        Animated.timing(opacityVal, {
+            toValue: 1,
+            duration: 750,
+            useNativeDriver: true
+        }).start();
+    }
+
+
     useEffect(() => {
         checkIfFavorited()
+        fadeIn()
     }, [favoriteQuotes.length])
 
     return (
-        <View style={[styles.quoteOfTheDayContainer]}>
+        <Animated.View style={[styles.quoteOfTheDayContainer, {opacity: opacityVal}]}>
             {quoteOfTheDayDate === '' ?
                 <TouchableOpacity onPress={handleFetchQuote}>
                     <Text>Load your first daily quote.</Text>
@@ -74,7 +86,7 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
                 <QuoteCardActions isFavorited={isFavorited} handleFavoritePress={handleFavoritePress} />
             </>
             }
-        </View>
+        </Animated.View>
     )
 }
 

@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, StatusBar } from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import { View, Text, StyleSheet, Dimensions, StatusBar, Animated } from 'react-native';
 import { connect } from 'react-redux';
 
 import GlobalStyles from '../../config/GlobalStyles';
