@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Feather } from 'react-native-vector-icons';
 
 import Colors from '../../config/Colors';
-const {black, white} = Colors;
+const {black, white, whiteOpaque} = Colors;
 
 import QuoteCardActions from '../QuoteOfTheDay/QuoteCardActions';
 import unfavoriteQuote from '../../redux/actions/quoteActions/unfavoriteQuote';
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'flex-start',
         padding: width * 0.05,
-        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+        backgroundColor: whiteOpaque,
     },
     quoteCellContainer: {
         width: "100%",

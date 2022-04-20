@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, Dimensions, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -18,7 +18,6 @@ const HomeScreen = ({userInfo, quoteFavoriting}) => {
     const timeBasedGreeting = () => {
         let date = new Date();
         let hour = date.getHours();
-        console.log(hour);
         if (hour >= 4 && hour < 12) {
             return "Good Morning,";
         } else if (hour >= 12 && hour < 17) {
