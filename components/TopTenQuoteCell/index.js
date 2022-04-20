@@ -15,7 +15,7 @@ const TopTenQuoteCell = ({quoteInfo}) => {
                 <Text style={styles.topTenAuthor}>{author}</Text>
             </View>
             <View style={styles.topTenQuoteCard}>
-                <Text style={styles.topTenQuote}>{quote}</Text>
+                <Text style={styles.topTenQuoteText}>{quote}</Text>
             </View>
         </View>
     )
@@ -25,20 +25,22 @@ const {width, height}= Dimensions.get('screen')
 
 const styles = StyleSheet.create({
     topTenQuote: {
-        width: width * 0.45,
-        marginEnd: width * 0.1
+        width: width * 0.60,
+        marginEnd: width * 0.05
     },
     topTenAuthorRow: {
         width: '100%',
     },
     topTenAuthor: {
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold'
     },
     topTenQuoteCard: {
         backgroundColor: whiteOpaque,
         borderRadius: 10,
-        padding: width * 0.05,
+        height: height * 0.15,
+        justifyContent: 'center',
+        paddingHorizontal: width * 0.02,
     },
 });
 

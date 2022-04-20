@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, Dimensions, Text } from 'react-native';
 import { connect } from 'react-redux';
+import GlobalStyles from '../../config/GlobalStyles';
+const {container} = GlobalStyles;
 
 import fetchFavorites from '../../redux/actions/quoteActions/fetchFavorites';
 import QuoteCell from '../../components/QuoteCell';
@@ -31,7 +33,7 @@ const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes, topTenQuotes
     }
 
     return (
-        <View style={styles.favoritesContainer}>
+        <View style={[styles.favoritesContainer]}>
             <Background />
             <View style={styles.communityQuotesContainer}>
                 <View style={styles.communityFavoritesRow}>
@@ -78,11 +80,16 @@ const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes, topTenQuotes
 const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
+    communityFavoritesTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
     communityQuotesContainer: {
-        height: height * 0.25,
+        height: height * 0.30,
     },
     favoritesContainer: {
-        paddingVertical: height * 0.075,
+        paddingTop: height * 0.075,
+        paddingHorizontal: width * 0.03,
         width: width,
         height: height,
     },
@@ -93,6 +100,14 @@ const styles = StyleSheet.create({
         height: height
     },
     noQuotesText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
+    yourFavorites: {
+        height: height * 0.7,
+        paddingBottom: height * 0.15,
+    },
+    yourFavoritesTitle: {
         fontSize: 24,
         fontWeight: 'bold',
     },
