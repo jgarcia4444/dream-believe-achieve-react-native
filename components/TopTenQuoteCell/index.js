@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Animated, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Animated, Dimensions, ScrollView } from 'react-native';
 
 import {Feather} from 'react-native-vector-icons';
 import Colors from '../../config/Colors';
@@ -15,7 +15,10 @@ const TopTenQuoteCell = ({quoteInfo}) => {
                 <Text style={styles.topTenAuthor}>{author}</Text>
             </View>
             <View style={styles.topTenQuoteCard}>
-                <Text style={styles.topTenQuoteText}>{quote}</Text>
+                <ScrollView >
+                    <Text style={styles.topTenQuoteText}>{quote}</Text>
+                </ScrollView>
+                <View style={styles.topTenQuoteFavoritesRow}></View>
             </View>
         </View>
     )
@@ -41,6 +44,11 @@ const styles = StyleSheet.create({
         height: height * 0.15,
         justifyContent: 'center',
         paddingHorizontal: width * 0.02,
+    },
+    topTenQuoteFavoritesRow: {
+        width: '100%',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
     },
 });
 
