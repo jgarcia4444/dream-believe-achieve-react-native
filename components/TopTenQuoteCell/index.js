@@ -3,11 +3,13 @@ import { View, Text, StyleSheet, Animated, Dimensions, ScrollView } from 'react-
 
 import {Feather} from 'react-native-vector-icons';
 import Colors from '../../config/Colors';
-const {whiteOpaque, black} = Colors;
+const {whiteOpaque, black, gold} = Colors;
+
+import QuoteCardActions from '../QuoteOfTheDay/QuoteCardActions';
 
 const TopTenQuoteCell = ({quoteInfo}) => {
 
-    const {author, quote} = quoteInfo;
+    const {author, quote, favorites} = quoteInfo;
 
     return (
         <View style={styles.topTenQuote}>
@@ -15,11 +17,15 @@ const TopTenQuoteCell = ({quoteInfo}) => {
                 <Text style={styles.topTenAuthor}>{author}</Text>
             </View>
             <View style={styles.topTenQuoteCard}>
-                <ScrollView >
+                <ScrollView contentContainerStyle={styles.quoteScrollContainer}>
                     <Text style={styles.topTenQuoteText}>{quote}</Text>
                 </ScrollView>
-                <View style={styles.topTenQuoteFavoritesRow}></View>
+                <View style={styles.topTenQuoteFavoritesRow}>
+                    <Text style={styles.topTenFavoritesCount}>{favorites}</Text>
+                    <Feather name="star" size={14} color={black} />
+                </View>
             </View>
+            <QuoteCardActions />
         </View>
     )
 }
@@ -38,17 +44,25 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold'
     },
+    topTenFavoritesCount: {
+        color: black,
+    },
     topTenQuoteCard: {
         backgroundColor: whiteOpaque,
         borderRadius: 10,
         height: height * 0.15,
         justifyContent: 'center',
-        paddingHorizontal: width * 0.02,
+        padding: width * 0.02,
     },
     topTenQuoteFavoritesRow: {
+        flexDirection:'row',
+        height: '25%',
         width: '100%',
         justifyContent: 'flex-end',
         alignItems: 'center',
+    },
+    quoteScrollContainer: {
+        height: '80%'
     },
 });
 

@@ -17,8 +17,8 @@ const fetchFavorites = (username) => {
                     let {message} = error;
                     return dispatch({type: "FAVORITES_FETCH_ERROR", errorMessage: message});
                 } else {
-                    let {favoriteQuotes} = data;
-                    return dispatch({type: "FAVORITES_FETCH_SUCCESS", favoriteQuotes});
+                    let {favoriteQuotes, topTenQuotes} = data;
+                    return dispatch({type: "FAVORITES_FETCH_SUCCESS", favoriteQuotes, topTenQuotes});
                 }
             })
             .catch(e => console.log("Error from fetch favorites: ", e))

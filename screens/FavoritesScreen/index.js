@@ -13,6 +13,8 @@ const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes, topTenQuotes
 
     const [loadFavorites, setLoadFavorites] = useState(true);
 
+    console.log(topTenQuotes);
+
     useEffect(() => {
         if (loadFavorites === true) {
             fetchFavorites(username);
@@ -81,14 +83,15 @@ const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
     communityFavoritesTitle: {
-        fontSize: 24,
+        fontSize: 28,
         fontWeight: 'bold',
     },
     communityQuotesContainer: {
-        height: height * 0.30,
+        height: height * 0.35,
+        justifyContent: 'center',
     },
     favoritesContainer: {
-        paddingTop: height * 0.075,
+        paddingTop: height * 0.05,
         paddingHorizontal: width * 0.03,
         width: width,
         height: height,
@@ -104,11 +107,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     yourFavorites: {
-        height: height * 0.7,
+        height: height * 0.65,
         paddingBottom: height * 0.15,
     },
     yourFavoritesTitle: {
-        fontSize: 24,
+        fontSize: 28,
         fontWeight: 'bold',
     },
 });

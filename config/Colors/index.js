@@ -10,6 +10,7 @@ const Colors = {
     backgroundGradientTopRight: ["#F54525", "#E59FDE", "#ffDA33"],
     blackOpaque: "rgba(0, 0, 0, 0.40)",
     whiteOpaque: "rgba(255, 255, 255, 0.40)",
+    gold: '#ffd700',
 }
 
 export default Colors;

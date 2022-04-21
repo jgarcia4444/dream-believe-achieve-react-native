@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
         width: '90%',
         height: '100%',
         // backgroundColor: whiteOpaque,
+        borderRadius: width / 2,
     },
     inputIconContainer: {
         width: '10%',

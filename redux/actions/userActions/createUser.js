@@ -21,8 +21,8 @@ const createUser = (userInfo) => {
                     let {message} = error;
                     return dispatch({type: "USER_CREATION_ERROR", errorMessage: message});
                 } else {
-                    let {userInfo} = data;
-                    return dispatch({type: "USER_CREATION_SUCCESS", userInfo})
+                    let {userInfo, topTenQuotes} = data;
+                    return dispatch({type: "USER_CREATION_SUCCESS", userInfo, topTenQuotes})
                 }
             })
     }

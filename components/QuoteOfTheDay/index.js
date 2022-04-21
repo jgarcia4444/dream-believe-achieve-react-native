@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 
 import GlobalStyles from '../../config/GlobalStyles';
 
 import Colors from '../../config/Colors';
-const {black, white, darkGray} = Colors;
+const {black, white, darkGray, whiteOpaque} = Colors;
 
 import QuoteCard from './QuoteCard';
 import QuoteCardActions from './QuoteCardActions';
@@ -76,7 +76,7 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     return (
         <Animated.View style={[styles.quoteOfTheDayContainer, {opacity: opacityVal}]}>
             {quoteOfTheDayDate === '' ?
-                <TouchableOpacity onPress={handleFetchQuote}>
+                <TouchableOpacity style={styles.loadQuoteButton} onPress={handleFetchQuote}>
                     <Text>Load your first daily quote.</Text>
                 </TouchableOpacity>
             :
@@ -90,7 +90,14 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     )
 }
 
+const {width} = Dimensions.get('screen');
+
 const styles = StyleSheet.create({
+    loadQuoteButton: {
+        padding: width * 0.05,
+        backgroundColor: whiteOpaque,
+        borderRadius: 10,
+    },
     quoteOfTheDayContainer: {
         width: '80%',
         height: '50%',

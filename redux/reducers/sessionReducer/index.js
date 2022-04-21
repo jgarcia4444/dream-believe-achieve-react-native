@@ -73,6 +73,7 @@ const sessionReducer = (state=initialState, action) => {
                 fetchingFavorites: false,
                 fetchingFavoritesError: '',
                 favoriteQuotes: action.favoriteQuotes,
+                topTenQuotes: action.topTenQuotes,
             }
         case "FAVORITES_FETCH_ERROR":
             return {
@@ -139,7 +140,8 @@ const sessionReducer = (state=initialState, action) => {
                     ...action.userInfo
                 },
                 userInfoLoading: false,
-                signUpError: ''
+                signUpError: '',
+                topTenQuotes: action.topTenQuotes
             }
         case 'USER_CREATION_ERROR':
             return {
@@ -180,9 +182,15 @@ const sessionReducer = (state=initialState, action) => {
                 loginError: action.errorMessage
             }
         case "persist/REHYDRATE":
-            return {
-                ...state,
-                ...action.payload.session,
+            if (action.payload) {
+                return {
+                    ...state,
+                    ...action.payload.session,
+                }
+            } else {
+                return {
+                    ...state
+                }
             }
         default:
             return {
