@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, } from 'react';
 import { View, StyleSheet, TextInput, Dimensions, Text } from 'react-native';
 
 import { Feather } from 'react-native-vector-icons';
@@ -11,6 +11,8 @@ const {darkGray, white, lightGray, whiteOpaque, black} = Colors;
 const FormInput = ({inputObject}) => {
 
     const {inputValue, changeFunc, label} = inputObject;
+
+    const [inputBackgroundColor, setInputBackgroundColor] = useState(whiteOpaque);
 
     const computedIcon = () => {
         var iconName
@@ -54,11 +56,11 @@ const FormInput = ({inputObject}) => {
             <View style={styles.formInputLabelRow}>
                 <Text style={styles.formInputLabel}>{label}</Text>
             </View>
-            <View style={styles.formInput}>
+            <View style={[styles.formInput, {backgroundColor: inputBackgroundColor}]}>
                 <View style={styles.inputIconContainer}>
                     {computedIcon()}
                 </View>
-                <TextInput secureTextEntry={label === "Password" ? true : false} placeholder={label} keyboardType={computedKeyboardType()} importantForAutofill='yes' clearButtonMode='while-editing' autoComplete={androidAutoComplete()} value={inputValue} onChangeText={changeFunc} style={styles.input} />
+                <TextInput onBlur={() => setInputBackgroundColor(whiteOpaque)} onFocus={() => setInputBackgroundColor(white)} secureTextEntry={label === "Password" ? true : false} placeholder={label} keyboardType={computedKeyboardType()} importantForAutofill='yes' clearButtonMode='while-editing' autoComplete={androidAutoComplete()} value={inputValue} onChangeText={changeFunc} style={[styles.input]} />
             </View>
         </View>
     )
