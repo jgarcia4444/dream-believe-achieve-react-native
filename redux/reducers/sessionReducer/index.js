@@ -28,7 +28,8 @@ const initialState = {
 
 const formatDateString = (dateString) => {
     let stringSplit = dateString.split(" ");
-    return `${stringSplit[0]}T${stringSplit[1]}${stringSplit[2]}`;
+    let timeDifference = `${stringSplit[2].slice(0, 3)}:${stringSplit[2].slice(3)}`
+    return `${stringSplit[0]}T${stringSplit[1]}${timeDifference}`;
 }
 
 const sessionReducer = (state=initialState, action) => {

@@ -27,7 +27,6 @@ const getDailyQuote = (dailyQuoteInfo) => {
         fetch(url, options)
             .then(res => res.json())
             .then(data => {
-                console.log("Here is random quote data", data);
                 let {error} = data;
                 let {hasError} = error;
                 if (hasError === true) {

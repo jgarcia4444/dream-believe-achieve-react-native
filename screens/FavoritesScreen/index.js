@@ -13,8 +13,6 @@ const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes, topTenQuotes
 
     const [loadFavorites, setLoadFavorites] = useState(true);
 
-    console.log(topTenQuotes);
-
     useEffect(() => {
         if (loadFavorites === true) {
             fetchFavorites(username);

@@ -15,6 +15,7 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
 
 
     const setTimeHours = () => {
+        console.log(quoteOfTheDayDate);
         let dailyQuoteDate = new Date(quoteOfTheDayDate);
         let todaysDate = new Date();
 
@@ -148,6 +149,7 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
                 let newHours = setTimeHours();
                 let newMinutes = setTimeMinutes();
                 let newSeconds = setTimeSeconds();
+                console.log("New Hours:", newHours);
                 setTimeObject({
                     hours: newHours,
                     minutes: newMinutes,

@@ -43,7 +43,6 @@ const FooterMenu = ({username}) => {
                 } else if (route.name === "Profile") {
                     iconName = "user";
                 }
-                console.log(iconName);
                 iconSize = focused ? 28 : 20;
                 iconColor = focused ? white : black
                 return <Feather name={iconName} size={iconSize} color={iconColor} />
