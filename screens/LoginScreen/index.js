@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
@@ -17,7 +17,7 @@ import Background from '../../components/Background';
 
 const LoginScreen = ({loginUser, session}) => {
 
-    const {userInfo, loginError} = session;
+    const {userInfo, loginError, userInfoLoading} = session;
 
     const {username} = userInfo;
 
@@ -76,6 +76,10 @@ const LoginScreen = ({loginUser, session}) => {
         }
     },[username])
 
+    const displayActionButtonText = () => {
+        return userInfoLoading === true ? <ActivityIndicator color={white} size='large' /> : "Login"
+    }
+
     return (
         <View style={[container, styles.loginScreenContainer]}>
             <Background />
@@ -91,7 +95,7 @@ const LoginScreen = ({loginUser, session}) => {
                 </View>
                 <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'margin'} style={styles.loginButtonContainer}>
                     <TouchableOpacity onPress={handleLoginPress} style={styles.loginButton}>
-                        <Text style={styles.loginButtonText}>Login</Text>
+                        <Text style={styles.loginButtonText}>{displayActionButtonText()}</Text>
                     </TouchableOpacity>
                 </KeyboardAvoidingView>
             </View>

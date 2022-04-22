@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -16,7 +16,7 @@ import Background from '../../components/Background';
 
 const SignUpScreen = ({createUser, session}) => {
 
-    const {userInfo, signUpError} = session
+    const {userInfo, signUpError, userInfoLoading} = session
 
     const {username} = userInfo;
 
@@ -92,6 +92,10 @@ const SignUpScreen = ({createUser, session}) => {
         }
     },[username])
 
+    const displayActionButtonText = () => {
+        return userInfoLoading === true ? <ActivityIndicator color={white} size='large' /> : "Create"
+    }
+
     return (
         <ScrollView contentContainerStyle={[container]}>
             <Background />
@@ -107,7 +111,7 @@ const SignUpScreen = ({createUser, session}) => {
                 </View>
                 <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'margin'} style={styles.signUpButtonContainer}>
                     <TouchableOpacity onPress={handleCreatePress} style={styles.signUpButton}>
-                        <Text style={styles.signUpButtonText}>Create</Text>
+                        <Text style={styles.signUpButtonText}>{displayActionButtonText()}</Text>
                     </TouchableOpacity>
                 </KeyboardAvoidingView>
             </View>
