@@ -1,8 +1,8 @@
 import React, {useRef, useEffect} from 'react';
-import { View, Text, StyleSheet, Animated } from 'react-native';
+import { View, Text, StyleSheet, Animated, Dimensions } from 'react-native';
 
 import Colors from '../../../config/Colors';
-const {white, black, darkGray, red} = Colors;
+const {white, black, darkGray, red, whiteOpaque} = Colors;
 
 const FormError = ({error}) => {
 
@@ -22,18 +22,29 @@ const FormError = ({error}) => {
 
     return (
         <Animated.View style={[styles.errorRow, {opacity: opacityVal}]}>
-            <Text style={styles.errorText}>{error}</Text>
+            <View style={styles.errorBackground}>
+                <Text style={styles.errorText}>{error}</Text>
+            </View>
         </Animated.View>
     )
 }
 
+const {height, width} = Dimensions.get('screen');
+
 const styles = StyleSheet.create({
+    errorBackground: {
+        backgroundColor: white,
+        padding: width * 0.01,
+        borderRadius: width / 2,
+    },
     errorRow: {
-        opacity: 0,
-        width: '100%'
+        width: '100%',
+        alignItems: 'flex-start',
+        justifyContent: 'center'
     },
     errorText: {
-        color: red
+        color: red,
+        fontWeight: 'bold'
     }
 });
 

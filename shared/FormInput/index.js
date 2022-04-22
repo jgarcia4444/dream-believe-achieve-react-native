@@ -1,5 +1,5 @@
 import React, { useState, } from 'react';
-import { View, StyleSheet, TextInput, Dimensions, Text } from 'react-native';
+import { View, StyleSheet, TextInput, Dimensions, Text, KeyboardAvoidingView, Platform } from 'react-native';
 
 import { Feather } from 'react-native-vector-icons';
 
@@ -52,17 +52,20 @@ const FormInput = ({inputObject}) => {
     }
 
     return (
-        <View style={styles.formInputContainer}>
+        // <View style={styles.formInputContainer}>
+        <KeyboardAvoidingView style={styles.formInputContainer} behavior={Platform.OS === 'ios' ? "padding" : "margin"}>    
             <View style={styles.formInputLabelRow}>
                 <Text style={styles.formInputLabel}>{label}</Text>
             </View>
+            
             <View style={[styles.formInput, {backgroundColor: inputBackgroundColor}]}>
-                <View style={styles.inputIconContainer}>
-                    {computedIcon()}
-                </View>
-                <TextInput onBlur={() => setInputBackgroundColor(whiteOpaque)} onFocus={() => setInputBackgroundColor(white)} secureTextEntry={label === "Password" ? true : false} placeholder={label} keyboardType={computedKeyboardType()} importantForAutofill='yes' clearButtonMode='while-editing' autoComplete={androidAutoComplete()} value={inputValue} onChangeText={changeFunc} style={[styles.input]} />
+                    <View style={styles.inputIconContainer}>
+                        {computedIcon()}
+                    </View>
+                    <TextInput onBlur={() => setInputBackgroundColor(whiteOpaque)} onFocus={() => setInputBackgroundColor(white)} secureTextEntry={label === "Password" ? true : false} placeholder={label} keyboardType={computedKeyboardType()} importantForAutofill='yes' clearButtonMode='while-editing' autoComplete={androidAutoComplete()} value={inputValue} onChangeText={changeFunc} style={[styles.input]} />
             </View>
-        </View>
+        </KeyboardAvoidingView>
+        // </View>
     )
 };
 

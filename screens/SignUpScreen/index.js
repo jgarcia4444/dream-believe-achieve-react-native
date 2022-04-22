@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -93,7 +93,7 @@ const SignUpScreen = ({createUser, session}) => {
     },[username])
 
     return (
-        <View style={[container, ]}>
+        <ScrollView contentContainerStyle={[container]}>
             <Background />
             <View style={styles.signUpTopContainer}>
                 <View style={styles.signUpTitleRow}>
@@ -105,11 +105,11 @@ const SignUpScreen = ({createUser, session}) => {
                 <View style={styles.signUpInputContainer}>
                     {renderInputs()}
                 </View>
-                <View style={styles.signUpButtonContainer}>
+                <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'margin'} style={styles.signUpButtonContainer}>
                     <TouchableOpacity onPress={handleCreatePress} style={styles.signUpButton}>
                         <Text style={styles.signUpButtonText}>Create</Text>
                     </TouchableOpacity>
-                </View>
+                </KeyboardAvoidingView>
             </View>
             <View style={styles.signUpLoginContainer}>
             <Text>Already have an account? </Text>
@@ -117,7 +117,7 @@ const SignUpScreen = ({createUser, session}) => {
                     <Text style={styles.signUpLoginText}>Login</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 
