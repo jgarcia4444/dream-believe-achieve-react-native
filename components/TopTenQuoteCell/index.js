@@ -1,15 +1,48 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, Animated, Dimensions, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 
 import {Feather} from 'react-native-vector-icons';
 import Colors from '../../config/Colors';
 const {whiteOpaque, black, gold} = Colors;
 
 import QuoteCardActions from '../QuoteOfTheDay/QuoteCardActions';
+import favoriteQuote from '../../redux/actions/quoteActions/favoriteQuote';
+import unfavoriteQuote from '../../redux/actions/quoteActions/unfavoriteQuote';
 
-const TopTenQuoteCell = ({quoteInfo}) => {
+const TopTenQuoteCell = ({quoteInfo, favoriteQuotes, username, favoriteQuote, unfavoriteQuote}) => {
 
-    const {author, quote, favorites} = quoteInfo;
+    const {author, quote, favorites, id} = quoteInfo;
+
+    const [isFavorited, setIsFavorited] = useState()
+
+    const handleFavoritePress = () => {
+        let favoriteInfo = {
+            username: username,
+            quoteId: id
+        }
+        if (isFavorited) {
+            unfavoriteQuote(favoriteInfo);
+        } else {
+            favoriteQuote(favoriteInfo)
+        }
+    }
+
+    const checkIfLiked = () =>{
+        if (favoriteQuotes.some(quote => quote.id === id)) {
+            setIsFavorited(true);
+        } else {
+            setIsFavorited(false);
+        }
+    }
+
+    useEffect(() => {
+        if (favoriteQuotes.length > 0) {
+            checkIfLiked()
+        } else {
+            setIsFavorited(false);
+        }
+    })
 
     return (
         <View style={styles.topTenQuote}>
@@ -25,7 +58,7 @@ const TopTenQuoteCell = ({quoteInfo}) => {
                     <Feather name="star" size={14} color={black} />
                 </View>
             </View>
-            <QuoteCardActions />
+            <QuoteCardActions isFavorited={isFavorited} handleFavoritePress={handleFavoritePress} />
         </View>
     )
 }
@@ -66,4 +99,21 @@ const styles = StyleSheet.create({
     },
 });
 
-export default TopTenQuoteCell;
+const mapStateToProps = state => {
+    return {
+        favoriteQuotes: state.session.favoriteQuotes,
+        username: state.session.userInfo.username
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        favoriteQuote: (favoriteInfo) => dispatch(favoriteQuote(favoriteInfo)),
+        unfavoriteQuote: (favoriteInfo) => dispatch(unfavoriteQuote(favoriteInfo)),
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TopTenQuoteCell);

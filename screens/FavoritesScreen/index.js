@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     yourFavorites: {
-        height: height * 0.65,
+        height: height * 0.55,
         paddingBottom: height * 0.15,
     },
     yourFavoritesTitle: {
