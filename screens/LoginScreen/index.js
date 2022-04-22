@@ -77,7 +77,7 @@ const LoginScreen = ({loginUser, session}) => {
     },[username])
 
     return (
-        <View style={[container]}>
+        <View style={[container, styles.loginScreenContainer]}>
             <Background />
             <View style={styles.loginTopContainer}>
                 <View style={styles.loginTitleRow}>
@@ -130,9 +130,9 @@ const styles = StyleSheet.create({
     },
     loginTopContainer: {
         width: '100%',
-        height: '80%',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
+        marginTop: height * 0.10
     },
     loginTitle: {
         fontSize: 48,
@@ -142,8 +142,12 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'flex-start',
     },
+    loginScreenContainer: {
+        justifyContent: 'flex-start'
+    },
     loginSignUpRow: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginTop: height * 0.1,
     },
     loginSignUpText: {
         color: blue
