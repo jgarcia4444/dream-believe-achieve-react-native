@@ -11,9 +11,10 @@ const { white, black, darkGray, blue, } = Colors;
 import QuoteOfTheDay from '../../components/QuoteOfTheDay';
 import Background from '../../components/Background';
 
-const HomeScreen = ({userInfo, quoteFavoriting}) => {
+const HomeScreen = ({userInfo, quoteFavoriting, quoteOfTheDayDate}) => {
 
     const {username} = userInfo;
+    console.log("Quote of the day date from the home screen", quoteOfTheDayDate);
 
     const timeBasedGreeting = () => {
         let date = new Date();
@@ -74,6 +75,7 @@ const mapStateToProps = state => {
     return {
         userInfo: state.session.userInfo,
         quoteFavoriting: state.session.quoteFavoriting,
+        quoteOfTheDayDate: state.session.dailyQuote.quoteOfTheDayDate
     }
 };
 

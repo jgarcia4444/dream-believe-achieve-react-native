@@ -19,7 +19,11 @@ const createUser = (userInfo) => {
                 let {hasError} = error;
                 if (hasError === true) {
                     let {message} = error;
-                    return dispatch({type: "USER_CREATION_ERROR", errorMessage: message});
+                    let errors = []
+                    if (error.errors) {
+                        errors = error.errors;
+                    }
+                    return dispatch({type: "USER_CREATION_ERROR", errorMessage: message, errors});
                 } else {
                     let {userInfo, topTenQuotes} = data;
                     return dispatch({type: "USER_CREATION_SUCCESS", userInfo, topTenQuotes})

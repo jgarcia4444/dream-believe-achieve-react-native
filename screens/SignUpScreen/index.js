@@ -16,7 +16,7 @@ import Background from '../../components/Background';
 
 const SignUpScreen = ({createUser, session}) => {
 
-    const {userInfo, signUpError, userInfoLoading} = session
+    const {userInfo, signUpError, userInfoLoading, formErrors} = session
 
     const {username} = userInfo;
 
@@ -27,6 +27,9 @@ const SignUpScreen = ({createUser, session}) => {
     const [signUpEmail, setSignUpEmail] = useState('');
     const [signUpUsername, setSignUpUsername] = useState('');
     const [signUpPassword, setSignUpPassword] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [usernameError, setUsernameError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
     const signUpInputObjects = [
         {
@@ -86,11 +89,16 @@ const SignUpScreen = ({createUser, session}) => {
         createUser(userInfo);
     }
 
+    const checkForErrors = () => {
+        console.log(formErrors);
+    }
+
     useEffect(() => {
+        checkForErrors();
         if (username !== "") {
             navigation.navigate('HomeStack');
         }
-    },[username])
+    },[username, formErrors.length])
 
     const displayActionButtonText = () => {
         return userInfoLoading === true ? <ActivityIndicator color={white} size='large' /> : "Create"

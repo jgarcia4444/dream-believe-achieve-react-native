@@ -27,6 +27,7 @@ const getDailyQuote = (dailyQuoteInfo) => {
         fetch(url, options)
             .then(res => res.json())
             .then(data => {
+                console.log("Here is the data from get daily quote.", data);
                 let {error} = data;
                 let {hasError} = error;
                 if (hasError === true) {

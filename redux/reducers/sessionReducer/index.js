@@ -23,13 +23,18 @@ const initialState = {
     fetchingFavoritesError: "",
     quoteFavoriting: false,
     quoteFavoritingError: "",
-    topTenQuotes: []
+    topTenQuotes: [],
+    formErrors: [],
 };
 
 const formatDateString = (dateString) => {
     let stringSplit = dateString.split(" ");
-    let timeDifference = `${stringSplit[2].slice(0, 3)}:${stringSplit[2].slice(3)}`
-    return `${stringSplit[0]}T${stringSplit[1]}${timeDifference}`;
+    if (stringSplit.length > 1) {
+        let timeDifference = `${stringSplit[2].slice(0, 3)}:${stringSplit[2].slice(3)}`
+        return `${stringSplit[0]}T${stringSplit[1]}${timeDifference}`;
+    } else {
+        return dateString;
+    }
 }
 
 const sessionReducer = (state=initialState, action) => {
@@ -148,7 +153,8 @@ const sessionReducer = (state=initialState, action) => {
             return {
                 ...state,
                 userInfoLoading: false,
-                signUpError: action.errorMessage
+                signUpError: action.errorMessage,
+                formErrors: action.errors
             }
         case 'USER_LOGGING_IN':
             return {
