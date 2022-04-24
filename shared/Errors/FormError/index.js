@@ -34,7 +34,8 @@ const {height, width} = Dimensions.get('screen');
 const styles = StyleSheet.create({
     errorBackground: {
         backgroundColor: white,
-        padding: width * 0.01,
+        paddingVertical: width * 0.01,
+        paddingHorizontal: width * 0.02,
         borderRadius: width / 2,
     },
     errorRow: {
@@ -44,7 +45,8 @@ const styles = StyleSheet.create({
     },
     errorText: {
         color: red,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 12,
     }
 });
 

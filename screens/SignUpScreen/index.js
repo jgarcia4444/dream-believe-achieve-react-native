@@ -35,17 +35,20 @@ const SignUpScreen = ({createUser, session}) => {
         {
             label: 'Email',
             inputValue: signUpEmail,
-            changeFunc: (newVal) => handleSignUpInputChange(newVal, 'email')
+            changeFunc: (newVal) => handleSignUpInputChange(newVal, 'email'),
+            inputError: emailError,
         },
         {
             label: 'Username',
             inputValue: signUpUsername,
-            changeFunc: (newVal) => handleSignUpInputChange(newVal, 'username')
+            changeFunc: (newVal) => handleSignUpInputChange(newVal, 'username'),
+            inputError: usernameError,
         },
         {
             label: 'Password',
             inputValue: signUpPassword,
-            changeFunc: (newVal) => handleSignUpInputChange(newVal, 'password')
+            changeFunc: (newVal) => handleSignUpInputChange(newVal, 'password'),
+            inputError: passwordError,
         },
     ];
 
@@ -90,7 +93,34 @@ const SignUpScreen = ({createUser, session}) => {
     }
 
     const checkForErrors = () => {
-        console.log(formErrors);
+        let errorKeys = Object.keys(formErrors);
+        if (errorKeys.length > 0) {
+            errorKeys.forEach(errorKey => {
+                let errorMessage = formErrors[errorKey][0];
+                switch(errorKey) {
+                    case 'email':
+                        setEmailError(errorMessage);
+                        break;
+                    case 'username':
+                        setUsernameError(errorMessage);
+                        break;
+                    case 'password':
+                        setPasswordError(errorMessage);
+                        break;
+                    default:
+                        break;
+                }
+            })
+        }
+        if (!errorKeys.includes('email')) {
+            setEmailError('');
+        }
+        if (!errorKeys.includes('password')) {
+            setPasswordError('')
+        }
+        if (!errorKeys.includes('username')) {
+            setUsernameError('')
+        }
     }
 
     useEffect(() => {
