@@ -1,5 +1,5 @@
-import React, { useState, } from 'react';
-import { View, StyleSheet, TextInput, Dimensions, Text, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useState, useRef, useEffect} from 'react';
+import { View, StyleSheet, TextInput, Dimensions, Text, KeyboardAvoidingView, Platform, Animated } from 'react-native';
 
 import { Feather } from 'react-native-vector-icons';
 
@@ -7,7 +7,7 @@ const {height, width} = Dimensions.get('screen');
 
 import Colors from '../../config/Colors';
 import FormError from '../Errors/FormError';
-const {darkGray, white, lightGray, whiteOpaque, black} = Colors;
+const {darkGray, white, lightGray, whiteOpaque, black, red} = Colors;
 
 const FormInput = ({inputObject}) => {
 
@@ -52,6 +52,30 @@ const FormInput = ({inputObject}) => {
         }
     }
 
+    const animatedBorderWidth = useRef(new Animated.Value(0)).current;
+
+    const fadeBorder = (fadeIn) => {
+        var toAnimatedValue;
+        if (fadeIn === true) {
+            toAnimatedValue = 2;
+        } else {
+            toAnimatedValue = 0;
+        }
+        Animated.timing(animatedBorderWidth, {
+            toValue: toAnimatedValue,
+            duration: 300,
+            useNativeDriver: false
+        }).start();
+    }
+
+    useEffect(() => {
+        if (inputError === "") {
+            fadeBorder(false);
+        } else {
+            fadeBorder(true);
+        }
+    }, [inputError])
+
     return (
         <KeyboardAvoidingView style={styles.formInputContainer} behavior={Platform.OS === 'ios' ? "padding" : "margin"}>    
             <View style={styles.formInputLabelRow}>
@@ -61,12 +85,12 @@ const FormInput = ({inputObject}) => {
                 }
             </View>
             
-            <View style={[styles.formInput, {backgroundColor: inputBackgroundColor}]}>
+            <Animated.View style={[styles.formInput, {backgroundColor: inputBackgroundColor}, {borderWidth: animatedBorderWidth, borderColor: red}]}>
                     <View style={styles.inputIconContainer}>
                         {computedIcon()}
                     </View>
                     <TextInput onBlur={() => setInputBackgroundColor(whiteOpaque)} onFocus={() => setInputBackgroundColor(white)} secureTextEntry={label === "Password" ? true : false} placeholder={label} keyboardType={computedKeyboardType()} importantForAutofill='yes' clearButtonMode='while-editing' autoComplete={androidAutoComplete()} value={inputValue} onChangeText={changeFunc} style={[styles.input]} />
-            </View>
+            </Animated.View>
         </KeyboardAvoidingView>
     )
 };

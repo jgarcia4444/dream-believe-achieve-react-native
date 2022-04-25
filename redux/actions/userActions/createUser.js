@@ -15,7 +15,6 @@ const createUser = (userInfo) => {
         fetch(url, options)
             .then(res => res.json())
             .then(data => {
-                console.log("Here is the data sent back from the user creation route", data);
                 let {error} = data;
                 let {hasError} = error;
                 if (hasError === true) {
