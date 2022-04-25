@@ -14,7 +14,6 @@ import Background from '../../components/Background';
 const HomeScreen = ({userInfo, quoteFavoriting, quoteOfTheDayDate}) => {
 
     const {username} = userInfo;
-    console.log("Quote of the day date from the home screen", quoteOfTheDayDate);
 
     const timeBasedGreeting = () => {
         let date = new Date();

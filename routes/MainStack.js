@@ -7,6 +7,7 @@ import LandingScreen from '../screens/LandingScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import HomeScreen from '../screens/HomeScreen';
+import SuccessScreen from '../screens/TransitionScreens/SuccessScreen';
 
 import FooterMenu from '../components/FooterMenu';
 
@@ -25,6 +26,8 @@ const MainStack = ({username}) => {
     useEffect(() => {
         if (username === "") {
             navigation.navigate("Landing");
+        } else {
+            navigation.navigate("SuccessScreen");
         }
     }, [username])
 
@@ -34,6 +37,7 @@ const MainStack = ({username}) => {
             <Stack.Screen options={transparentHeader} name="Login" component={LoginScreen} />
             <Stack.Screen options={transparentHeader} name="SignUp" component={SignUpScreen} />
             <Stack.Screen options={transparentHeader} name="HomeStack" component={FooterMenu} />
+            <Stack.Screen options={transparentHeader} name="SuccessScreen" component={SuccessScreen} />
         </Stack.Navigator>
     )
 
