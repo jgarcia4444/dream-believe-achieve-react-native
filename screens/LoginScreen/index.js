@@ -27,6 +27,8 @@ const LoginScreen = ({loginUser, session}) => {
 
     const [loginEmail, setLoginEmail] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
     const handleLoginInputChange = (newVal, label) => {
         if (label === 'email') {
@@ -40,12 +42,14 @@ const LoginScreen = ({loginUser, session}) => {
         {
             label: 'Email',
             inputValue: loginEmail,
-            changeFunc: (newVal) => handleLoginInputChange(newVal, 'email')
+            changeFunc: (newVal) => handleLoginInputChange(newVal, 'email'),
+            inputError: emailError
         },
         {
             label: 'Password',
             inputValue: loginPassword,
-            changeFunc: (newVal) => handleLoginInputChange(newVal, 'password')
+            changeFunc: (newVal) => handleLoginInputChange(newVal, 'password'),
+            inputError: passwordError
         }
     ]
 
