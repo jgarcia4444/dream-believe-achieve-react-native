@@ -136,7 +136,8 @@ const sessionReducer = (state=initialState, action) => {
             return {
                 ...state,
                 userInfoLoading: true,
-                signUpError: ''
+                signUpError: '',
+                formErrors: [],
             }
         case 'USER_CREATION_SUCCESS':
             return {
@@ -147,7 +148,8 @@ const sessionReducer = (state=initialState, action) => {
                 },
                 userInfoLoading: false,
                 signUpError: '',
-                topTenQuotes: action.topTenQuotes
+                topTenQuotes: action.topTenQuotes,
+                formErrors: [],
             }
         case 'USER_CREATION_ERROR':
             return {
@@ -160,7 +162,8 @@ const sessionReducer = (state=initialState, action) => {
             return {
                 ...state,
                 userInfoLoading: true,
-                loginError: ''
+                loginError: '',
+                formErrors: [],
             }
         case 'USER_LOGIN_SUCCESS':
             return {
@@ -177,7 +180,8 @@ const sessionReducer = (state=initialState, action) => {
                     quoteOfTheDayDate: formatDateString(action.dailyQuote.quoteOfTheDayDate)
                 },
                 favoriteQuotes: action.favoriteQuotes,
-                topTenQuotes: action.topTenQuotes
+                topTenQuotes: action.topTenQuotes,
+                formErrors: [],
             }
         case 'USER_LOGIN_ERROR':
             return {
