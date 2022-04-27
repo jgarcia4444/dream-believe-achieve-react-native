@@ -14,6 +14,7 @@ const FormInput = ({inputObject}) => {
     const {inputValue, changeFunc, label, inputError} = inputObject;
 
     const [inputBackgroundColor, setInputBackgroundColor] = useState(whiteOpaque);
+    const [borderWidth, setBorderWidth] = useState(0);
 
     const computedIcon = () => {
         var iconName
@@ -52,20 +53,14 @@ const FormInput = ({inputObject}) => {
         }
     }
 
-    const animatedBorderWidth = useRef(new Animated.Value(0)).current;
-
     const fadeBorder = (fadeIn) => {
-        var toAnimatedValue;
+        var toValue;
         if (fadeIn === true) {
-            toAnimatedValue = 2;
+            toValue = 2;
         } else {
-            toAnimatedValue = 0;
+            toValue = 0;
         }
-        Animated.timing(animatedBorderWidth, {
-            toValue: toAnimatedValue,
-            duration: 300,
-            useNativeDriver: false
-        }).start();
+        setBorderWidth(toValue)
     }
 
     useEffect(() => {
@@ -85,7 +80,7 @@ const FormInput = ({inputObject}) => {
                 }
             </View>
             
-            <Animated.View style={[styles.formInput, {backgroundColor: inputBackgroundColor}, {borderWidth: animatedBorderWidth, borderColor: red}]}>
+            <Animated.View style={[styles.formInput, {backgroundColor: inputBackgroundColor}, {borderWidth: borderWidth, borderColor: red}]}>
                     <View style={styles.inputIconContainer}>
                         {computedIcon()}
                     </View>
