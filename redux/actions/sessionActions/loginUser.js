@@ -30,8 +30,12 @@ const loginUser = (loginInfo) => {
                 let {error} = data;
                 let {hasError} = error;
                 if (hasError === true) {
+                    var formErrors;
                     let {message} = error;
-                    return dispatch({type: "USER_LOGIN_ERROR", errorMessage: message});
+                    if (error.errors) {
+                        formErrors = error.errors;
+                    }
+                    return dispatch({type: "USER_LOGIN_ERROR", errorMessage: message, formErrors});
                 } else {
                     let {userInfo, dailyQuote, favoriteQuotes, topTenQuotes} = data;
                     return dispatch({type: "USER_LOGIN_SUCCESS", userInfo, dailyQuote, favoriteQuotes, topTenQuotes});

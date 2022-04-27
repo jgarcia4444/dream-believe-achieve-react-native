@@ -17,7 +17,7 @@ import Background from '../../components/Background';
 
 const LoginScreen = ({loginUser, session}) => {
 
-    const {userInfo, loginError, userInfoLoading} = session;
+    const {userInfo, loginError, userInfoLoading, formErrors} = session;
 
     const {username} = userInfo;
 
@@ -61,7 +61,7 @@ const LoginScreen = ({loginUser, session}) => {
         })
     }
 
-    const handleLoginPress = async () => {
+    const handleLoginPress = () => {
         if (loginEmail === "") {
             return dispatch({type: "USER_LOGIN_ERROR", errorMessage: "Email cannot be left empty."});
         } else if (loginPassword === "") {
@@ -71,14 +71,34 @@ const LoginScreen = ({loginUser, session}) => {
             email: loginEmail,
             password: loginPassword
         }
-        await loginUser(loginInfo);
+        loginUser(loginInfo);
+    }
+
+    const checkForErrors = () => {
+        if (formErrors.length > 0) {
+            formErrors.forEach(error => {
+                let errorKey = Object.keys(error)[0];
+                let errorMessage = error[errorKey]
+                switch(errorKey) {
+                    case 'email':
+                        setEmailError(errorMessage);
+                        break;
+                    case 'password':
+                        setPasswordError(errorMessage);
+                        break;
+                    default:
+                        return;
+                }
+            })
+        }
     }
 
     useEffect(() => {
+        checkForErrors();
         if (username !== "") {
             navigation.navigate('HomeStack');
         }
-    },[username])
+    },[username, formErrors.length])
 
     const displayActionButtonText = () => {
         return userInfoLoading === true ? <ActivityIndicator color={white} size='large' /> : "Login"

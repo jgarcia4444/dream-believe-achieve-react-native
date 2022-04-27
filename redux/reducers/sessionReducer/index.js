@@ -186,7 +186,8 @@ const sessionReducer = (state=initialState, action) => {
                     ...state.userInfo
                 },
                 userInfoLoading: false,
-                loginError: action.errorMessage
+                loginError: action.errorMessage,
+                formErrors: action.formErrors,
             }
         case "persist/REHYDRATE":
             if (action.payload) {
