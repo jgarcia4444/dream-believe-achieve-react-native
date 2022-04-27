@@ -29,7 +29,9 @@ const SuccessScreen = ({successFrom}) => {
             duration: 750,
             useNativeDriver: true
         }).start(() => {
-            setTimeout(navigateToSuccess, 2000);
+            setTimeout(() => {
+                navigateToSuccess()
+            }, 2000);
         })
     }
 

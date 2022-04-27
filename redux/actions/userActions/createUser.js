@@ -29,6 +29,7 @@ const createUser = (userInfo) => {
                     return dispatch({type: "USER_CREATION_SUCCESS", userInfo, topTenQuotes})
                 }
             })
+            .catch(e => console.log(e));
     }
 }
 
