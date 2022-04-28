@@ -1,3 +1,4 @@
+
 {
   "expo": {
     "name": "Dream Believe Achieve",
@@ -7,5 +8,6 @@
       "**/*"
     ]
   },
-  "name": "dream-believe-achieve"
+  "name": "dream-believe-achieve",
+  "icon": "./media/icons/DBA.png"
 }
