@@ -15,9 +15,14 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
 
 
     const setTimeHours = () => {
-        console.log(quoteOfTheDayDate);
+        console.log("Quote of the day date from the refresh button set time hours", quoteOfTheDayDate);
         let dailyQuoteDate = new Date(quoteOfTheDayDate);
+        console.log(dailyQuoteDate);
         let todaysDate = new Date();
+        console.log(todaysDate);
+
+        let quoteDay = dailyQuoteDate.getDate();
+        let todaysDay = todaysDate.getDate();
 
         let quoteHours = dailyQuoteDate.getHours();
         let todaysHours = todaysDate.getHours();
@@ -25,7 +30,9 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
         if (quoteHours < todaysHours) {
             let howManyToTwentyThree = 23 - todaysHours;
             return howManyToTwentyThree + quoteHours;
-        } else if (quoteHours === todaysHours) {
+        } else if (quoteHours === todaysHours && quoteDay === todaysDay) {
+            return 23;
+        } else if (quoteHours === todaysHours && quoteDay !== todaysDay) {
             return 0;
         } else {
             return quoteHours - todaysHours;
@@ -36,13 +43,18 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
         let dailyQuoteDate = new Date(quoteOfTheDayDate);
         let todaysDate = new Date();
 
+        let quoteHour = dailyQuoteDate.getHours();
+        let todaysHour = todaysDate.getHours();
+
         let quoteMinutes = dailyQuoteDate.getMinutes();
         let todaysMinutes = todaysDate.getMinutes();
 
         if (quoteMinutes < todaysMinutes) {
             let howManyToSixty = 60 - todaysMinutes;
             return howManyToSixty + quoteMinutes;
-        } else if (quoteMinutes === todaysMinutes) {
+        } else if (quoteMinutes === todaysMinutes && quoteHour === todaysHour) {
+            return 59;
+        } else if (quoteMinutes === todaysMinutes && quoteHour !== todaysHour) {
             return 0;
         } else {
             return quoteMinutes - todaysMinutes;

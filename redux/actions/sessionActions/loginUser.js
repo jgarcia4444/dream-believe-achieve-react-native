@@ -27,6 +27,7 @@ const loginUser = (loginInfo) => {
                 return res.json()
             })
             .then(data => {
+                console.log("Data sent back after logging in.", data);
                 let {error} = data;
                 let {hasError} = error;
                 if (hasError === true) {
