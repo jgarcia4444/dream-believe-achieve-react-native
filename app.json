@@ -6,8 +6,9 @@
     "version": "1.3.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "icon": "./media/icons/DBA.png"
   },
-  "name": "dream-believe-achieve",
+  "name": "Dream Believe Achieve",
   "icon": "./media/icons/DBA.png"
 }
