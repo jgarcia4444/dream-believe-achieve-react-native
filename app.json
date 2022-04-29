@@ -7,8 +7,8 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "icon": "./media/icons/DBA.jpg"
+    "icon": "./media/icons/DBA.png"
   },
   "name": "Dream Believe Achieve",
-  "icon": "./media/icons/DBA.jpg"
+  "icon": "./media/icons/DBA.png"
 }
