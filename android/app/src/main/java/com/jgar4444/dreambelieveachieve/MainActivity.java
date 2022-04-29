@@ -1,4 +1,4 @@
-package com.dreambelieveachieve;
+package com.jgar4444.dreambelieveachieve;
 
 import android.os.Build;
 import android.os.Bundle;
