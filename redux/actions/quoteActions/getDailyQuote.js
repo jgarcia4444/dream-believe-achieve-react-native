@@ -6,6 +6,8 @@ const getDailyQuote = (dailyQuoteInfo) => {
 
     const url = `${baseUrl}/quotes/get-daily-quote`;
 
+    console.log("Here is the daily quote info", dailyQuoteInfo);
+
     const configuredBody = {
         user_info: {
             username: dailyQuoteInfo.username,

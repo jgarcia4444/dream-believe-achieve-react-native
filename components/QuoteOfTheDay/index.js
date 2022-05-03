@@ -30,8 +30,10 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     const handleFetchQuote = () => {
         let dailyQuoteInfo = {
             username: username,
+            quoteOfTheDayDate: quoteOfTheDayDate
         };
         getDailyQuote(dailyQuoteInfo);
+        setIsFavorited(false);
     };
 
     const handleFavoritePress = () => {
@@ -81,7 +83,7 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
                 </TouchableOpacity>
             :
             <>
-                <RefreshButton />
+                <RefreshButton handleRefreshPress={handleFetchQuote} />
                 <QuoteCard />
                 <QuoteCardActions isFavorited={isFavorited} handleFavoritePress={handleFavoritePress} />
             </>
