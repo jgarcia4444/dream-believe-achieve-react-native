@@ -26,11 +26,7 @@ const LandingScreen = ({username}) => {
             toValue: 1,
             duration: 2000,
             useNativeDriver: true
-        }).start(() => {
-            if (username !== "") {
-                navigation.navigate('SuccessScreen')
-            }
-        });
+        }).start();
     }
 
     return (
