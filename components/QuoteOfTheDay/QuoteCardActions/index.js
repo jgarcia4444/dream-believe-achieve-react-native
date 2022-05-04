@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Platform, Share } from 'react-native';
 import { Feather } from 'react-native-vector-icons';
 
 import Colors from '../../../config/Colors';
 const {black, white, darkGray} = Colors;
 
-const QuoteCardActions = ({handleFavoritePress, isFavorited}) => {
+const QuoteCardActions = ({handleFavoritePress, isFavorited, handleSharePress, shareToIGStories}) => {
 
     const deviceShadow = Platform.OS === 'ios' ? {
         shadowOffset: {
@@ -24,23 +24,23 @@ const QuoteCardActions = ({handleFavoritePress, isFavorited}) => {
         shadowColor: black,
         ...deviceShadow
     }
+    console.log("Share to IG Stories value",shareToIGStories)
 
     const starButton = (
         <TouchableOpacity onPress={handleFavoritePress} style={[styles.actionButton, styles.starButton, isFavoritedStyle]}>
-            <Feather name="star" size={24} color={black}/>
+            <Feather name={shareToIGStories ? "instagram" : "star"} size={24} color={black}/>
         </TouchableOpacity>
     );
 
-    const shareButton = (
-        <TouchableOpacity style={[styles.actionButton, styles.shareButton]}>
+    const shareButton =
+        <TouchableOpacity onPress={handleSharePress} style={[styles.actionButton, styles.shareButton]}>
             <Feather name="share" size={24} color={black}/>
         </TouchableOpacity>
-    )
 
     return (
         <View style={styles.quoteCardActionsRow}>
             {starButton} 
-            {/* {shareButton} */}
+            {shareButton}
         </View>
     )
 }

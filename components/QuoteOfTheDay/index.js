@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useRef} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Dimensions } from 'react-native';
+import { Platform, Linking, Text, StyleSheet, TouchableOpacity, Animated, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
+import { captureRef } from 'react-native-view-shot';
+import * as Sharing from 'expo-sharing';
+import Share from 'react-native-share';
 
 import GlobalStyles from '../../config/GlobalStyles';
 
 import Colors from '../../config/Colors';
-const {black, white, darkGray, whiteOpaque} = Colors;
+const {whiteOpaque, backgroundGradientTopLeft, backgroundGradientTopRight} = Colors;
 
 import QuoteCard from './QuoteCard';
 import QuoteCardActions from './QuoteCardActions';
@@ -25,6 +28,10 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     const {quoteOfTheDayDate, quoteInfo} = dailyQuote;
 
     const opacityVal = useRef(new Animated.Value(0)).current;
+
+    const [shareToIGStories, setShareToIGStories] = useState(false);
+
+    const shareRef = useRef();
     
 
     const handleFetchQuote = () => {
@@ -67,13 +74,52 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
             duration: 750,
             useNativeDriver: true
         }).start();
+    };
+
+    const checkIGStories = () => {
+        Linking.canOpenURL('instagram://')
+            .then(val => {
+                console.log(val);
+                setShareToIGStories(val);
+            })
+            .catch(error => console.log(error.message))
     }
 
 
     useEffect(() => {
         checkIfFavorited()
+        checkIGStories();
         fadeIn()
-    }, [favoriteQuotes.length])
+    }, [favoriteQuotes.length]);
+
+    const handleSharePress = async () => {
+        try {
+            const uri = await captureRef(shareRef, {
+                format: 'png',
+                quality: 0.8,
+                height: 200,
+                width: 300,
+                result: 'tmpfile'
+            });
+            console.log("ref uri", uri);
+            const encodedUrl = encodeURI(uri)
+            console.log("Encoded url:", encodedUrl);
+            // if (shareToIGStories) {
+                await Linking.openURL(`instagram://library?AssetPath=${encodedUrl}`);
+                // await Share.shareSingle({
+                //     stickerImage: uri,
+                //     method: Share.InstagramStories.SHARE_STICKER_IMAGE,
+                //     social: Share.Social.INSTAGRAM_STORIES,
+                //     backgroundBottomColor: backgroundGradientTopLeft[0],
+                //     backgroundTopColor: backgroundGradientTopRight[1],
+                // })
+            // } else {
+                // Share.share({url: uri})
+            // }
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     return (
         <Animated.View style={[styles.quoteOfTheDayContainer, {opacity: opacityVal}]}>
@@ -84,8 +130,8 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
             :
             <>
                 <RefreshButton handleRefreshPress={handleFetchQuote} />
-                <QuoteCard />
-                <QuoteCardActions isFavorited={isFavorited} handleFavoritePress={handleFavoritePress} />
+                <QuoteCard shareRef={shareRef} />
+                <QuoteCardActions shareToIGStories={shareToIGStories} handleSharePress={handleSharePress} isFavorited={isFavorited} handleFavoritePress={handleFavoritePress} />
             </>
             }
         </Animated.View>
