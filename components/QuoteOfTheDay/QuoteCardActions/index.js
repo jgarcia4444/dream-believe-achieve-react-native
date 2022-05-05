@@ -24,17 +24,16 @@ const QuoteCardActions = ({handleFavoritePress, isFavorited, handleSharePress, s
         shadowColor: black,
         ...deviceShadow
     }
-    console.log("Share to IG Stories value",shareToIGStories)
 
     const starButton = (
         <TouchableOpacity onPress={handleFavoritePress} style={[styles.actionButton, styles.starButton, isFavoritedStyle]}>
-            <Feather name={shareToIGStories ? "instagram" : "star"} size={24} color={black}/>
+            <Feather name="star" size={24} color={black}/>
         </TouchableOpacity>
     );
 
     const shareButton =
         <TouchableOpacity onPress={handleSharePress} style={[styles.actionButton, styles.shareButton]}>
-            <Feather name="share" size={24} color={black}/>
+            <Feather name={shareToIGStories ? "instagram" : "share"} size={24} color={black}/>
         </TouchableOpacity>
 
     return (

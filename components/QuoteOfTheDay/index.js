@@ -3,7 +3,7 @@ import { Platform, Linking, Text, StyleSheet, TouchableOpacity, Animated, Dimens
 import { connect } from 'react-redux';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
-import Share from 'react-native-share';
+import * as FileSystem from 'expo-file-system';
 
 import GlobalStyles from '../../config/GlobalStyles';
 
@@ -30,6 +30,7 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     const opacityVal = useRef(new Animated.Value(0)).current;
 
     const [shareToIGStories, setShareToIGStories] = useState(false);
+    const [shareUrl, setShareUrl] = useState('');
 
     const shareRef = useRef();
     
@@ -77,7 +78,7 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     };
 
     const checkIGStories = () => {
-        Linking.canOpenURL('instagram://')
+        Linking.canOpenURL('https://www.instagram.com')
             .then(val => {
                 console.log(val);
                 setShareToIGStories(val);
@@ -89,36 +90,44 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     useEffect(() => {
         checkIfFavorited()
         checkIGStories();
+        captureQuoteToShare()
         fadeIn()
     }, [favoriteQuotes.length]);
 
-    const handleSharePress = async () => {
+    const captureQuoteToShare = async () => {
         try {
-            const uri = await captureRef(shareRef, {
+            const capturedRef = await captureRef(shareRef, {
                 format: 'png',
                 quality: 0.8,
                 height: 200,
                 width: 300,
                 result: 'tmpfile'
-            });
-            console.log("ref uri", uri);
-            const encodedUrl = encodeURI(uri)
-            console.log("Encoded url:", encodedUrl);
-            // if (shareToIGStories) {
-                await Linking.openURL(`instagram://library?AssetPath=${encodedUrl}`);
-                // await Share.shareSingle({
-                //     stickerImage: uri,
-                //     method: Share.InstagramStories.SHARE_STICKER_IMAGE,
-                //     social: Share.Social.INSTAGRAM_STORIES,
-                //     backgroundBottomColor: backgroundGradientTopLeft[0],
-                //     backgroundTopColor: backgroundGradientTopRight[1],
-                // })
-            // } else {
-                // Share.share({url: uri})
-            // }
+            })
+            setShareUrl(capturedRef);
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
+    }
+
+    const handleSharePress = async () => {
+        console.log("Here is the share url", shareUrl);
+        // const { uri } = await FileSystem.downloadAsync(
+        //     encodeURI(`file://${shareUrl}`),
+        //     `${FileSystem.documentDirectory}share.png`
+        // ).catch(error => console.log(error))
+                const encodedUrl = encodeURIComponent(`${"file://" + shareUrl}`)
+                // if (shareToIGStories) {
+                    Linking.openURL(`instagram://library?AssetPath=${encodedUrl}`)
+                    // await Share.shareSingle({
+                    //     stickerImage: uri,
+                    //     method: Share.InstagramStories.SHARE_STICKER_IMAGE,
+                    //     social: Share.Social.INSTAGRAM_STORIES,
+                    //     backgroundBottomColor: backgroundGradientTopLeft[0],
+                    //     backgroundTopColor: backgroundGradientTopRight[1],
+                    // })
+                // } else {
+                    // Share.share({url: uri})
+                // }
     }
 
     return (
