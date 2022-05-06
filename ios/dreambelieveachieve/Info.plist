@@ -43,6 +43,8 @@
       <string>whatsapp</string>
       <string>twitter</string>
       <string>instagram-stories</string>
+      <string>intagram</string>
+      <string>instagram://app</string>
     </array>
     <key>CFBundleURLTypes</key>
     <array>

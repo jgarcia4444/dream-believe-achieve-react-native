@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef} from 'react';
-import { Platform, Linking, Text, StyleSheet, TouchableOpacity, Animated, Dimensions } from 'react-native';
+import { Platform, PermissionsAndroid, Linking, Text, StyleSheet, TouchableOpacity, Animated, Dimensions, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { captureRef } from 'react-native-view-shot';
-import * as Sharing from 'expo-sharing';
+import * as Sharing from 'expo-sharing'
+import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 
 import GlobalStyles from '../../config/GlobalStyles';
@@ -30,7 +31,6 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     const opacityVal = useRef(new Animated.Value(0)).current;
 
     const [shareToIGStories, setShareToIGStories] = useState(false);
-    const [shareUrl, setShareUrl] = useState('');
 
     const shareRef = useRef();
     
@@ -78,10 +78,10 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     };
 
     const checkIGStories = () => {
-        Linking.canOpenURL('https://www.instagram.com')
+        Linking.canOpenURL('http://www.instagram.com')
             .then(val => {
-                console.log(val);
-                setShareToIGStories(val);
+                console.log("Share to ig stories: ", val);
+                setShareToIGStories(val)
             })
             .catch(error => console.log(error.message))
     }
@@ -90,44 +90,81 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     useEffect(() => {
         checkIfFavorited()
         checkIGStories();
-        captureQuoteToShare()
         fadeIn()
     }, [favoriteQuotes.length]);
 
-    const captureQuoteToShare = async () => {
+    const sharePressed = async () => {
+        var uri = ''
+        const granted = await MediaLibrary.requestPermissionsAsync();
+        if (granted) {
+            let mediaAsset = await saveQuoteAsAsset();
+            let assetUriParts = mediaAsset.uri.split('/');
+            let assetName = assetUriParts[assetUriParts.length - 1];
+            uri = `${FileSystem.documentDirectory}/${assetName}`;
+            await FileSystem.copyAsync({
+                from: mediaAsset.uri,
+                to: uri
+            });
+            if (shareToIGStories) {
+                let encodedUri = encodeURIComponent(uri);
+                Linking.openURL(`instagram://library?AssetPath=${encodedUri}`)
+            } else {
+                const sharingResult = Sharing.shareAsync(uri);
+            }
+        }
+    }
+
+    const saveQuoteAsAsset = async () => {
+        var prefix = ''
+        if (Platform.OS === 'android') {
+            prefix = "file://";
+        }
         try {
-            const capturedRef = await captureRef(shareRef, {
-                format: 'png',
+            let capturedRef = await captureRef(shareRef, {
                 quality: 0.8,
-                height: 200,
                 width: 300,
-                result: 'tmpfile'
+                height: 200,
             })
-            setShareUrl(capturedRef);
+            let mediaAvailable = await MediaLibrary.isAvailableAsync();
+            if (mediaAvailable) {
+                let newAsset = await MediaLibrary.createAssetAsync(capturedRef);
+                return newAsset;
+            } else {
+                // show alert that the user has not allowed permissions.
+            }
+        } catch (error) {
+            console.log("Error saving quote as an asset", error)
+        }
+    }
+
+    const getPermissionAndroid = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                {
+                    title: 'Image Download Permission',
+                    message: "Your permission is required to save the image that is generated to your library, so that it can be used to share.",
+                    buttonNegative: 'Cancel',
+                    buttonPositive: 'OK',
+                },
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                return true;
+            }
+            Alert.alert(
+                'Permission Required',
+                'Your Permission is required to use this feature, please allow through device settings.',
+                [{text: 'OK', onPress: () => console.log("OK pressed!")}],
+                {cancelable: true}
+            )
         } catch (err) {
-            console.log(err);
+            console.log("ERROR:", err);
         }
     }
 
     const handleSharePress = async () => {
-        console.log("Here is the share url", shareUrl);
-        // const { uri } = await FileSystem.downloadAsync(
-        //     encodeURI(`file://${shareUrl}`),
-        //     `${FileSystem.documentDirectory}share.png`
-        // ).catch(error => console.log(error))
-                const encodedUrl = encodeURIComponent(`${"file://" + shareUrl}`)
-                // if (shareToIGStories) {
-                    Linking.openURL(`instagram://library?AssetPath=${encodedUrl}`)
-                    // await Share.shareSingle({
-                    //     stickerImage: uri,
-                    //     method: Share.InstagramStories.SHARE_STICKER_IMAGE,
-                    //     social: Share.Social.INSTAGRAM_STORIES,
-                    //     backgroundBottomColor: backgroundGradientTopLeft[0],
-                    //     backgroundTopColor: backgroundGradientTopRight[1],
-                    // })
-                // } else {
-                    // Share.share({url: uri})
-                // }
+        const encodedUrl = encodeURIComponent(`${"file://" + shareUrl}`)
+        Linking.openURL(`instagram://library?AssetPath=${encodedUrl}`)
     }
 
     return (
@@ -140,7 +177,7 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
             <>
                 <RefreshButton handleRefreshPress={handleFetchQuote} />
                 <QuoteCard shareRef={shareRef} />
-                <QuoteCardActions shareToIGStories={shareToIGStories} handleSharePress={handleSharePress} isFavorited={isFavorited} handleFavoritePress={handleFavoritePress} />
+                <QuoteCardActions shareToIGStories={shareToIGStories} handleSharePress={sharePressed} isFavorited={isFavorited} handleFavoritePress={handleFavoritePress} />
             </>
             }
         </Animated.View>
