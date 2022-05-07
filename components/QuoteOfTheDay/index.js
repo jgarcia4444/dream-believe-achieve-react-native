@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef} from 'react';
-import { Platform, PermissionsAndroid, Linking, Text, StyleSheet, TouchableOpacity, Animated, Dimensions, Alert } from 'react-native';
+import { Platform, Text, StyleSheet, TouchableOpacity, Animated, Dimensions, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing'
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
+import * as Linking from 'expo-linking';
 
 import GlobalStyles from '../../config/GlobalStyles';
 
@@ -78,13 +79,11 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     };
 
     const checkIGStories = () => {
-        
-        Linking.canOpenURL('instagram://app')
+        Linking.canOpenURL('instagram://')
             .then(val => {
                 console.log("Share to ig stories: ", val);
-                setShareToIGStories(val)
+                setShareToIGStories(val);
             })
-            .catch(error => console.log(error.message))
     }
 
 
@@ -106,12 +105,14 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
                 from: mediaAsset.uri,
                 to: uri
             });
-            if (shareToIGStories) {
-                let encodedUri = encodeURIComponent(uri);
-                Linking.openURL(`instagram://library?AssetPath=${encodedUri}`)
-            } else {
-                const sharingResult = Sharing.shareAsync(uri);
-            }
+            // if (shareToIGStories) {
+                try {
+                    let encodedUri = encodeURIComponent(uri);
+                    Linking.openURL(`instagram://library?AssetPath=${encodedUri}`)
+                    .catch(err => Sharing.shareAsync(uri))
+                } catch (err) {
+                    console.log("Error from attempting to share media.");
+                }
         }
     }
 
