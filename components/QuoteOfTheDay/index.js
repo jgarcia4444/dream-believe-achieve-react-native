@@ -78,7 +78,8 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     };
 
     const checkIGStories = () => {
-        Linking.canOpenURL('http://www.instagram.com')
+        
+        Linking.canOpenURL('instagram://app')
             .then(val => {
                 console.log("Share to ig stories: ", val);
                 setShareToIGStories(val)
@@ -135,37 +136,7 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
         } catch (error) {
             console.log("Error saving quote as an asset", error)
         }
-    }
-
-    const getPermissionAndroid = async () => {
-        try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-                {
-                    title: 'Image Download Permission',
-                    message: "Your permission is required to save the image that is generated to your library, so that it can be used to share.",
-                    buttonNegative: 'Cancel',
-                    buttonPositive: 'OK',
-                },
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                return true;
-            }
-            Alert.alert(
-                'Permission Required',
-                'Your Permission is required to use this feature, please allow through device settings.',
-                [{text: 'OK', onPress: () => console.log("OK pressed!")}],
-                {cancelable: true}
-            )
-        } catch (err) {
-            console.log("ERROR:", err);
-        }
-    }
-
-    const handleSharePress = async () => {
-        const encodedUrl = encodeURIComponent(`${"file://" + shareUrl}`)
-        Linking.openURL(`instagram://library?AssetPath=${encodedUrl}`)
-    }
+    } 
 
     return (
         <Animated.View style={[styles.quoteOfTheDayContainer, {opacity: opacityVal}]}>
