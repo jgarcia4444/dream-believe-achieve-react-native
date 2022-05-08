@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 
 import {Feather} from 'react-native-vector-icons';
 import Colors from '../../config/Colors';
-const {whiteOpaque, black, gold} = Colors;
+const {whiteOpaque, black, gold, white} = Colors;
 
 import QuoteCardActions from '../QuoteOfTheDay/QuoteCardActions';
 import favoriteQuote from '../../redux/actions/quoteActions/favoriteQuote';
 import unfavoriteQuote from '../../redux/actions/quoteActions/unfavoriteQuote';
 
-const TopTenQuoteCell = ({quoteInfo, favoriteQuotes, username, favoriteQuote, unfavoriteQuote}) => {
+const TopTenQuoteCell = ({position, quoteInfo, favoriteQuotes, username, favoriteQuote, unfavoriteQuote}) => {
 
     const {author, quote, favorites, id} = quoteInfo;
 
@@ -44,8 +44,15 @@ const TopTenQuoteCell = ({quoteInfo, favoriteQuotes, username, favoriteQuote, un
         }
     })
 
+    const positionBackground = (
+        <View style={styles.positionContainer}>
+            <Text style={styles.position}>{position}</Text>
+        </View>
+    )
+
     return (
         <View style={styles.topTenQuote}>
+            {positionBackground}
             <View style={styles.topTenAuthorRow}>
                 <Text style={styles.topTenAuthor}>{author}</Text>
             </View>
@@ -75,7 +82,7 @@ const styles = StyleSheet.create({
     },
     topTenAuthor: {
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     topTenFavoritesCount: {
         color: black,
@@ -93,6 +100,20 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'flex-end',
         alignItems: 'center',
+    },
+    position: {
+        fontSize: 72,
+        color: white,
+        fontWeight: 'bold',
+        opacity: 0.15,
+    },
+    positionContainer: {
+        position: 'absolute',
+        width: '100%',
+        height: height * 0.20,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     quoteScrollContainer: {
         height: '80%'

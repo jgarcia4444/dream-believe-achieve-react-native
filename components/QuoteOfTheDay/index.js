@@ -81,7 +81,6 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     const checkIGStories = () => {
         Linking.canOpenURL('instagram://')
             .then(val => {
-                console.log("Share to ig stories: ", val);
                 setShareToIGStories(val);
             })
     }

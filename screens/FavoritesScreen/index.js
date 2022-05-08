@@ -24,10 +24,10 @@ const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes, topTenQuotes
         return <QuoteCell quoteInfo={item} />
     }
 
-    const renderTopTenQuote = ({item}) => {
+    const renderTopTenQuote = ({item, index}) => {
         return (
             <View style={styles.topTenQuoteContainer}>
-                <TopTenQuoteCell quoteInfo={item} />
+                <TopTenQuoteCell position={index + 1} quoteInfo={item} />
             </View>
         )
     }

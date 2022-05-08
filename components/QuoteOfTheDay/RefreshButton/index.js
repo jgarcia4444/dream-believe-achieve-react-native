@@ -217,7 +217,7 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
                 }, 1000)
             }
         }
-    },[seconds])
+    },[seconds, quoteOfTheDayDate])
 
     const adjustTime = () => {
         var newSeconds = seconds - 1;
