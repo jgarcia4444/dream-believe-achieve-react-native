@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Platform, Share }
 import { Feather } from 'react-native-vector-icons';
 
 import Colors from '../../../config/Colors';
-const {black, white, darkGray} = Colors;
+const {black, white, darkGray, redOpaque} = Colors;
 
 const QuoteCardActions = ({handleFavoritePress, isFavorited, handleSharePress, shareToIGStories}) => {
 
@@ -32,7 +32,7 @@ const QuoteCardActions = ({handleFavoritePress, isFavorited, handleSharePress, s
     );
 
     const shareButton =
-        <TouchableOpacity onPress={handleSharePress} style={[styles.actionButton, styles.shareButton]}>
+        <TouchableOpacity onPress={handleSharePress} style={[styles.actionButton, styles.shareButton, {shadowColor: black, ...deviceShadow}]}>
             <Feather name={shareToIGStories ? "instagram" : "share"} size={24} color={black}/>
         </TouchableOpacity>
 
@@ -52,9 +52,10 @@ const styles = StyleSheet.create({
         height: 48,
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 2,
+        borderWidth: 0,
         borderColor: black,
         borderRadius: 24,
+        backgroundColor: redOpaque,
     },
     shareButton: {
         marginStart: width * 0.05,

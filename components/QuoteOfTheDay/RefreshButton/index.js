@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     refreshButton: {
         width: width * 0.15,
         height: width * 0.15,
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: '#000',
         borderRadius: (width * 0.15) / 2,
         alignItems: 'center',
