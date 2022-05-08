@@ -105,7 +105,41 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
             if (monthDifferential > 1) {
                 return true;
             } else if (monthDifferential === 0) {
-                // check that a day/date has passed and 24 hours have passed.
+                let todaysDateNumber = todaysDate.getDate();
+                let dailyQuoteDateNumber = dailyQuoteDate.getDate();
+                let dateDifferential = todaysDateNumber - dailyQuoteDateNumber;
+                if (dateDifferential > dailyQuoteDateNumber + 1) {
+                    return true;
+                } else if (dateDifferential - dailyQuoteDateNumber === 1) {
+                    let dailyQuoteHours = dailyQuoteDate.getHours();
+                    let todaysHours = todaysDate.getHours();
+                    let hourDifferential = todaysHours - dailyQuoteHours;
+                    if (hourDifferential > 0) {
+                        return true;
+                    } else if (hourDifferential === 0) {
+                        let dailyQuoteMinutes = dailyQuoteDate.getMinutes();
+                        let todaysMinutes = todaysDate.getMinutes();
+                        let minutesDifferential = todaysMinutes - dailyQuoteMinutes;
+
+                        if (minutesDifferential === 0) {
+                            let dailyQuoteSeconds = dailyQuoteDate.getSeconds();
+                            let todaysSeconds = todaysDate.getSeconds();
+                            if (todaysSeconds <= dailyQuoteSeconds) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        } else if (minutesDifferential > 0) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             } else if (monthDifferential < 0) {
                 if (monthDifferential * -1 < 11 && monthDifferential * -1 > 0) {
                     return true;
@@ -113,6 +147,38 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
                     let todaysDateNumber = todaysDate.getDate();
                     let dailyQuoteDateNumber = dailyQuoteDate.getDate();
                     let dateDifferential = (todaysDateNumber - dailyQuoteDateNumber) * -1;
+                    if (dateDifferential > dailyQuoteDateNumber + 1) {
+                        return true;
+                    } else if (dateDifferential - dailyQuoteDateNumber === 1) {
+                        let dailyQuoteHours = dailyQuoteDate.getHours();
+                        let todaysHours = todaysDate.getHours();
+                        let hourDifferential = todaysHours - dailyQuoteHours;
+                        if (hourDifferential > 0) {
+                            return true;
+                        } else if (hourDifferential === 0) {
+                            let dailyQuoteMinutes = dailyQuoteDate.getMinutes();
+                            let todaysMinutes = todaysDate.getMinutes();
+                            let minutesDifferential = todaysMinutes - dailyQuoteMinutes;
+
+                            if (minutesDifferential === 0) {
+                                let dailyQuoteSeconds = dailyQuoteDate.getSeconds();
+                                let todaysSeconds = todaysDate.getSeconds();
+                                if (todaysSeconds <= dailyQuoteSeconds) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            } else if (minutesDifferential > 0) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
                 } else {
                     return false;
                 }
