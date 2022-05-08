@@ -105,14 +105,13 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
                 from: mediaAsset.uri,
                 to: uri
             });
-            // if (shareToIGStories) {
-                try {
-                    let encodedUri = encodeURIComponent(uri);
-                    Linking.openURL(`instagram://library?AssetPath=${encodedUri}`)
-                    .catch(err => Sharing.shareAsync(uri))
-                } catch (err) {
-                    console.log("Error from attempting to share media.");
-                }
+            try {
+                let encodedUri = encodeURIComponent(uri);
+                Linking.openURL(`instagram://library?AssetPath=${encodedUri}`)
+                .catch(err => Sharing.shareAsync(uri))
+            } catch (err) {
+                console.log("Error from attempting to share media.");
+            }
         }
     }
 

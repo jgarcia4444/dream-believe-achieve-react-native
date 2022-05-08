@@ -15,11 +15,8 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
 
 
     const setTimeHours = () => {
-        console.log("Quote of the day date from the refresh button set time hours", quoteOfTheDayDate);
         let dailyQuoteDate = new Date(quoteOfTheDayDate);
-        console.log(dailyQuoteDate);
         let todaysDate = new Date();
-        console.log(todaysDate);
 
         let quoteDay = dailyQuoteDate.getDate();
         let todaysDay = todaysDate.getDate();
@@ -81,7 +78,7 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
     const { hours, minutes, seconds } = timeObject;
 
     const setRefreshDisplay = () => {
-        if (quoteOfTheDayDate === "" || aDayHasPassed(quoteOfTheDayDate)) {
+        if (quoteOfTheDayDate === "" || aDayHasPassed()) {
             return <Feather name="rotate-cw" size={height * 0.05} />
         } else {
             return (
@@ -90,53 +87,34 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
         }
     }
 
-    const aDayHasPassed = (quoteDateString) => {
-        let quoteDate = new Date(quoteDateString)
-        let quoteDateYear = quoteDate.getFullYear();
-        let quoteDateMonth = quoteDate.getMonth()
-        let quoteDateNumber = quoteDate.getDate();
-        let quoteDateHours = quoteDate.getHours();
-        let quoteDateMinutes = quoteDate.getMinutes();
-        let quoteDateSeconds = quoteDate.getSeconds();
-
+    const aDayHasPassed = () => {
+        let dailyQuoteDate = new Date(quoteOfTheDayDate)
         let todaysDate = new Date();
-        let todaysDateYear = todaysDate.getFullYear();
-        let todaysDateMonth = todaysDate.getMonth();
-        let todaysDateNumber = todaysDate.getDate();
-        let todaysDateHours = todaysDate.getHours();
-        let todaysDateMinutes = todaysDate.getMinutes();
-        let todaysDateSeconds = todaysDate.getSeconds();
 
-        if (quoteDateYear < todaysDateYear) {
+        let dailyQuoteDateYear = dailyQuoteDate.getFullYear();
+        let todaysDateYear = todaysDate.getFullYear();
+        let yearDifferential = todaysDateYear - dailyQuoteDateYear;
+
+        if (yearDifferential > 1) {
             return true;
-        } else if (quoteDateYear === todaysDateYear) {
-            if (quoteDateMonth < todaysDateMonth) {
-                let monthDifferential = todaysDateMonth - quoteDateMonth;
-                if (monthDifferential < 2) {
-                    if (todaysDateNumber > 1) {
-                        return true
-                    } else {
-                        if ((quoteDateHours === todaysDateHours && quoteDateMinutes === todaysDateMinutes) && (quoteDateSeconds === todaysDateSeconds)) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                } else {
-                    return true
-                }
-            } else if (quoteDateMonth === todaysDateMonth) {
-                let dateNumberDifferential = quoteDateNumber - todaysDateNumber
-                if (dateNumberDifferential === 1) {
-                    if ((quoteDateHours === todaysDateHours && quoteDateMinutes === todaysDateMinutes) && (quoteDateSeconds === todaysDateSeconds)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else if (dateNumberDifferential > 1) {
+        } else if (yearDifferential <= 1 && yearDifferential >= 0) {
+            let dailyQuoteDateMonth = dailyQuoteDate.getMonth();
+            let todaysDateMonth = todaysDate.getMonth();
+            let monthDifferential = todaysDateMonth - dailyQuoteDateMonth;
+            
+            if (monthDifferential > 1) {
+                return true;
+            } else if (monthDifferential === 0) {
+                // check that a day/date has passed and 24 hours have passed.
+            } else if (monthDifferential < 0) {
+                if (monthDifferential * -1 < 11 && monthDifferential * -1 > 0) {
                     return true;
+                } else if (monthDifferential === -11) {
+                    let todaysDateNumber = todaysDate.getDate();
+                    let dailyQuoteDateNumber = dailyQuoteDate.getDate();
+                    let dateDifferential = (todaysDateNumber - dailyQuoteDateNumber) * -1;
                 } else {
-                    return false
+                    return false;
                 }
             } else {
                 return false;
@@ -156,12 +134,11 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
     }
 
     useEffect(() => {
-        if (!aDayHasPassed(quoteOfTheDayDate)) {
+        if (!aDayHasPassed()) {
             if ((hours === 0 && minutes === 0) && (seconds === 0)) {
                 let newHours = setTimeHours();
                 let newMinutes = setTimeMinutes();
                 let newSeconds = setTimeSeconds();
-                console.log("New Hours:", newHours);
                 setTimeObject({
                     hours: newHours,
                     minutes: newMinutes,
@@ -218,7 +195,7 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
             ]
         )
 
-    const onPressFunction = quoteOfTheDayDate === "" || aDayHasPassed(quoteOfTheDayDate) ? handleRefreshPress : alertUser;
+    const onPressFunction = quoteOfTheDayDate === "" || aDayHasPassed() ? handleRefreshPress : alertUser;
 
     return (
         <View style={styles.refreshButtonRow}>
