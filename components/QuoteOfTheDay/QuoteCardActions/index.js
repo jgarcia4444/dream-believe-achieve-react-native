@@ -26,7 +26,7 @@ const QuoteCardActions = ({handleFavoritePress, isFavorited, handleSharePress, s
     }
 
     const starButton = (
-        <TouchableOpacity onPress={handleFavoritePress} style={[styles.actionButton, styles.starButton, isFavoritedStyle]}>
+        <TouchableOpacity onPress={handleFavoritePress} style={[styles.actionButton, styles.starButton, isFavoritedStyle, {shadowColor: black, ...deviceShadow}]}>
             <Feather name="star" size={24} color={black}/>
         </TouchableOpacity>
     );
@@ -52,13 +52,15 @@ const styles = StyleSheet.create({
         height: 48,
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 0,
+        borderWidth: 1,
         borderColor: black,
         borderRadius: 24,
-        backgroundColor: redOpaque,
+        
     },
     shareButton: {
         marginStart: width * 0.05,
+        backgroundColor: redOpaque,
+        borderWidth: 0,
     },
     starButton: {
 
