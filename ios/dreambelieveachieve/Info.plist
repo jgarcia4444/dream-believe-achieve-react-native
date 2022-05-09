@@ -3,9 +3,9 @@
 <plist version="1.0">
   <dict>
     <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>This app would like to save images to your device.</string>
+    <string>Access to your photo library is needed to complete this action. The quote will be saved as an image in your photo library and then used to share.</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>This app would like to save images to your device.</string>
+    <string>Access to your photo library is needed to complete this action. The quote will be saved as an image in your photo library and then used to share.</string>
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
