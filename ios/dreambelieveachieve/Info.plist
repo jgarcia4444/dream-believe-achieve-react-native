@@ -3,9 +3,9 @@
 <plist version="1.0">
   <dict>
     <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>Access to your photo library is needed to complete this action. The quote will be saved as an image in your photo library and then used to share.</string>
+    <string>Access to your photo library is needed to complete this action. The quote will be saved as an image in your photo library and then used to share. Quote photos are only stored in your device.</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>Access to your photo library is needed to complete this action. The quote will be saved as an image in your photo library and then used to share.</string>
+    <string>Access to your photo library is needed to complete this action. The quote will be saved as an image in your photo library and then used to share. Quote photos are only stored in your device.</string>
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
