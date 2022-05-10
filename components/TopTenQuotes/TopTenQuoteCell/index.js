@@ -3,12 +3,12 @@ import { View, Text, StyleSheet, Animated, Dimensions, ScrollView } from 'react-
 import { connect } from 'react-redux';
 
 import {Feather} from 'react-native-vector-icons';
-import Colors from '../../config/Colors';
+import Colors from '../../../config/Colors';
 const {whiteOpaque, black, gold, white} = Colors;
 
-import QuoteCardActions from '../QuoteOfTheDay/QuoteCardActions';
-import favoriteQuote from '../../redux/actions/quoteActions/favoriteQuote';
-import unfavoriteQuote from '../../redux/actions/quoteActions/unfavoriteQuote';
+import QuoteCardActions from '../../QuoteOfTheDay/QuoteCardActions';
+import favoriteQuote from '../../../redux/actions/quoteActions/favoriteQuote';
+import unfavoriteQuote from '../../../redux/actions/quoteActions/unfavoriteQuote';
 
 const TopTenQuoteCell = ({position, quoteInfo, favoriteQuotes, username, favoriteQuote, unfavoriteQuote}) => {
 

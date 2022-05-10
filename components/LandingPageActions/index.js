@@ -24,6 +24,11 @@ const LandingPageActions = () => {
                     <Text style={styles.buttonText}>Sign Up</Text>
                 </TouchableOpacity>
             </View>
+            <View style={[styles.buttonContainer]}>
+                <TouchableOpacity onPress={() => navigation.navigate('GuestScreen')} style={[styles.actionButton, styles.guestScreenButton]}>
+                    <Text style={styles.buttonText}>Top Quotes</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -47,6 +52,9 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 24
+    },
+    guestScreenButton: {
+
     },
     landingPageActionsContainer: {
         height: '50%',

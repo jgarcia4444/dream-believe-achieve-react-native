@@ -7,7 +7,7 @@ const {container} = GlobalStyles;
 import fetchFavorites from '../../redux/actions/quoteActions/fetchFavorites';
 import QuoteCell from '../../components/QuoteCell';
 import Background from '../../components/Background';
-import TopTenQuoteCell from '../../components/TopTenQuoteCell';
+import TopTenQuoteCell from '../../components/TopTenQuotes/TopTenQuoteCell';
 
 const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes, topTenQuotes}) => {
 

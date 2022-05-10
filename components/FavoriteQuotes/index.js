@@ -20,7 +20,9 @@ const FavoriteQuotes = ({topTenQuotes}) => {
 };
 
 const styles = StyleSheet.create({
+    favoriteQuotesContainer: {
 
+    },
 });
 
 const mapStateToProps = state => {
