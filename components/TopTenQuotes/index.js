@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 
 import GlobalStyles from '../../config/GlobalStyles';
@@ -18,7 +18,7 @@ const TopTenQuotes = ({topTenQuotes}) => {
     }
 
     return (
-        <View style={[container, styles.communityQuotesContainer]}>
+        <View style={[styles.communityQuotesContainer]}>
             <View style={styles.communityFavoritesRow}>
                 <Text style={styles.communityFavoritesTitle}>
                     Community Favorites
@@ -42,6 +42,8 @@ const TopTenQuotes = ({topTenQuotes}) => {
     )
 }
 
+const { height, width } = Dimensions.get('screen');
+
 const styles = StyleSheet.create({
     communityFavoritesRow: {
 
@@ -53,6 +55,7 @@ const styles = StyleSheet.create({
     communityQuotesContainer: {
         height: height * 0.35,
         justifyContent: 'center',
+        backgroundColor: 'transparent',
     },
     noCommunityQuotesContainer: {
 
