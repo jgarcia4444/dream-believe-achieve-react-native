@@ -8,6 +8,7 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import HomeScreen from '../screens/HomeScreen';
 import SuccessScreen from '../screens/TransitionScreens/SuccessScreen';
+import GuestScreen from '../screens/GuestScreen';
 
 import FooterMenu from '../components/FooterMenu';
 
@@ -38,6 +39,7 @@ const MainStack = ({username}) => {
             <Stack.Screen options={transparentHeader} name="SignUp" component={SignUpScreen} />
             <Stack.Screen options={transparentHeader} name="HomeStack" component={FooterMenu} />
             <Stack.Screen options={transparentHeader} name="SuccessScreen" component={SuccessScreen} />
+            <Stack.Screen options={transparentHeader} name="GuestScreen" component={GuestScreen} />
         </Stack.Navigator>
     )
 
