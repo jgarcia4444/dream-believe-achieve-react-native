@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import GlobalStyles from '../../config/GlobalStyles';
 const { container } = GlobalStyles;
 
-import TopTenQuoteCell from '../TopTenQuoteCell';
+import TopTenQuoteCell from './TopTenQuoteCell';
 
 const TopTenQuotes = ({topTenQuotes}) => {
 
@@ -18,7 +18,7 @@ const TopTenQuotes = ({topTenQuotes}) => {
     }
 
     return (
-        <View style={styles.communityQuotesContainer}>
+        <View style={[container, styles.communityQuotesContainer]}>
             <View style={styles.communityFavoritesRow}>
                 <Text style={styles.communityFavoritesTitle}>
                     Community Favorites
@@ -47,10 +47,12 @@ const styles = StyleSheet.create({
 
     },
     communityFavoritesTitle: {
-
+        fontSize: 28,
+        fontWeight: 'bold',
     },
     communityQuotesContainer: {
-
+        height: height * 0.35,
+        justifyContent: 'center',
     },
     noCommunityQuotesContainer: {
 

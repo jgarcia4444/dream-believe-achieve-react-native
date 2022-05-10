@@ -8,6 +8,7 @@ import fetchFavorites from '../../redux/actions/quoteActions/fetchFavorites';
 import QuoteCell from '../../components/QuoteCell';
 import Background from '../../components/Background';
 import TopTenQuoteCell from '../../components/TopTenQuotes/TopTenQuoteCell';
+import TopTenQuotes from '../../components/TopTenQuotes';
 
 const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes, topTenQuotes}) => {
 
@@ -35,7 +36,8 @@ const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes, topTenQuotes
     return (
         <View style={[styles.favoritesContainer]}>
             <Background />
-            <View style={styles.communityQuotesContainer}>
+            <TopTenQuotes />
+            {/* <View style={styles.communityQuotesContainer}>
                 <View style={styles.communityFavoritesRow}>
                     <Text style={styles.communityFavoritesTitle}>
                         Community Favorites
@@ -55,7 +57,7 @@ const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes, topTenQuotes
                         keyExtractor={item => item.id}
                     />
                 }
-            </View>
+            </View> */}
             <View style={styles.yourFavorites}>
                 <View style={styles.yourFavoritesLabelRow}>
                     <Text style={styles.yourFavoritesTitle}>Your Favorites</Text>
@@ -80,14 +82,6 @@ const FavoritesScreen = ({fetchFavorites, username, favoriteQuotes, topTenQuotes
 const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
-    communityFavoritesTitle: {
-        fontSize: 28,
-        fontWeight: 'bold',
-    },
-    communityQuotesContainer: {
-        height: height * 0.35,
-        justifyContent: 'center',
-    },
     favoritesContainer: {
         paddingTop: height * 0.05,
         paddingHorizontal: width * 0.03,
