@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, Dimensions, ActivityIndicator, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import TopTenQuotes from '../../components/TopTenQuotes';
 
@@ -8,9 +8,12 @@ const { container } = GlobalStyles;
 
 import fetchTopTenQuotes from '../../redux/actions/quoteActions/fetchTopTenQuotes';
 
-const GuestScreen = ({navigation, username}) => {
+import Background from '../../components/Background';
+
+const GuestScreen = ({navigation, username, topTenQuotesLoading, fetchTopTenQuotes}) => {
 
     useEffect(() => {
+        fadeViewIn();
         if (username !== "") {
             navigation.navigate("SuccessScreen"); 
         } else {
@@ -22,10 +25,21 @@ const GuestScreen = ({navigation, username}) => {
         return topTenQuotesLoading === true ? <ActivityIndicator size="large" /> : <TopTenQuotes />
     }
 
+    const viewOpacity = useRef(new Animated.Value(0)).current;
+
+    const fadeViewIn = () => {
+        Animated.timing(viewOpacity, {
+            toValue: 1,
+            duration: 400,
+            useNativeDriver: true,
+        }).start();
+    }
+
     return (
-        <View style={[container, styles.guestScreenContainer]}>
+        <Animated.View style={[container, styles.guestScreenContainer, {opacity: viewOpacity}]}>
+            <Background />
             {displayTopTenQuotes()}
-        </View>
+        </Animated.View>
     )
 };
 
@@ -39,7 +53,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        username: state.session.userInfo.username
+        username: state.session.userInfo.username,
+        topTenQuotesLoading: state.session.topTenQuotesLoading,
     }
 }
 
