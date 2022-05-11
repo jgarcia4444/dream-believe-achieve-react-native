@@ -24,6 +24,8 @@ const initialState = {
     quoteFavoriting: false,
     quoteFavoritingError: "",
     topTenQuotes: [],
+    topTenQuotesLoading: false,
+    topTenQuotesError: "",
     formErrors: [],
 };
 
@@ -39,6 +41,24 @@ const formatDateString = (dateString) => {
 
 const sessionReducer = (state=initialState, action) => {
     switch(action.type) {
+        case "TOP_TEN_QUOTES_LOADING":
+            return {
+                ...state,
+                topTenQuotesLoading: true,
+                topTenQuotesError: ""
+            }
+        case "TOP_TEN_QUOTES_LOAD_FAILED":
+            return {
+                ...state,
+                topTenQuotesLoading: false,
+                topTenQuotesError: action.errorMessage
+            }
+        case "TOP_TEN_QUOTES_LOAD_SUCCESS":
+            return {
+                ...state,
+                topTenQuotes: action.topTenQuotes,
+                topTenQuotesLoading: false,
+            }
         case "UNFAVORITE_QUOTE_SUCCESS":
             let removedFavorites = state.favoriteQuotes.filter(quote => quote.id !== action.removedQuoteId);
             return {
