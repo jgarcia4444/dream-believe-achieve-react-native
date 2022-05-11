@@ -108,9 +108,9 @@ const RefreshButton = ({quoteOfTheDayDate, handleRefreshPress}) => {
                 let todaysDateNumber = todaysDate.getDate();
                 let dailyQuoteDateNumber = dailyQuoteDate.getDate();
                 let dateDifferential = todaysDateNumber - dailyQuoteDateNumber;
-                if (dateDifferential > dailyQuoteDateNumber + 1) {
+                if (dateDifferential > 1) {
                     return true;
-                } else if (dateDifferential - dailyQuoteDateNumber === 1) {
+                } else if (dateDifferential === 1) {
                     let dailyQuoteHours = dailyQuoteDate.getHours();
                     let todaysHours = todaysDate.getHours();
                     let hourDifferential = todaysHours - dailyQuoteHours;

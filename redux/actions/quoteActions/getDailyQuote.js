@@ -6,8 +6,6 @@ const getDailyQuote = (dailyQuoteInfo) => {
 
     const url = `${baseUrl}/quotes/get-daily-quote`;
 
-    console.log("Here is the daily quote info", dailyQuoteInfo);
-
     const configuredBody = {
         user_info: {
             username: dailyQuoteInfo.username,
@@ -29,7 +27,6 @@ const getDailyQuote = (dailyQuoteInfo) => {
         fetch(url, options)
             .then(res => res.json())
             .then(data => {
-                console.log("Here is the data from get daily quote.", data);
                 let {error} = data;
                 let {hasError} = error;
                 if (hasError === true) {
