@@ -5,6 +5,8 @@ import TopTenQuotes from '../../components/TopTenQuotes';
 
 import GlobalStyles from '../../config/GlobalStyles';
 const { container } = GlobalStyles;
+import Colors from '../../config/Colors';
+const {white} = Colors;
 
 import fetchTopTenQuotes from '../../redux/actions/quoteActions/fetchTopTenQuotes';
 
@@ -22,7 +24,7 @@ const GuestScreen = ({navigation, username, topTenQuotesLoading, fetchTopTenQuot
     },[username])
 
     const displayTopTenQuotes = () => {
-        return topTenQuotesLoading === true ? <ActivityIndicator size="large" /> : <TopTenQuotes />
+        return topTenQuotesLoading === true ? <ActivityIndicator color={white} size="large" /> : <TopTenQuotes />
     }
 
     const viewOpacity = useRef(new Animated.Value(0)).current;

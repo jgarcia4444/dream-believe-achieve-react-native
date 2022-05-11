@@ -65,7 +65,8 @@ const TopTenQuoteCell = ({position, quoteInfo, favoriteQuotes, username, favorit
                     <Feather name="star" size={14} color={black} />
                 </View>
             </View>
-            <QuoteCardActions isFavorited={isFavorited} handleFavoritePress={handleFavoritePress} />
+            {username !== "" && <QuoteCardActions isFavorited={isFavorited} handleFavoritePress={handleFavoritePress} />}
+            
         </View>
     )
 }
