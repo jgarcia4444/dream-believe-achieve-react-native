@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-nati
 import { useNavigation } from '@react-navigation/native';
 
 import Colors from '../../config/Colors';
-const {black, white, blackOpaque, whiteOpaque} = Colors;
+const {black, white, blackOpaque, whiteOpaque, blue} = Colors;
 
 const {height, width} = Dimensions.get('screen');
 
@@ -26,7 +26,7 @@ const LandingPageActions = () => {
             </View>
             <View style={[styles.buttonContainer]}>
                 <TouchableOpacity onPress={() => navigation.navigate('GuestScreen')} style={[styles.actionButton, styles.guestScreenButton]}>
-                    <Text style={styles.buttonText}>Top Quotes</Text>
+                    <Text style={[styles.buttonText, styles.topQuotesText]}>Top Quotes</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -45,8 +45,6 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         width: '75%',
-        // height: height * 0.05,
-        
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -69,6 +67,9 @@ const styles = StyleSheet.create({
     },
     signUpButton: {
         backgroundColor: whiteOpaque
+    },
+    topQuotesText: {
+        color: blue
     }
 });
 
