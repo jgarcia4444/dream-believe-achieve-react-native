@@ -62,8 +62,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly'
     },
     loginButton: {
-        backgroundColor: blackOpaque,
-        
+        backgroundColor: blackOpaque,  
     },
     signUpButton: {
         backgroundColor: whiteOpaque

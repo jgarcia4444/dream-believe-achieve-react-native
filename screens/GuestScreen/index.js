@@ -6,7 +6,7 @@ import TopTenQuotes from '../../components/TopTenQuotes';
 import GlobalStyles from '../../config/GlobalStyles';
 const { container } = GlobalStyles;
 import Colors from '../../config/Colors';
-const {white} = Colors;
+const {white, black, blackOpaque, whiteOpaque} = Colors;
 
 import fetchTopTenQuotes from '../../redux/actions/quoteActions/fetchTopTenQuotes';
 
@@ -71,13 +71,16 @@ const GuestScreen = ({navigation, username, topTenQuotesLoading, fetchTopTenQuot
                 </View>
                 <Text style={[styles.featuresTitleText]}>To use these features</Text>
                 <View style={[styles.buttonRow]}>
-                    <TouchableOpacity>
-                        <Text>Create an account</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={[styles.actionButton, styles.signUpButton]}>
+                        <Text style={styles.buttonText}>Sign Up</Text>
                     </TouchableOpacity>
                 </View>
+                <View style={styles.orContainer}>
+                    <Text>Or</Text>
+                </View>
                 <View style={[styles.buttonRow]}>
-                    <TouchableOpacity>
-                        <Text>Login</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("Login")} style={[styles.actionButton, styles.loginButton]}>
+                        <Text style={[styles.buttonText, {color: white}]}>Login</Text>
                     </TouchableOpacity>
                 </View>
             </Animated.View>
@@ -91,6 +94,24 @@ const styles = StyleSheet.create({
     appInfoContainer: {
         width: '100%',
     },
+    actionButton: {
+        width: '75%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 0,
+        borderColor: black,
+        borderRadius: width / 2,
+        paddingVertical: height * 0.02,
+    },
+    buttonRow: {
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: height * 0.02,
+    },
+    buttonText: {
+        fontSize: 24,
+    },
     featureContainer: {
         marginBottom: height * 0.02,
     },
@@ -103,6 +124,17 @@ const styles = StyleSheet.create({
     },
     guestScreenContainer: {
 
+    },
+    orContainer: {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: "center",
+    },
+    loginButton: {
+        backgroundColor: blackOpaque
+    },
+    signUpButton: {
+        backgroundColor: whiteOpaque
     },
 });
 
