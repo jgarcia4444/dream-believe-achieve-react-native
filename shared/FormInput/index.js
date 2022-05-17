@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     },
     formInputContainer: {
         width: '100%',
-        marginBottom: height * 0.03,
+        marginBottom: height * 0.02,
     },
     formInputLabel: {
         fontWeight: 'bold',

@@ -117,6 +117,11 @@ const LoginScreen = ({loginUser, session}) => {
                 <View style={styles.loginContainer}>
                     {renderInputs()}
                 </View>
+                <View style={styles.forgotPasswordRow}>
+                    <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
+                        <Text style={styles.forgotPasswordText}>Forgot Password</Text>
+                    </TouchableOpacity>
+                </View>
                 <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'margin'} style={styles.loginButtonContainer}>
                     <TouchableOpacity onPress={handleLoginPress} style={styles.loginButton}>
                         <Text style={styles.loginButtonText}>{displayActionButtonText()}</Text>
@@ -136,6 +141,14 @@ const LoginScreen = ({loginUser, session}) => {
 const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
+    forgotPasswordRow: {
+        width: '100%',
+        alignItems: 'flex-end',
+        marginBottom: height * 0.03,
+    },
+    forgotPasswordText: {
+        color: blue,
+    },
     loginButton: {
         backgroundColor: blackOpaque,
         height: '100%',
@@ -153,7 +166,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     loginContainer: {
-        paddingVertical: height * 0.01,
+        paddingTop: height * 0.01,
         width: '100%',
     },
     loginTopContainer: {

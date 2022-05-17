@@ -9,10 +9,14 @@ import SignUpScreen from '../screens/SignUpScreen';
 import HomeScreen from '../screens/HomeScreen';
 import SuccessScreen from '../screens/TransitionScreens/SuccessScreen';
 import GuestScreen from '../screens/GuestScreen';
+import ForgotPassword from '../screens/ForgotPassword/ForgotPassword';
 
 import FooterMenu from '../components/FooterMenu';
 
 import { useNavigation } from '@react-navigation/native';
+
+import Colors from '../config/Colors';
+const { white, } = Colors;
 
 const MainStack = ({username}) => {
 
@@ -22,6 +26,16 @@ const MainStack = ({username}) => {
 
     const transparentHeader = {
         headerShown: false
+    }
+
+    const largeTitleHeader = {
+        headerTransparent: true,
+        headerTintColor: white,
+        headerBackTitle: "",
+        headerTitleStyle: {
+            fontSize: 24,
+            fontWeight: '300'
+        }
     }
 
     useEffect(() => {
@@ -40,6 +54,7 @@ const MainStack = ({username}) => {
             <Stack.Screen options={transparentHeader} name="HomeStack" component={FooterMenu} />
             <Stack.Screen options={transparentHeader} name="SuccessScreen" component={SuccessScreen} />
             <Stack.Screen options={transparentHeader} name="GuestScreen" component={GuestScreen} />
+            <Stack.Screen options={largeTitleHeader} name="ForgotPassword" component={ForgotPassword} />
         </Stack.Navigator>
     )
 
