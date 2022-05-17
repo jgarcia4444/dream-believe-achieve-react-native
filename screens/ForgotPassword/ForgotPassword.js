@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Animated, ActivityIndicator } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/elements'
 
 
@@ -19,20 +19,28 @@ const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState("");
 
-    const inputObject = {
+    const inputValues = {
         inputValue: email,
         changeFunc: (e) => setEmail(e),
         label: "Email",
         inputError: emailError
     }
 
+    const handleSendCodePress = () => {
+        if (email === "") {
+            setEmailError("Email needs a value to send the code to.")
+        } else {
+            sendCode(email)
+        }
+    }
+
     return (
         <View style={[container, styles.forgotPasswordContainer, {paddingTop: headerHeight + height * 0.05}]}>
             <Background />
             <Text style={styles.descriptionText}>Enter the email address associated with your account.</Text>
-            <FormInput inputObject={inputObject} />
-            <TouchableOpacity style={styles.actionButton}>
-                <Text style={styles.sendCodeText}>Send Code</Text>
+            <FormInput inputObject={inputValues} />
+            <TouchableOpacity onPress={handleSendCodePress} style={styles.actionButton}>
+                <Text style={styles.sendCodeText}>{sendingCode ? <ActivityIndicator size="large" color={white} /> : "Send Code"}</Text>
             </TouchableOpacity>
         </View>
     )
