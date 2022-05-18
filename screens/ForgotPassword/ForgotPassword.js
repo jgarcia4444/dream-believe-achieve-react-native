@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Animated, ActivityIndicator } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/elements'
+import { connect } from 'react-redux';
 
 
 import GlobalStyles from '../../config/GlobalStyles';
@@ -12,7 +13,9 @@ const { white, black, whiteOpaque, blackOpaque, blue } = Colors;
 import Background from '../../components/Background';
 import FormInput from '../../shared/FormInput';
 
-const ForgotPassword = () => {
+import sendCode from '../../redux/actions/userActions/sendCode';
+
+const ForgotPassword = ({sendingCode, sendCode}) => {
 
     const headerHeight = useHeaderHeight();
 
@@ -71,4 +74,20 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ForgotPassword;
+const mapStateToProps = state => {
+    return {
+        sendingCode: state.forgotPassword.sendingCode,
+        email: state.forgotPassword.email
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        sendCode: (email) => dispatch(sendCode(email)),
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ForgotPassword);

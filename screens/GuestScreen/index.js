@@ -62,28 +62,28 @@ const GuestScreen = ({navigation, username, topTenQuotesLoading, fetchTopTenQuot
         <Animated.View style={[container, styles.guestScreenContainer, {opacity: viewOpacity}]}>
             <Background />
             {displayTopTenQuotes()}
-            <Animated.View style={[styles.appInfoContainer, {opacity: secondaryOpacity}]}>
-                <View style={[styles.featureContainer]}>
-                    {topTenQuotesLoading === false && 
-                        <Text style={[styles.featuresTitleText]}>More Features Available</Text>
-                    }
-                    {renderFeatures()}
-                </View>
-                <Text style={[styles.featuresTitleText]}>To use these features</Text>
-                <View style={[styles.buttonRow]}>
-                    <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={[styles.actionButton, styles.signUpButton]}>
-                        <Text style={styles.buttonText}>Sign Up</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.orContainer}>
-                    <Text>Or</Text>
-                </View>
-                <View style={[styles.buttonRow]}>
-                    <TouchableOpacity onPress={() => navigation.navigate("Login")} style={[styles.actionButton, styles.loginButton]}>
-                        <Text style={[styles.buttonText, {color: white}]}>Login</Text>
-                    </TouchableOpacity>
-                </View>
-            </Animated.View>
+            {topTenQuotesLoading === false && 
+                <Animated.View style={[styles.appInfoContainer, {opacity: secondaryOpacity}]}>
+                    <View style={[styles.featureContainer]}>
+                            <Text style={[styles.featuresTitleText]}>More Features Available</Text>
+                        {renderFeatures()}
+                    </View>
+                        <Text style={[styles.featuresTitleText]}>To use these features</Text>
+                        <View style={[styles.buttonRow]}>
+                            <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={[styles.actionButton, styles.signUpButton]}>
+                                <Text style={styles.buttonText}>Sign Up</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.orContainer}>
+                            <Text>Or</Text>
+                        </View>
+                        <View style={[styles.buttonRow]}>
+                            <TouchableOpacity onPress={() => navigation.navigate("Login")} style={[styles.actionButton, styles.loginButton]}>
+                                <Text style={[styles.buttonText, {color: white}]}>Login</Text>
+                            </TouchableOpacity>
+                        </View>
+                </Animated.View>
+            }
         </Animated.View>
     )
 };
