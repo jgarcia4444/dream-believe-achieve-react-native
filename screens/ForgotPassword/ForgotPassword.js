@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Animated, ActivityIndicator } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/elements'
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
 
 import GlobalStyles from '../../config/GlobalStyles';
@@ -15,25 +15,28 @@ import FormInput from '../../shared/FormInput';
 
 import sendCode from '../../redux/actions/userActions/sendCode';
 
-const ForgotPassword = ({sendingCode, sendCode}) => {
+const ForgotPassword = ({ sendCode, forgotPassword }) => {
+
+    const {codeError, sendingCode, email} = forgotPassword;
+
+    const dispatch = useDispatch()
 
     const headerHeight = useHeaderHeight();
 
-    const [email, setEmail] = useState("");
-    const [emailError, setEmailError] = useState("");
+    const [inputEmail, setInputEmail] = useState("");
 
     const inputValues = {
-        inputValue: email,
-        changeFunc: (e) => setEmail(e),
+        inputValue: inputEmail,
+        changeFunc: (e) => setInputEmail(e),
         label: "Email",
-        inputError: emailError
+        inputError: codeError
     }
 
     const handleSendCodePress = () => {
-        if (email === "") {
-            setEmailError("Email needs a value to send the code to.")
+        if (inputEmail === "") {
+            dispatch({type: "CODE_SEND_ERROR", errorMessage: "Email needs a value to send the code to."});
         } else {
-            sendCode(email)
+            sendCode(inputEmail)
         }
     }
 
@@ -76,8 +79,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        sendingCode: state.forgotPassword.sendingCode,
-        email: state.forgotPassword.email
+        forgotPassword: state.forgotPassword
     }
 }
 
