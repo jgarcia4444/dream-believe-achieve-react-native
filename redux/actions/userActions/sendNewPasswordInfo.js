@@ -22,7 +22,7 @@ const sendNewPasswordInfo = (passwordInfo) => {
                 let { error } = data;
                 let { hasError } = error;
                 if (hasError === true) {
-                    let { message, errorType } = errorHash;
+                    let { message, errorType } = error;
                     return dispatch({type: "PASSWORD_CHANGE_ERROR", errorMessage: message, errorType});
                 } else {
                     return dispatch({type: "PASSWORD_CHANGE_SUCCESS"});

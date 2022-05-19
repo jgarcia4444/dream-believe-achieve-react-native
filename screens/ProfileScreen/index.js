@@ -30,7 +30,7 @@ const ProfileScreen = ({signOut, userInfo, sendNewPasswordInfo, changePassword})
             dispatch({type: "PASSWORD_EMPTY"});
         } else if (newPassword === "") {
             dispatch({type: "NEW_PASSWORD_EMPTY"});
-        } else {
+        } else if (password !== "" && newPassword !== "") {
             let newPassInfo = {
                 password: password,
                 new_password: newPassword,
