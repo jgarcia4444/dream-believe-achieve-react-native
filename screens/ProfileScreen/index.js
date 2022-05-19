@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity, Animated } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
@@ -13,6 +13,7 @@ import Background from '../../components/Background';
 import FormInput from '../../shared/FormInput';
 
 import sendNewPasswordInfo from '../../redux/actions/userActions/sendNewPasswordInfo';
+import SuccessModal from '../../components/SuccessModal';
 
 const ProfileScreen = ({signOut, userInfo, sendNewPasswordInfo, changePassword}) => {
 
@@ -20,10 +21,11 @@ const ProfileScreen = ({signOut, userInfo, sendNewPasswordInfo, changePassword})
 
     const {username, email} = userInfo;
 
-    const { changingPassword, oldPasswordError, newPasswordError } = changePassword;
+    const { changingPassword, oldPasswordError, newPasswordError, passwordChangeSuccess } = changePassword;
 
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
+
 
     const handlePasswordChangePress = () => {
         if (password === "") {
@@ -41,6 +43,13 @@ const ProfileScreen = ({signOut, userInfo, sendNewPasswordInfo, changePassword})
             })
         }
     }
+
+    useEffect(() => {
+        if (passwordChangeSuccess === true) {
+            setPassword("");
+            setNewPassword("");
+        }
+    },[passwordChangeSuccess])
 
     const renderInputs = () => {
         const inputs = [
@@ -77,10 +86,11 @@ const ProfileScreen = ({signOut, userInfo, sendNewPasswordInfo, changePassword})
                     </View>
                 </View>
                 <View style={styles.passwordChangeContainer}>
+                    <SuccessModal show={passwordChangeSuccess} />
                     { renderInputs() }
                     <View style={styles.changePasswordButtonContainer}>
                         <TouchableOpacity style={[styles.actionButton, styles.changePasswordButton]} onPress={handlePasswordChangePress}>
-                            <Text style={styles.changePasswordText}>Change Password</Text>
+                            <Text style={styles.changePasswordText}>{changingPassword === true ? <ActivityIndicator size="large" color={white} />: "Change Password"}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

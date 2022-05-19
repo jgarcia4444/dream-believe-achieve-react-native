@@ -12,6 +12,7 @@ const Colors = {
     whiteOpaque: "rgba(255, 255, 255, 0.40)",
     gold: '#ffd700',
     redOpaque: '#E43414cc',
+    green: '#4BB543'
 }
 
 export default Colors;

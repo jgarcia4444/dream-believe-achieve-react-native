@@ -2,6 +2,7 @@ const initialState = {
     oldPasswordError: "",
     changingPassword: false,
     newPasswordError: "",
+    passwordChangeSuccess: false,
 };
 
 const changePasswordReducer = (state=initialState, action) => {
@@ -42,9 +43,15 @@ const changePasswordReducer = (state=initialState, action) => {
                     newPasswordError: action.errorMessage,
                 }
             }
-        case "PASSWORD_CHANGE_SUCCES":
+        case "PASSWORD_CHANGE_SUCCESS":
             return {
-                ...initialState
+                ...initialState,
+                passwordChangeSuccess: true
+            }
+        case "REMOVE_SUCCESS_MODAL":
+            return {
+                ...state,
+                passwordChangeSuccess: false
             }
         default:
             return {
