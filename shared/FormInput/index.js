@@ -22,7 +22,10 @@ const FormInput = ({inputObject}) => {
             case 'Email':
                 iconName = "mail";
                 break;
-            case 'Password' || 'New Password':
+            case 'New Password':
+                iconName = "lock"
+                break;
+            case 'Password':
                 iconName = "lock";
                 break;
             case 'Username':

@@ -7,18 +7,20 @@ import GlobalStyles from '../../config/GlobalStyles';
 const { container } = GlobalStyles;
 
 import Colors from '../../config/Colors';
-const {white, black, darkGray, blue} = Colors;
+const {white, black, darkGray, blue, blackOpaque} = Colors;
 
 import Background from '../../components/Background';
 import FormInput from '../../shared/FormInput';
 
 import sendNewPasswordInfo from '../../redux/actions/userActions/sendNewPasswordInfo';
 
-const ProfileScreen = ({signOut, userInfo, sendNewPasswordInfo}) => {
+const ProfileScreen = ({signOut, userInfo, sendNewPasswordInfo, changePassword}) => {
 
     const dispatch = useDispatch();
 
     const {username, email} = userInfo;
+
+    const { changingPassword, oldPasswordError, newPasswordError } = changePassword;
 
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -45,25 +47,25 @@ const ProfileScreen = ({signOut, userInfo, sendNewPasswordInfo}) => {
             {
                 inputValue: password,
                 changeFunc: (e) => setPassword(e),
-                inputError: "",
+                inputError: oldPasswordError,
                 label: "Password"
             },
             {
                 inputValue: newPassword,
                 changeFunc: (e) => setNewPassword(e),
-                inputError: "",
+                inputError: newPasswordError,
                 label: "New Password"
             }
         ];
 
-        return inputs.forEach(inputInfo => <FormInput inputObject={inputInfo} />)
+        return inputs.map((inputInfo, i) => <FormInput key={i} inputObject={inputInfo} />)
 
     }
 
     return (
         <View style={[container, styles.profileScreenContainer]}>
             <Background />
-            <ScrollView contentContainerStyle={styles.profileScrollContainer}>
+            <View style={styles.profileScrollContainer}>
                 <View style={styles.userInfoRow}>
                     <View style={styles.userInfoCol}>
                         <Text style={styles.userInfoLabel}>Username:</Text>
@@ -76,11 +78,13 @@ const ProfileScreen = ({signOut, userInfo, sendNewPasswordInfo}) => {
                 </View>
                 <View style={styles.passwordChangeContainer}>
                     { renderInputs() }
-                    <TouchableOpacity onPress={handlePasswordChangePress}>
-                        <Text>Change Password</Text>
-                    </TouchableOpacity>
+                    <View style={styles.changePasswordButtonContainer}>
+                        <TouchableOpacity style={[styles.actionButton, styles.changePasswordButton]} onPress={handlePasswordChangePress}>
+                            <Text style={styles.changePasswordText}>Change Password</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </ScrollView>
+            </View>
             <View style={styles.signOutButtonContainer}>
                 <TouchableOpacity style={styles.signOutButton} onPress={signOut}>
                     <Text style={styles.signOutText}>Sign Out</Text>
@@ -94,9 +98,34 @@ const ProfileScreen = ({signOut, userInfo, sendNewPasswordInfo}) => {
 const {height, width} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
+    actionButton: {
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 0,
+        borderColor: black,
+        borderRadius: width / 2,
+        paddingVertical: height * 0.02,
+    },
+    changePasswordButton: {
+        backgroundColor: blackOpaque,
+        width: "100%"
+    },
+    changePasswordButtonContainer: {
+        width: '100%',
+    },
+    changePasswordText: {
+        color: white,
+        fontSize: 18,
+    },
+    passwordChangeContainer: {
+        width: "90%",
+        alignItems: 'center',
+        justifyContent: "center"
+    },
     profileScrollContainer: {
         width: '100%',
-        height: height * 0.5,
+        height: height * 0.75,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -120,8 +149,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     signOutText: {
-        fontWeight: 'bold',
-        color: blue
+        color: blue,
+        fontSize: 18,
     },
     userInfo: {
         fontWeight: 'bold'
@@ -145,6 +174,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         userInfo: state.session.userInfo,
+        changePassword: state.changePassword,
     }
 }
 

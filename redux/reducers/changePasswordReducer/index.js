@@ -52,3 +52,5 @@ const changePasswordReducer = (state=initialState, action) => {
             }
     }
 }
+
+export default changePasswordReducer;
