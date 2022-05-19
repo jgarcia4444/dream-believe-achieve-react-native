@@ -1,6 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity, Animated } from 'react-native';
 import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import GlobalStyles from '../../config/GlobalStyles';
 const { container } = GlobalStyles;
@@ -9,10 +10,55 @@ import Colors from '../../config/Colors';
 const {white, black, darkGray, blue} = Colors;
 
 import Background from '../../components/Background';
+import FormInput from '../../shared/FormInput';
 
-const ProfileScreen = ({signOut, userInfo}) => {
+import sendNewPasswordInfo from '../../redux/actions/userActions/sendNewPasswordInfo';
 
-    const {username, email} = userInfo
+const ProfileScreen = ({signOut, userInfo, sendNewPasswordInfo}) => {
+
+    const dispatch = useDispatch();
+
+    const {username, email} = userInfo;
+
+    const [password, setPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+
+    const handlePasswordChangePress = () => {
+        if (password === "") {
+            dispatch({type: "PASSWORD_EMPTY"});
+        } else if (newPassword === "") {
+            dispatch({type: "NEW_PASSWORD_EMPTY"});
+        } else {
+            let newPassInfo = {
+                password: password,
+                new_password: newPassword,
+                email: email
+            }
+            sendNewPasswordInfo({
+                password_info: newPassInfo
+            })
+        }
+    }
+
+    const renderInputs = () => {
+        const inputs = [
+            {
+                inputValue: password,
+                changeFunc: (e) => setPassword(e),
+                inputError: "",
+                label: "Password"
+            },
+            {
+                inputValue: newPassword,
+                changeFunc: (e) => setNewPassword(e),
+                inputError: "",
+                label: "New Password"
+            }
+        ];
+
+        return inputs.forEach(inputInfo => <FormInput inputObject={inputInfo} />)
+
+    }
 
     return (
         <View style={[container, styles.profileScreenContainer]}>
@@ -27,6 +73,12 @@ const ProfileScreen = ({signOut, userInfo}) => {
                         <Text style={styles.userInfoLabel}>Email:</Text>
                         <Text style={styles.userInfo}>{email}</Text>
                     </View>
+                </View>
+                <View style={styles.passwordChangeContainer}>
+                    { renderInputs() }
+                    <TouchableOpacity onPress={handlePasswordChangePress}>
+                        <Text>Change Password</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
             <View style={styles.signOutButtonContainer}>
@@ -62,7 +114,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba( 255, 255, 255, 0.10)',
     },
     signOutButtonContainer: {
-        height: height * 0.50,
+        height: height * 0.25,
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center'
@@ -99,6 +151,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         signOut: () => dispatch({type: "USER_SIGN_OUT"}),
+        sendNewPasswordInfo: (passwordInfo) => dispatch(sendNewPasswordInfo(passwordInfo)),
     }
 }
 
