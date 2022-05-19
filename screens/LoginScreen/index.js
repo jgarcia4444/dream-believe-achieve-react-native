@@ -117,11 +117,11 @@ const LoginScreen = ({loginUser, session}) => {
                 <View style={styles.loginContainer}>
                     {renderInputs()}
                 </View>
-                <View style={styles.forgotPasswordRow}>
+                {/* <View style={styles.forgotPasswordRow}>
                     <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
                         <Text style={styles.forgotPasswordText}>Forgot Password</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
                 <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'margin'} style={styles.loginButtonContainer}>
                     <TouchableOpacity onPress={handleLoginPress} style={styles.loginButton}>
                         <Text style={styles.loginButtonText}>{displayActionButtonText()}</Text>

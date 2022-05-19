@@ -11,7 +11,7 @@ const SuccessModal = ({show}) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setTimeout(closeModal, 1500);
+        setTimeout(closeModal, 2000);
     })
 
     const closeModal = () => {

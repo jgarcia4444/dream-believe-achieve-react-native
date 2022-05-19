@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
@@ -85,7 +85,7 @@ const ProfileScreen = ({signOut, userInfo, sendNewPasswordInfo, changePassword})
                         <Text style={styles.userInfo}>{email}</Text>
                     </View>
                 </View>
-                <View style={styles.passwordChangeContainer}>
+                <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'margin'} style={styles.passwordChangeContainer}>
                     <SuccessModal show={passwordChangeSuccess} />
                     { renderInputs() }
                     <View style={styles.changePasswordButtonContainer}>
@@ -93,7 +93,7 @@ const ProfileScreen = ({signOut, userInfo, sendNewPasswordInfo, changePassword})
                             <Text style={styles.changePasswordText}>{changingPassword === true ? <ActivityIndicator size="large" color={white} />: "Change Password"}</Text>
                         </TouchableOpacity>
                     </View>
-                </View>
+                </KeyboardAvoidingView>
             </View>
             <View style={styles.signOutButtonContainer}>
                 <TouchableOpacity style={styles.signOutButton} onPress={signOut}>
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     },
     profileScrollContainer: {
         width: '100%',
-        height: height * 0.75,
+        height: height * 0.60,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -153,10 +153,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba( 255, 255, 255, 0.10)',
     },
     signOutButtonContainer: {
-        height: height * 0.25,
+        width: "100%",
+        height: height * 0.3,
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginBottom: Platform.OS === 'android' ? height * 0.1 : 0,
     },
     signOutText: {
         color: blue,
