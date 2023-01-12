@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import Colors from '../../../config/Colors';
 const {black, whiteOpaque} = Colors;
 
-const QuoteCard = ({quoteInfo, shareRef}) => {
+const QuoteCard = ({quoteInfo}) => {
 
     const {author, quote} = quoteInfo;
 
     return (
-        <View ref={shareRef} style={styles.quoteCard}>
+        <View style={styles.quoteCard}>
             <View style={styles.quoteTextContainer}>
                 <Text style={styles.quoteText}>"{quote}"</Text>
             </View>

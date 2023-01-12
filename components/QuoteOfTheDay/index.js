@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef} from 'react';
-import { Platform, Text, StyleSheet, TouchableOpacity, Animated, Dimensions, Alert } from 'react-native';
+import { View, Platform, Text, StyleSheet, TouchableOpacity, Animated, Dimensions, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing'
@@ -10,28 +10,29 @@ import * as Linking from 'expo-linking';
 import GlobalStyles from '../../config/GlobalStyles';
 
 import Colors from '../../config/Colors';
-const {whiteOpaque, backgroundGradientTopLeft, backgroundGradientTopRight} = Colors;
+const {whiteOpaque, backgroundGradientTopLeft, backgroundGradientTopRight, gold} = Colors;
 
 import QuoteCard from './QuoteCard';
 import QuoteCardActions from './QuoteCardActions';
-import getDailyQuote from '../../redux/actions/quoteActions/getDailyQuote';
 import RefreshButton from './RefreshButton';
+import Background from '../Background';
+
+import getDailyQuote from '../../redux/actions/quoteActions/getDailyQuote';
 import favoriteQuote from '../../redux/actions/quoteActions/favoriteQuote';
 import unfavoriteQuote from '../../redux/actions/quoteActions/unfavoriteQuote';
 
 const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }) => {
 
     const [isFavorited, setIsFavorited] = useState(false);
+    const [shareToIGStories, setShareToIGStories] = useState(false);
+    const [capturingRef, setCapturingRef] = useState(false);
 
     const {dailyQuote, userInfo, favoriteQuotes} = session;
-
     const {username} = userInfo;
-
     const {quoteOfTheDayDate, quoteInfo} = dailyQuote;
 
     const opacityVal = useRef(new Animated.Value(0)).current;
 
-    const [shareToIGStories, setShareToIGStories] = useState(false);
 
     const shareRef = useRef();
     
@@ -93,6 +94,7 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     }, [favoriteQuotes.length]);
 
     const sharePressed = async () => {
+        setCapturingRef(true);
         var uri = ''
         const granted = await MediaLibrary.requestPermissionsAsync();
         if (granted) {
@@ -114,6 +116,18 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
         }
     }
 
+    let shareAsset = (
+        <View ref={shareRef} style={styles.shareAsset}>
+            <Background />
+            <View style={styles.shareAssetQuoteContainer}>
+                <QuoteCard />
+            </View>
+            <View style={styles.shareAssetRow}>
+                <Text style={styles.shareAssetText}>Dream Believe Achieve</Text>
+            </View>
+        </View>
+    )
+
     const saveQuoteAsAsset = async () => {
         var prefix = ''
         if (Platform.OS === 'android') {
@@ -122,9 +136,10 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
         try {
             let capturedRef = await captureRef(shareRef, {
                 quality: 0.8,
-                width: 300,
-                height: 200,
+                width: width,
+                height: height,
             })
+            setCapturingRef(false);
             let mediaAvailable = await MediaLibrary.isAvailableAsync();
             if (mediaAvailable) {
                 let newAsset = await MediaLibrary.createAssetAsync(capturedRef);
@@ -139,6 +154,7 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
 
     return (
         <Animated.View style={[styles.quoteOfTheDayContainer, {opacity: opacityVal}]}>
+            {capturingRef === true && shareAsset}
             {quoteOfTheDayDate === '' ?
                 <TouchableOpacity style={styles.loadQuoteButton} onPress={handleFetchQuote}>
                     <Text>Load your first daily quote.</Text>
@@ -146,7 +162,8 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
             :
             <>
                 <RefreshButton handleRefreshPress={handleFetchQuote} />
-                <QuoteCard shareRef={shareRef} />
+                {/* <QuoteCard shareRef={shareRef} /> */}
+                <QuoteCard />
                 <QuoteCardActions shareToIGStories={shareToIGStories} handleSharePress={sharePressed} isFavorited={isFavorited} handleFavoritePress={handleFavoritePress} />
             </>
             }
@@ -154,13 +171,31 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
     )
 }
 
-const {width} = Dimensions.get('screen');
+const {width, height} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
     loadQuoteButton: {
         padding: width * 0.05,
         backgroundColor: whiteOpaque,
         borderRadius: 10,
+    },
+    shareAsset: {
+        height: height,
+        width: width,
+        margin: width * 0.02,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    shareAssetRow: {
+        marginVertical: height * 0.02
+    },
+    shareAssetText: {
+        fontWeight: "900",
+        opacity: 0.5
+    },
+    shareAssetQuoteContainer: {
+        width: width * 0.75,
+        flex: 1,
     },
     quoteOfTheDayContainer: {
         width: '80%',
