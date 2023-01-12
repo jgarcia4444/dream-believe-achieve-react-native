@@ -6,11 +6,12 @@ import * as Sharing from 'expo-sharing'
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import * as Linking from 'expo-linking';
+import {Feather} from 'react-native-vector-icons';
 
 import GlobalStyles from '../../config/GlobalStyles';
 
 import Colors from '../../config/Colors';
-const {whiteOpaque, backgroundGradientTopLeft, backgroundGradientTopRight, gold} = Colors;
+const {whiteOpaque, backgroundGradientTopLeft, backgroundGradientTopRight, black} = Colors;
 
 import QuoteCard from './QuoteCard';
 import QuoteCardActions from './QuoteCardActions';
@@ -130,8 +131,13 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
                 <Text style={styles.shareAssetText}>Dream Believe Achieve</Text>
             </View>
             <View>
-                <Text>Download on</Text>
-                <Text>Google Play Store Or iOS App Store</Text>
+                <View style={styles.arrowRow}>
+                    <Feather name="arrow-up" size={32} color={black} />
+                    <Feather name="arrow-up" size={32} color={black} />
+                </View>
+                <View style={styles.downloadDescription}>
+                    <Text>Use the title above and search within your native app store to get inspirational quotes.</Text>
+                </View>
             </View>
         </View>
     )
@@ -182,6 +188,17 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
 const {width, height} = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
+    arrowRow: {
+        width: width,
+        flexDirection: "row",
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: height * 0.02,
+    },
+    downloadDescription: {
+        width: width * 0.9,
+        marginStart: width * 0.05,
+    },
     loadQuoteButton: {
         padding: width * 0.05,
         backgroundColor: whiteOpaque,

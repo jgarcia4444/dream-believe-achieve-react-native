@@ -135,8 +135,8 @@ android {
         applicationId 'com.jgar4444.dreambelieveachieve'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "1.3.5"
+        versionCode 5
+        versionName "1.4.0"
     }
     splits {
         abi {
