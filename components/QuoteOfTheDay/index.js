@@ -116,6 +116,10 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
         }
     }
 
+    const handleDownloadIOS = () => {
+        Linking.openURL("https://apps.apple.com/us/app/dream-believe-achieve/id1531356264");
+    }
+
     let shareAsset = (
         <View ref={shareRef} style={styles.shareAsset}>
             <Background />
@@ -124,6 +128,10 @@ const QuoteOfTheDay = ({session, getDailyQuote, favoriteQuote, unfavoriteQuote }
             </View>
             <View style={styles.shareAssetRow}>
                 <Text style={styles.shareAssetText}>Dream Believe Achieve</Text>
+            </View>
+            <View>
+                <Text>Download on</Text>
+                <Text>Google Play Store Or iOS App Store</Text>
             </View>
         </View>
     )
@@ -190,12 +198,13 @@ const styles = StyleSheet.create({
         marginVertical: height * 0.02
     },
     shareAssetText: {
+        fontSize: 24,
         fontWeight: "900",
-        opacity: 0.5
+        opacity: 0.75
     },
     shareAssetQuoteContainer: {
         width: width * 0.75,
-        flex: 1,
+        height: height * 0.5,
     },
     quoteOfTheDayContainer: {
         width: '80%',
